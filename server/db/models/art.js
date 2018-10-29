@@ -39,4 +39,4 @@ const Art = db.define('art', {
   }
 })
 
-export default Art
+module.exports = Art
