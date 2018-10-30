@@ -12,6 +12,7 @@ class AllArt extends Component {
   }
 
   render() {
+    console.log('Hello it is all art')
     const allArt = this.props.allArt
 
     return (
@@ -20,7 +21,7 @@ class AllArt extends Component {
         <ul>
           {
             allArt.map(art =>
-              <li key={art.id}>{art.name}</li>
+              <li key={art.id}>{art.title}</li>
             )
           }
         </ul>
@@ -29,12 +30,12 @@ class AllArt extends Component {
   }
 }
 
-const mapStateToProp = state => {
+const mapStateToProps = state => {
   return {
-    allArt: state.art.allArt
+    allArt: state.art.allArt //possible .art addition
   }
 }
-const mapDispatchToProp = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     loadInitialArt: function() {
       dispatch(fetchAllArt())
@@ -42,4 +43,4 @@ const mapDispatchToProp = dispatch => {
   }
 }
 
-export default withRouter(connect(mapStateToProp, mapDispatchToProp)(AllArt))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AllArt))
