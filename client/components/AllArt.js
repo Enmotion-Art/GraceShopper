@@ -8,7 +8,6 @@ class AllArt extends Component {
 
   componentDidMount() {
     this.props.loadInitialArt()
-    console.log('didMount')
   }
 
   render() {
@@ -18,13 +17,17 @@ class AllArt extends Component {
     return (
       <div>
         <h1>ALL ART HERE</h1>
-        <ul>
-          {
-            allArt.map(art =>
-              <li key={art.id}>{art.title}</li>
-            )
-          }
-        </ul>
+        {
+           allArt.map(art =>
+
+            <div key ={art.id}>
+               <NavLink to={`/art/${art.id}`}> {art.title} </NavLink>
+            </div>
+           )
+        }
+
+
+
       </div>
     )
   }

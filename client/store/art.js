@@ -23,9 +23,7 @@ export const gotSingleArt = (art) => ({
 export const fetchAllArt = () =>  {
   return async (dispatch) => {
     try {
-      console.log('before axios inside thunk')
       const response = await axios.get('/api/art')
-      console.log('after axios inside thunk')
       const allArt = response.data
       const action = gotAllArt(allArt)
       dispatch(action)
@@ -37,7 +35,10 @@ export const fetchAllArt = () =>  {
  export const fetchSingleArt = (id) =>  {
   return async (dispatch) => {
     try {
+      console.log('before axios inside thunk')
       const response = await axios.get(`/api/art/${id}`)
+      console.log('after axios inside thunk')
+
       const singleArt = response.data
       const action = gotSingleArt(singleArt)
       dispatch(action)
