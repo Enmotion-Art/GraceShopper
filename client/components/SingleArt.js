@@ -19,6 +19,7 @@ class AllArt extends Component {
       <div>
         <h1>Single Art</h1>
         <p>{singleArt.title}</p>
+        <img src = {singleArt.image} />
       </div>
     )
   }
