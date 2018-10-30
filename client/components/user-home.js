@@ -1,16 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import AdminPage from './AdminPage'
+import StandardPage from './StandardPage'
 
 /**
  * COMPONENT
  */
 export const UserHome = props => {
   const {email} = props
-
+  const {type} = props
+  console.log('is user home rendering')
+  console.log('props.type', type)
   return (
     <div>
       <h3>Welcome, {email}</h3>
+      {
+        type === 'admin' ? <AdminPage /> : <StandardPage />
+      }
     </div>
   )
 }
@@ -20,7 +27,8 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
-    email: state.user.email
+    email: state.user.email,
+    type: state.user.UserType
   }
 }
 
@@ -30,5 +38,5 @@ export default connect(mapState)(UserHome)
  * PROP TYPES
  */
 UserHome.propTypes = {
-  email: PropTypes.string
+  email: PropTypes.string,
 }
