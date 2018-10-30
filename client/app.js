@@ -7,14 +7,10 @@ import { BrowserRouter as Router } from 'react-router-dom'
 
 const App = () => {
   return (
-    <Provider store={store}>
-      <Router>
         <div>
           <Navbar />
           <Routes />
         </div>
-      </Router>
-    </Provider>
   )
 }
 

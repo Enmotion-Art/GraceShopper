@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import { bindActionCreators } from 'redux';
 
 const initialState = ({
   allArt: [],
@@ -8,6 +9,7 @@ const initialState = ({
 //ACTION TYPES
 export const GOT_ALL_ART = 'GOT_ALL_ART'
 export const GOT_SINGLE_ART = 'GOT_SINGLE_ART'
+export const ADD_ART = 'ADD_ART'
 
 //ACTION CREATORS
 export const gotAllArt = (allArt) => ({
@@ -16,6 +18,11 @@ export const gotAllArt = (allArt) => ({
 })
 export const gotSingleArt = (art) => ({
   type: GOT_SINGLE_ART,
+  art
+})
+
+export const addArt = (art) => ({
+  type: ADD_ART,
   art
 })
 
@@ -47,6 +54,18 @@ export const fetchAllArt = () =>  {
     }
   }
  }
+ export const postArt = (art) => {
+   return async (dispatch) => {
+     try {
+       const response = await axios.post('/api/art', art)
+       const newArt = response.data
+       const action = addArt(newArt)
+       dispatch(action)
+     } catch (err) {
+       console.log(err)
+     }
+   }
+ }
 
 //ART REDUCER
 
@@ -56,7 +75,8 @@ export const artReducer = (state = initialState, action) => {
       return { ...state, allArt: action.allArt }
     case GOT_SINGLE_ART:
       return { ...state, singleArt: action.art }
-
+    case ADD_ART:
+      return {...state, allArt: [...state.allArt, action.art]}
     default:
       return state
   }
