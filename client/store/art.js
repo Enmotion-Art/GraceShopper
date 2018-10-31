@@ -74,7 +74,7 @@ export const fetchAllArt = () =>  {
      }
    }
  }
- export const putArt = (art) => {
+ export const putArt = (art, id) => {
    return async (dispatch) => {
      try {
        const response = await axios.put(`/api/art/${id}`, art)

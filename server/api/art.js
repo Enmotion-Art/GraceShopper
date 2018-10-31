@@ -25,7 +25,7 @@ router.get('/:artId', async (req, res, next) => {
   }
 });
 
-router.put('/:artId/edit', async (req, res, next) => {
+router.put('/:artId', async (req, res, next) => {
   try{
     console.log('in try block')
     let art = await Art.findById(req.params.artId)
