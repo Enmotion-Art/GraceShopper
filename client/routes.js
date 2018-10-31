@@ -8,6 +8,8 @@ import AllArt from './components/AllArt'
 import SingleArt from './components/SingleArt'
 import EditArt from './components/EditArt'
 import Cart from './components/Cart'
+import AllOrders from './components/AllOrders'
+import SingleOrder from './components/SingleOrder'
 
 import {me} from './store'
 
@@ -29,7 +31,7 @@ class Routes extends Component {
 
           <Route exact path ="/" component={AllArt} />
           <Route path="/login" component={Login} />
-          <Route path="/signup" component={Signup} /> 
+          <Route path="/signup" component={Signup} />
           <Route exact path ="/art" component={AllArt} />
           <Route exact path ="/art/:artId" component={SingleArt} />
           <Route path= "/art/:artId/edit" component={EditArt} />
@@ -40,7 +42,10 @@ class Routes extends Component {
               {/* Routes placed here are only available after logging in */}
               {/* <Route path="/home" component={AdminPage} /> */}
               <Route path="/home" component={UserHome} />
-            </Switch> 
+              {/* BELOW NEED TO BE AVAIL ADMIN ONLY... */}
+              <Route exact path ="/order" component={AllOrders} />
+              <Route exact path ="/order/:orderId" component={SingleOrder} />
+            </Switch>
           )}
           {/* Displays our Login component as a fallback */}
           <Route component={AllArt} />
