@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Order, Art} = require('../db/models')
+const {Order, Art, User} = require('../db/models')
 module.exports = router
 
 router.post('/', async (req, res, next) => {
@@ -28,15 +28,15 @@ router.get('/', async (req, res, next) => {
     }
   })
   
-  router.get('/:orderId', async (req, res, next) => {
-    try {
-      const order = await Order.findById(req.params.orderId);
-      res.send(order)
-    } catch (err) {
-      next(err)
-    }
-  
-  })
+//   router.get('/:orderId', async (req, res, next) => {
+//     try {
+//       const order = await Order.findById(req.params.orderId);
+//       res.send(order)
+//     } catch (err) {
+//       next(err)
+//     }
+//   })
+
   
   //When requesting this route on the checkout button, pass in 'created'; when requesting this route on submit order, pass in 'processing' as the second parameter.
   router.put('/:orderId', async (req, res, next) => {

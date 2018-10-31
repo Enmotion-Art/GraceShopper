@@ -11,11 +11,12 @@ async handleCheckout(event) {
     event.preventDefault();
     await Axios.post('/api/orders', JSON.parse(localStorage.getItem('product')))
     }
+    //This should happen through our reducer!
 
   render() {
     const cart = JSON.parse(localStorage.getItem('product'))
     // const user = this.props.user
-
+    console.log('this.props AGAIN', this.props)
     return (
       <div>
         <br />
