@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import { NavLink, withRouter, Link } from 'react-router-dom'
 import { fetchSingleArt, removeArt } from '../store/art'
+import Axios from 'axios';
 
 
 class SingleArt extends Component {
@@ -10,7 +11,6 @@ class SingleArt extends Component {
     this.handleClick = this.handleClick.bind(this)
     this.addtoCart = this.addtoCart.bind(this)
   }
-
 
   componentDidMount() {
     const id= this.props.match.params.artId
@@ -27,12 +27,12 @@ class SingleArt extends Component {
   addtoCart(event) {
     event.preventDefault()
     localStorage.setItem('product', JSON.stringify(this.props.singleArt))
+    // this.props.user.id ? await Axios.post('/api/orders', JSON.parse(localStorage.getItem('product')))
   }
 
   render() {
     const singleArt = this.props.singleArt
     const user = this.props.user
-
     return (
       <div>
         {
