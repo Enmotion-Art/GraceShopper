@@ -4,6 +4,22 @@ module.exports = router
 
 
 router.get('/', async (req, res, next) => {
+  if (req.query.search) {
+    const regex = escapeRegex(req.query.search);
+    //need to ignore caps and fuzzy search not exact?
+    try {
+      console.log('regex: ', regex);
+      const response = await Art.findAll( {where:{
+        title: {
+          like: regex}}} )
+      console.log('response', response);
+      res.json(response)
+    }
+      catch (err) {
+      console.log('getArt not working:', err)
+      //next(err)
+    }
+  } else {
   try {
     res.json(await Art.findAll())
   }
@@ -11,6 +27,7 @@ router.get('/', async (req, res, next) => {
     console.log('getArt not working:', err)
     //next(err)
   }
+}
 });
 
 router.get('/:artId', async (req, res, next) => {
@@ -45,4 +62,8 @@ router.post('/', async (req, res, next) => {
     next(err)
   }
 });
+
+function escapeRegex(text) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
 
