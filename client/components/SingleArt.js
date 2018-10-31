@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import { NavLink, withRouter } from 'react-router-dom'
+import { NavLink, withRouter, Link } from 'react-router-dom'
 import { fetchSingleArt } from '../store/art'
 
 
@@ -8,14 +8,31 @@ class AllArt extends Component {
 
   componentDidMount() {
     const id= this.props.match.params.artId
-    this.props.loadSingleArt(id)
+    this.props.actions.loadSingleArt(id)
+    console.log('didMount')
   }
+
+  // async handleClick(event) {
+  //   event.preventDefault();
+  //   // this.render()
+  // }
 
   render() {
     const singleArt = this.props.singleArt
 
     return (
       <div>
+         <button
+            type="button"
+            id={`${singleArt.id}`}
+            // onClick={this.handleClick}
+            >
+          X
+        </button>
+        <Link to={`/art/${singleArt.id}/edit`} activeClassName="active" id="editLink">
+            Edit
+          </Link>
+        <br />
         <h1>{singleArt.title}</h1>
         <div id="container-row">
           <div id="column">
@@ -42,8 +59,10 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    loadSingleArt: function(id) {
-      dispatch(fetchSingleArt(id))
+    actions: {
+      loadSingleArt: function(id) {
+        dispatch(fetchSingleArt(id))
+    }
     }
   }
 }

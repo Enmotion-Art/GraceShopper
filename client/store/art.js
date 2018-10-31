@@ -10,6 +10,7 @@ const initialState = ({
 export const GOT_ALL_ART = 'GOT_ALL_ART'
 export const GOT_SINGLE_ART = 'GOT_SINGLE_ART'
 export const ADD_ART = 'ADD_ART'
+export const UPDATE_ART = 'UPDATE_ART'
 
 //ACTION CREATORS
 export const gotAllArt = (allArt) => ({
@@ -23,6 +24,11 @@ export const gotSingleArt = (art) => ({
 
 export const addArt = (art) => ({
   type: ADD_ART,
+  art
+})
+
+export const updateArt = (art) => ({
+  type: UPDATE_ART,
   art
 })
 
@@ -68,6 +74,18 @@ export const fetchAllArt = () =>  {
      }
    }
  }
+ export const putArt = (art) => {
+   return async (dispatch) => {
+     try {
+       const response = await axios.put(`/api/art/${id}`, art)
+       const updatedArt = response.data
+       const action = updateArt(updatedArt)
+       dispatch(action)
+     } catch (err) {
+       console.log(err)
+     }
+   }
+ }
 
 //ART REDUCER
 
@@ -79,6 +97,8 @@ export const artReducer = (state = initialState, action) => {
       return { ...state, singleArt: action.art }
     case ADD_ART:
       return {...state, allArt: [...state.allArt, action.art]}
+    case UPDATE_ART:
+      return {...state, singleArt: action.art}
     default:
       return state
   }

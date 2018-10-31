@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import AllArt from './components/AllArt'
 import SingleArt from './components/SingleArt'
+import EditArt from './components/EditArt'
 
 import {me} from './store'
 
@@ -30,6 +31,7 @@ class Routes extends Component {
           <Route path="/signup" component={Signup} /> 
           <Route exact path ="/art" component={AllArt} />
           <Route exact path ="/art/:artId" component={SingleArt} />
+          <Route path= "/art/:artId/edit" component={EditArt} />
 
           {isLoggedIn && (
             <Switch>
