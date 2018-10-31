@@ -25,7 +25,6 @@ class AllArt extends Component {
   render() {
     const singleArt = this.props.singleArt
     const user = this.props.user
-    console.log('user type', user.UserType)
 
     return (
       <div>

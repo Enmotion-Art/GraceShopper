@@ -51,6 +51,10 @@ router.put('/:artId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
+    if(req.body.image === '') {
+      req.body.image = Art.image;
+    }
+
     const newArt = await Art.create({
       title: req.body.title,
       description: req.body.description,
