@@ -19,6 +19,7 @@ class AllArt extends Component {
 
   render() {
     const singleArt = this.props.singleArt
+    console.log(singleArt);
 
     return (
       <div>

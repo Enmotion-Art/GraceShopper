@@ -22,8 +22,8 @@ const Art = db.define('art', {
     allowNull: false
   },
   image: {
-    type: Sequelize.STRING,
-    defaultValue: '../../public/favicon.ico'
+    type: Sequelize.TEXT,
+    defaultValue: 'https://cdn.hipwallpaper.com/m/2/59/yRUE7B.jpg'
   },
   height: {
     type: Sequelize.DECIMAL,
