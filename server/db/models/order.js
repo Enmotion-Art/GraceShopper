@@ -1,36 +1,47 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
-const art = require('./art')
 
 const Order = db.define('order', {
+  firstName: {
+    type: Sequelize.STRING
+  },
+  lastName: {
+    type: Sequelize.STRING
+  },
+  email: {
+    type: Sequelize.STRING,
+    validate: {
+      isEmail: true
+    }
+  },
   status: {
-    type: Sequelize.ENUM('Created','Processing','Canceled', 'Shipped'),
-    defaultValue: 'Created',
+    type: Sequelize.ENUM('created','processing','canceled', 'shipped'),
+    defaultValue: 'created',
     allowNull:false
   },
   subtotal: {
     type: Sequelize.INTEGER,
-    allowNull:false
+    allowNull:true
   },
   streetNum: {
     type: Sequelize.INTEGER,
-    allowNull:false
+    allowNull:true
   },
   street: {
     type: Sequelize.STRING,
-    allowNull:false
+    allowNull:true
   },
   city: {
     type: Sequelize.STRING,
-    allowNull:false
+    allowNull:true
   },
   state: {
     type: Sequelize.STRING,
-    allowNull:false
+    allowNull:true
   },
   zip: {
     type: Sequelize.INTEGER,
-    allowNull:false
+    allowNull:true
   }
 })
 

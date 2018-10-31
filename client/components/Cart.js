@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { fetchSingleArt, removeArt } from '../store/art'
+import Axios from 'axios';
 
 
 class Cart extends Component {
 
-handleCheckout(event) {
+async handleCheckout(event) {
     event.preventDefault();
-    
+    await Axios.post('/api/orders')
     }
 
   render() {
