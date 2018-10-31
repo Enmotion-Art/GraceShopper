@@ -4,6 +4,7 @@ module.exports = router
 
 
 router.get('/', async (req, res, next) => {
+  console.log('I am in the .get backend')
   try {
     res.json(await Art.findAll())
   }
@@ -25,7 +26,7 @@ router.get('/:artId', async (req, res, next) => {
   }
 });
 
-router.put('/:artId/edit', async (req, res, next) => {
+router.put('/:artId', async (req, res, next) => {
   try{
     console.log('in try block')
     let art = await Art.findById(req.params.artId)
@@ -72,3 +73,15 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+router.delete('/', async (req, res, next) => {
+  try {
+    await Art.destroy({
+      where: {
+        id: req.body.id
+      }
+    });
+    res.json({ deletedArt: req.body.id})
+  } catch (err) {
+    next(err)
+  }
+})
