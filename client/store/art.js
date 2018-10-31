@@ -53,10 +53,7 @@ export const fetchAllArt = () =>  {
  export const fetchSingleArt = (id) =>  {
   return async (dispatch) => {
     try {
-      console.log('before axios inside thunk')
       const response = await axios.get(`/api/art/${id}`)
-      console.log('after axios inside thunk')
-
       const singleArt = response.data
       const action = gotSingleArt(singleArt)
       dispatch(action)
@@ -72,7 +69,6 @@ export const fetchAllArt = () =>  {
        const newArt = response.data
        const action = addArt(newArt)
        dispatch(action)
-       console.log("NEW ART", newArt.id)
        history.push(`/art/${newArt.id}`)
      } catch (err) {
        console.log(err)

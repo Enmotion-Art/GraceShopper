@@ -11,9 +11,6 @@ const User = db.define('user', {
     unique: true,
     allowNull: false
   },
-  address: {
-    type: Sequelize.STRING
-  },
   password: {
     type: Sequelize.STRING,
     // Making `.password` act like a func hides it when serializing to JSON.
@@ -39,8 +36,22 @@ const User = db.define('user', {
     validate: {
       isIn: [ ['standard', 'admin'] ]
     }
+  },
+  streetNum: {
+    type: Sequelize.INTEGER,
+  },
+  street: {
+    type: Sequelize.STRING,
+  },
+  city: {
+    type: Sequelize.STRING,
+  },
+  state: {
+    type: Sequelize.STRING,
+  },
+  zip: {
+    type: Sequelize.INTEGER,
   }
-
 })
 
 module.exports = User
