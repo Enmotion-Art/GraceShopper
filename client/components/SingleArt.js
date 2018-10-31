@@ -8,6 +8,7 @@ class AllArt extends Component {
   constructor() {
     super();
     this.handleClick = this.handleClick.bind(this)
+    this.addtoCart = this.addtoCart.bind(this)
   }
 
   componentDidMount() {
@@ -16,10 +17,15 @@ class AllArt extends Component {
     console.log('didMount')
   }
 
-  async handleClick(event) {
+  handleClick(event) {
     event.preventDefault();
     const ArtId = event.target.id;
-    await this.props.actions.removeSpecificArt({ id: ArtId });
+    this.props.actions.removeSpecificArt({ id: ArtId });
+  }
+
+  addtoCart(event) {
+    event.preventDefault()
+    localStorage.setItem('product', JSON.stringify(this.props.singleArt))
   }
 
   render() {
@@ -56,7 +62,7 @@ class AllArt extends Component {
             <p>{singleArt.width}W x {singleArt.height}H</p>
             <p><strong>${singleArt.price}</strong></p>
             { singleArt.quantity === 0 ? <p>SOLD OUT</p> :
-            <button type="submit">Add to Cart</button> }
+            <button type="submit" onClick={this.addtoCart}>Add to Cart</button> }
           </div>
         </div>
       </div>

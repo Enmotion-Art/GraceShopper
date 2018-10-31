@@ -7,6 +7,7 @@ import {Login, Signup, UserHome} from './components'
 import AllArt from './components/AllArt'
 import SingleArt from './components/SingleArt'
 import EditArt from './components/EditArt'
+import Cart from './components/Cart'
 
 import {me} from './store'
 
@@ -32,6 +33,7 @@ class Routes extends Component {
           <Route exact path ="/art" component={AllArt} />
           <Route exact path ="/art/:artId" component={SingleArt} />
           <Route path= "/art/:artId/edit" component={EditArt} />
+          <Route path="/cart" component={Cart} />
 
           {isLoggedIn && (
             <Switch>
