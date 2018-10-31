@@ -10,8 +10,7 @@ router.get('/', async (req, res, next) => {
     try {
       console.log('regex: ', regex);
       const response = await Art.findAll( {where:{
-        title: {
-          like: regex}}} )
+        title: '%' + regex + '%'}} )
       console.log('response', response);
       res.json(response)
     }
