@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import { NavLink, withRouter, Link } from 'react-router-dom'
-import { fetchSingleArt } from '../store/art'
+import { fetchSingleArt, removeArt } from '../store/art'
 
 
 class AllArt extends Component {
+  constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this)
+  }
 
   componentDidMount() {
     const id= this.props.match.params.artId
@@ -12,26 +16,33 @@ class AllArt extends Component {
     console.log('didMount')
   }
 
-  // async handleClick(event) {
-  //   event.preventDefault();
-  //   // this.render()
-  // }
+  async handleClick(event) {
+    event.preventDefault();
+    const ArtId = event.target.id;
+    await this.props.actions.removeSpecificArt({ id: ArtId });
+  }
 
   render() {
     const singleArt = this.props.singleArt
+    const user = this.props.user
+    console.log('user type', user.UserType)
 
     return (
       <div>
          <button
             type="button"
             id={`${singleArt.id}`}
-            // onClick={this.handleClick}
+            onClick={this.handleClick}
             >
           X
         </button>
+        {
+          user.UserType === 'admin' ?
         <Link to={`/art/${singleArt.id}/edit`} activeClassName="active" id="editLink">
             Edit
-          </Link>
+          </Link> 
+          : <div />
+        }
         <br />
         <h1>{singleArt.title}</h1>
         <div id="container-row">
@@ -54,7 +65,8 @@ class AllArt extends Component {
 
 const mapStateToProps = state => {
   return {
-    singleArt: state.art.singleArt
+    singleArt: state.art.singleArt, 
+    user: state.user
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -62,6 +74,9 @@ const mapDispatchToProps = dispatch => {
     actions: {
       loadSingleArt: function(id) {
         dispatch(fetchSingleArt(id))
+    },
+    removeSpecificArt: function(art) {
+      dispatch(removeArt(art))
     }
     }
   }

@@ -4,6 +4,7 @@ module.exports = router
 
 
 router.get('/', async (req, res, next) => {
+  console.log('I am in the .get backend')
   try {
     res.json(await Art.findAll())
   }
@@ -68,3 +69,15 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+router.delete('/', async (req, res, next) => {
+  try {
+    await Art.destroy({
+      where: {
+        id: req.body.id
+      }
+    });
+    res.json({ deletedArt: req.body.id})
+  } catch (err) {
+    next(err)
+  }
+})
