@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { postArt } from '../store/art'
 import ArtForm from './ArtForm'
+import {putArt } from '../store/art'
 
-class AddArt extends Component {
-  constructor() {
-    super()
+class EditArt extends Component {
+  constructor(props) {
+    super(props)
     this.state = {
-      title: '',
-      description: '',
-      price: '',
-      quantity: '',
-      image: '',
-      height: '',
-      width: '',
-      depth: '',
-      category: ''
+      title: props.currentArt.title,
+      description: props.currentArt.description,
+      price: props.currentArt.price,
+      quantity: props.currentArt.quantity,
+      image: props.currentArt.image,
+      height: props.currentArt.height,
+      width: props.currentArt.width,
+      depth: props.currentArt.depth,
+      category: props.currentArt.category
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,14 +31,14 @@ class AddArt extends Component {
     e.preventDefault();
     const title = this.state.title;
     const description = this.state.description;
-    const price = +this.state.price;
-    const quantity = +this.state.quantity;
+    const price = this.state.price;
+    const quantity = this.state.quantity;
     const image = this.state.image;
-    const height = +this.state.height;
-    const width = +this.state.width;
-    const depth = +this.state.depth;
+    const height = this.state.height;
+    const width = this.state.width;
+    const depth = this.state.depth;
     const category = this.state.category;
-
+	
       this.setState({
         title: '',
         description: '',
@@ -50,7 +50,7 @@ class AddArt extends Component {
         depth: '',
         category: ''
       })
-      this.props.addArt({ title,
+      this.props.editArt({ title,
         description,
         price,
         quantity,
@@ -58,7 +58,7 @@ class AddArt extends Component {
         height,
         width,
         depth,
-        category})
+        category}, this.props.currentArt.id)   
     }
 
   render() {
@@ -67,9 +67,12 @@ class AddArt extends Component {
     )
   }
 }
-
+const mapStateToProps = (state) => ({
+    currentArt: state.art.singleArt
+})
 const mapDispatchToProps = (dispatch) => ({
-  addArt: (art) => dispatch(postArt(art))
+  editArt: (art, id) => dispatch(putArt(art, id))
 })
 
-export default connect(null, mapDispatchToProps)(AddArt)
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditArt)

@@ -20,6 +20,8 @@ router.get('/', async (req, res, next) => {
       //next(err)
     }
   } else {
+
+
   try {
     res.json(await Art.findAll())
   }
@@ -42,9 +44,35 @@ router.get('/:artId', async (req, res, next) => {
   }
 });
 
+router.put('/:artId', async (req, res, next) => {
+  try{
+    console.log('in try block')
+    let art = await Art.findById(req.params.artId)
+    await art.update({
+      title: req.body.title,
+      description: req.body.description,
+      price: req.body.price,
+      quantity: req.body.quantity,
+      image: req.body.image,
+      height: req.body.height,
+      width: req.body.width,
+      depth: req.body.depth,
+      category: req.body.category
+    })
+    await art.save()
+    res.send(art)
+  } catch (err) {
+    console.err(err)
+    next(err)
+  }
+})
+
 router.post('/', async (req, res, next) => {
-  console.log("REQ BODY", req.body)
   try {
+    if(req.body.image === '') {
+      req.body.image = Art.image;
+    }
+
     const newArt = await Art.create({
       title: req.body.title,
       description: req.body.description,
@@ -63,7 +91,20 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+
+router.delete('/', async (req, res, next) => {
+  try {
+    await Art.destroy({
+      where: {
+        id: req.body.id
+      }
+    });
+    res.json({ deletedArt: req.body.id})
+  } catch (err) {
+    next(err)
+  }
+})
+
 function escapeRegex(text) {
   return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
-
