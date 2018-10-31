@@ -4,7 +4,7 @@ const art = require('./art')
 
 const Order = db.define('order', {
   status: {
-    type: Sequelize.ENUM('Created','Processing','Canceled', 'Complete'),
+    type: Sequelize.ENUM('Created','Processing','Canceled', 'Shipped'),
     defaultValue: 'Created',
     allowNull:false
   },
@@ -12,23 +12,26 @@ const Order = db.define('order', {
     type: Sequelize.INTEGER,
     allowNull:false
   },
-  shippingAddress: {
+  streetNum: {
+    type: Sequelize.INTEGER,
+    allowNull:false
+  },
+  street: {
     type: Sequelize.STRING,
     allowNull:false
   },
-  contactEmail: {
+  city: {
     type: Sequelize.STRING,
-    validate: {
-      isEmail: true
-    }
+    allowNull:false
+  },
+  state: {
+    type: Sequelize.STRING,
+    allowNull:false
+  },
+  zip: {
+    type: Sequelize.INTEGER,
+    allowNull:false
   }
-
 })
 
 module.exports = Order
-
-//Order.belongsTo(User)
-//User.hasMany(Order)
-
-//Order.belongsToMany(Art)
-//Art.belongsToMany(User)

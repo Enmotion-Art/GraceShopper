@@ -4,7 +4,7 @@ import { NavLink, withRouter, Link } from 'react-router-dom'
 import { fetchSingleArt } from '../store/art'
 
 
-class AllArt extends Component {
+class SingleArt extends Component {
 
   componentDidMount() {
     const id= this.props.match.params.artId
@@ -68,4 +68,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AllArt))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleArt))
