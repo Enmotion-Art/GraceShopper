@@ -8,6 +8,7 @@ class SingleArt extends Component {
   constructor() {
     super();
     this.handleClick = this.handleClick.bind(this)
+    this.addtoCart = this.addtoCart.bind(this)
   }
 
 
@@ -17,10 +18,15 @@ class SingleArt extends Component {
     console.log('didMount')
   }
 
-  async handleClick(event) {
+  handleClick(event) {
     event.preventDefault();
     const ArtId = event.target.id;
-    await this.props.actions.removeSpecificArt({ id: ArtId });
+    this.props.actions.removeSpecificArt({ id: ArtId });
+  }
+
+  addtoCart(event) {
+    event.preventDefault()
+    localStorage.setItem('product', JSON.stringify(this.props.singleArt))
   }
 
   render() {
@@ -29,18 +35,20 @@ class SingleArt extends Component {
 
     return (
       <div>
-         <button
+        {
+          user.UserType === 'admin' ?
+          <div>
+          <button
             type="button"
             id={`${singleArt.id}`}
             onClick={this.handleClick}
             >
           X
         </button>
-        {
-          user.UserType === 'admin' ?
         <Link to={`/art/${singleArt.id}/edit`} activeClassName="active" id="editLink">
             Edit
           </Link> 
+          </ div>
           : <div />
         }
         <br />
@@ -55,7 +63,7 @@ class SingleArt extends Component {
             <p>{singleArt.width}W x {singleArt.height}H</p>
             <p><strong>${singleArt.price}</strong></p>
             { singleArt.quantity === 0 ? <p>SOLD OUT</p> :
-            <button type="submit">Add to Cart</button> }
+            <button type="submit" onClick={this.addtoCart}>Add to Cart</button> }
           </div>
         </div>
       </div>
