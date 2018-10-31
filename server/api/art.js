@@ -49,7 +49,6 @@ router.put('/:artId/edit', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
-  console.log("REQ BODY", req.body)
   try {
     const newArt = await Art.create({
       title: req.body.title,

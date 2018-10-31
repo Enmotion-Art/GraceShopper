@@ -67,6 +67,8 @@ export const fetchAllArt = () =>  {
        const newArt = response.data
        const action = addArt(newArt)
        dispatch(action)
+       console.log("NEW ART", newArt.id)
+       history.push(`/art/${newArt.id}`)
      } catch (err) {
        console.log(err)
      }

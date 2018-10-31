@@ -19,3 +19,11 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+#container-row {
+  display: flex;
+}
+
+#second-column {
+  padding-left: 20px
+}

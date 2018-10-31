@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-// import { postArt } from '../reducers/campusReducer'
+import { postArt } from '../store/art'
 import ArtForm from './ArtForm'
 
 class AddArt extends Component {
@@ -31,14 +31,14 @@ class AddArt extends Component {
     e.preventDefault();
     const title = this.state.title;
     const description = this.state.description;
-    const price = this.state.price;
-    const quantity = this.state.quantity;
+    const price = +this.state.price;
+    const quantity = +this.state.quantity;
     const image = this.state.image;
-    const height = this.state.height;
-    const width = this.state.width;
-    const depth = this.state.depth;
+    const height = +this.state.height;
+    const width = +this.state.width;
+    const depth = +this.state.depth;
     const category = this.state.category;
-	
+
       this.setState({
         title: '',
         description: '',
@@ -58,7 +58,7 @@ class AddArt extends Component {
         height,
         width,
         depth,
-        category})   
+        category})
     }
 
   render() {

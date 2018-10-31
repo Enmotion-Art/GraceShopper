@@ -9,11 +9,20 @@ const Navbar = ({handleClick, isLoggedIn}) => (
     <h1>EnMotion, LLC</h1>
 
     <nav>
+
+      <form action='/art' method='GET' class='form-inline'>
+        <div class='form-group'>
+          <input type='text' name='search' placeholder='Art search...' class='form-control'></input>
+          <input type='submit' value='Search' class='btn btn-default'></input>
+        </div>
+      </form>
+
       <div>
         {/* <Link to="/art">Art Shop</Link> */}
           {isLoggedIn ? (
             <div>
               {/* The navbar will show these links after you log in */}
+              <Link to="/">Shop</Link>
               <Link to="/home">Home</Link>
               <a href="#" onClick={handleClick}>
                 Logout
@@ -22,6 +31,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           ) : (
             <div>
               {/* The navbar will show these links before you log in */}
+              <Link to="/">Shop</Link>
               <Link to="/login">Login</Link>
               <Link to="/signup">Sign Up</Link>
             </div>
