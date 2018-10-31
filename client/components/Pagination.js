@@ -13,6 +13,7 @@ class Pagination extends React.Component {
     this.createPages = this.createPages.bind(this)
   }
 
+
   showPreviousPage = () => {
     if (this.state.page-1>=0) {
       this.setState(state => ({
@@ -31,6 +32,12 @@ class Pagination extends React.Component {
     }
   }
 
+  handleClickPageNum = (pageNum) => {
+    this.setState({
+      page:pageNum  });
+  }
+
+
   createPages = (totalPages) => {
     const pages = []
     for (let i=1; i<totalPages; i++) {
@@ -38,6 +45,8 @@ class Pagination extends React.Component {
     }
     return pages
   }
+
+
 
   render() {
     // an example list of all item IDs we can show
@@ -59,7 +68,7 @@ class Pagination extends React.Component {
           <p onClick={this.showPreviousPage}>&laquo;</p>
           {
             this.createPages(totalPages).map(pageNum =>
-              <p key={pageNum}>{pageNum}</p>
+              <p key={pageNum} onClick={()=> this.handleClickPageNum(pageNum)}>{pageNum}</p>
             )
           }
         <p onClick={() => this.showNextPage(totalPages)}>&raquo;</p>
