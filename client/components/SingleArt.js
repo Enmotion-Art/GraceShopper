@@ -29,18 +29,20 @@ class AllArt extends Component {
 
     return (
       <div>
-         <button
+        {
+          user.UserType === 'admin' ?
+          <div>
+          <button
             type="button"
             id={`${singleArt.id}`}
             onClick={this.handleClick}
             >
           X
         </button>
-        {
-          user.UserType === 'admin' ?
         <Link to={`/art/${singleArt.id}/edit`} activeClassName="active" id="editLink">
             Edit
           </Link> 
+          </ div>
           : <div />
         }
         <br />

@@ -70,6 +70,11 @@ router.post('/', async (req, res, next) => {
 });
 
 router.delete('/', async (req, res, next) => {
+  if(!req.user || req.user.UserType !== 'admin') {
+    const error = new Error("Action not permitted");
+    console.error(error)
+    res.status(403).send("Action forbidden")
+  } else if (req.user.UserType === 'admin') {
   try {
     await Art.destroy({
       where: {
@@ -80,4 +85,5 @@ router.delete('/', async (req, res, next) => {
   } catch (err) {
     next(err)
   }
+}
 })
