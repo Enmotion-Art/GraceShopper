@@ -39,3 +39,12 @@ form div {
 /* Add a grey background color on mouse-over */
 .pagination p:hover:not(.active) {background-color: #ddd;}
 /*Pagination End*/
+
+#container-row {
+  display: flex;
+}
+
+#second-column {
+  padding-left: 20px
+}
+

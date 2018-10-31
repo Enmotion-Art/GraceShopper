@@ -9,7 +9,6 @@ class AllArt extends Component {
   componentDidMount() {
     const id= this.props.match.params.artId
     this.props.loadSingleArt(id)
-    console.log('didMount')
   }
 
   render() {
@@ -17,9 +16,20 @@ class AllArt extends Component {
 
     return (
       <div>
-        <h1>Single Art</h1>
-        <p>{singleArt.title}</p>
-        <img src = {singleArt.image} />
+        <h1>{singleArt.title}</h1>
+        <div id="container-row">
+          <div id="column">
+            <img src = {singleArt.image} />
+          </div>
+          <div id="second-column">
+            <p>{singleArt.description}</p>
+            <p>Style: {singleArt.category}</p>
+            <p>{singleArt.width}W x {singleArt.height}H</p>
+            <p><strong>${singleArt.price}</strong></p>
+            { singleArt.quantity === 0 ? <p>SOLD OUT</p> :
+            <button type="submit">Add to Cart</button> }
+          </div>
+        </div>
       </div>
     )
   }
