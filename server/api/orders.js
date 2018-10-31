@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Order} = require('../db/models')
+const {Order, Art} = require('../db/models')
 module.exports = router
 
 router.post('/', async (req, res, next) => {
@@ -10,6 +10,9 @@ router.post('/', async (req, res, next) => {
         street: 'Macdonough St',
         contactEmail: 'mags21walker@gmail.com'
     })
+    const id = req.body.id
+    const currArt = await Art.findById(id)
+    await order.addArt(currArt)
     res.json(order)
   } catch (err) {
     next(err)

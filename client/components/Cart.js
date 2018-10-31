@@ -9,7 +9,7 @@ class Cart extends Component {
 
 async handleCheckout(event) {
     event.preventDefault();
-    await Axios.post('/api/orders')
+    await Axios.post('/api/orders', JSON.parse(localStorage.getItem('product')))
     }
 
   render() {
