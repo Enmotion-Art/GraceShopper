@@ -10,6 +10,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
 
     <nav>
 
+
       <form action='/art' method='GET' className='form-inline'>
         <div className='form-group'>
           <input type='text' name='search' placeholder='Art search...' className='form-control'></input>

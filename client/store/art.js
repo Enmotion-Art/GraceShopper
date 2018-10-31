@@ -1,6 +1,5 @@
 import axios from 'axios'
 import history from '../history'
-import { bindActionCreators } from 'redux';
 
 const initialState = ({
   allArt: [],
@@ -11,6 +10,7 @@ export const GOT_ALL_ART = 'GOT_ALL_ART'
 export const GOT_SINGLE_ART = 'GOT_SINGLE_ART'
 export const ADD_ART = 'ADD_ART'
 export const UPDATE_ART = 'UPDATE_ART'
+export const DELETE_ART = 'DELETE_ART'
 
 //ACTION CREATORS
 export const gotAllArt = (allArt) => ({
@@ -29,6 +29,11 @@ export const addArt = (art) => ({
 
 export const updateArt = (art) => ({
   type: UPDATE_ART,
+  art
+})
+
+export const deleteArt = (art) => ({
+  type: DELETE_ART,
   art
 })
 
@@ -70,7 +75,7 @@ export const fetchAllArt = () =>  {
      }
    }
  }
- export const putArt = (art) => {
+ export const putArt = (art, id) => {
    return async (dispatch) => {
      try {
        const response = await axios.put(`/api/art/${id}`, art)
@@ -80,6 +85,14 @@ export const fetchAllArt = () =>  {
      } catch (err) {
        console.log(err)
      }
+   }
+ }
+ export const removeArt = (art) => {
+   return async (dispatch) => {
+     const removedArt = await axios.delete('/api/art', { data: art })
+     const action = deleteArt(removedArt);
+     dispatch(action)
+     history.push(`/art`)
    }
  }
 

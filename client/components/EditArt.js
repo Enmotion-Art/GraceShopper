@@ -58,7 +58,7 @@ class EditArt extends Component {
         height,
         width,
         depth,
-        category})   
+        category}, this.props.currentArt.id)   
     }
 
   render() {
@@ -71,7 +71,7 @@ const mapStateToProps = (state) => ({
     currentArt: state.art.singleArt
 })
 const mapDispatchToProps = (dispatch) => ({
-  editArt: (art) => dispatch(putArt(art))
+  editArt: (art, id) => dispatch(putArt(art, id))
 })
 
 
