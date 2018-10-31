@@ -80,20 +80,20 @@ const arts = [ {
 ]
 
 const users = [{
-  name: 'Cody',
+  firstName: 'Cody',
   email: 'cody@email.com',
   password: '123',
-  userType: 'standard'
+  UserType: 'standard'
 }, {
-  name: 'Murphy',
+  firstName: 'Murphy',
   email: 'murphy@email.com',
   password: '123',
-  userType: 'standard'
+  UserType: 'standard'
 }, {
-  name: 'Lexi',
+  firstName: 'Lexi',
   email: 'lexi@email.com',
   password: '123',
-  userType: 'admin'
+  UserType: 'admin'
 }
 ]
 

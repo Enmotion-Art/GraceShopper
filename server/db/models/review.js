@@ -8,9 +8,6 @@ const Review = db.define('review', {
   },
   stars: {
     type: Sequelize.INTEGER
-  },
-  validate: {
-    len: [3, 600]
   }
 })
 
