@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { postOrder } from '../store/order'
 import { me } from '../store/user'
-
+import history from '../history'
 
 class Cart extends Component {
   constructor() {
@@ -22,7 +22,12 @@ class Cart extends Component {
     }
     let product = JSON.parse(localStorage.getItem('product'));
     let productId = product.id;
-    this.props.createOrder({ productId, userId})
+    console.log("LOGGED IN USER IN CART", this.props.user.id)
+    if(!this.props.user.id) {
+      this.props.createOrder({ productId, userId}, 'checkout')
+    } else {
+      history.push('/checkout')
+    }
   }
 
   render() {
@@ -58,12 +63,12 @@ class Cart extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user.singleUser
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  createOrder: (art) => dispatch(postOrder(art)),
+  createOrder: (product, page ) => dispatch(postOrder(product, page)),
   getMeAgain: () => dispatch(me())
 })
 

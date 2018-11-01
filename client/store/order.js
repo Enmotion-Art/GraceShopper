@@ -64,7 +64,7 @@ export const fetchAllOrders = () =>  {
   }
  }
 
- export const postOrder = (order) => {
+ export const postOrder = (order, page) => {
    return async (dispatch) => {
      console.log("IN THE POST THUNK")
      try {
@@ -73,7 +73,7 @@ export const fetchAllOrders = () =>  {
        const action = addOrder(newOrder)
        dispatch(action)
        localStorage.setItem('order', JSON.stringify(newOrder))
-       history.push('/checkout')
+       history.push(`/${page}`)
      } catch (err) {
        console.log(err)
      }

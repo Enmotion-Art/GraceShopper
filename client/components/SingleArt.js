@@ -51,7 +51,7 @@ class SingleArt extends Component {
       let userId =this.props.user.id
       if(!orders.length) {
         console.log("GETTING HERE")
-        this.props.actions.createOrder({productId, userId})
+        this.props.actions.createOrder({productId, userId}, 'cart')
       } else {
         let created = orders.filter(order => order.status === 'created');
         //we need to pass in the new product and update its association
@@ -105,7 +105,7 @@ class SingleArt extends Component {
 const mapStateToProps = state => {
   return {
     singleArt: state.art.singleArt,
-    user: state.user
+    user: state.user.singleUser
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -117,8 +117,8 @@ const mapDispatchToProps = dispatch => {
     removeSpecificArt: function(art) {
       dispatch(removeArt(art))
     },
-    createOrder: function(order) {
-      dispatch(postOrder(order));
+    createOrder: function(order, page) {
+      dispatch(postOrder(order, page));
     },
     editOrder: function(status, id) {
       dispatch(putOrder(status, id))
