@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 const LandingPage = () => {
   return (
     <div>
-      <body background='http://www.artsupply.com/Art_Tips/downloaded/201206_02_separator_banner.jpg'>
+      <body id="landingPage">
       <p></p>
       <p></p>
       <p></p>
@@ -21,7 +21,6 @@ const LandingPage = () => {
           <input type='submit' value='Search' className='btn btn-default'></input>
         </div>
       </form>
-
       </body>
     </div>
   )
