@@ -24,4 +24,4 @@ deploy:
   provider: heroku
   app: enmotion-llc # see README
   api_key:
-    secure: f3005143-e1b3-4f90-bab1-22657a0f1306 # see README
+    secure: c1b9a368-6a02-49fc-bce2-c8c75e7e5c09 # see README
