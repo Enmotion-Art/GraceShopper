@@ -12,7 +12,6 @@ class AllUsers extends Component {
 
   render() {
     const users = this.props.allUsers
-    //const users = [{id: 1}, {id: 2}, {id: 3}, {id: 4}];
 
       return (
         <div>
@@ -20,7 +19,7 @@ class AllUsers extends Component {
             users.map(user =>
             <div key={user.id}>
             <NavLink to={`/user/${user.id}`}> {user.id} </NavLink>
-            <div>ALSO RENDER DETAILS OF USER HERE INCLUDING THAT USERS ORDERS</div>
+            <div>ALSO RENDER DETAILS OF USER HERE (INCLUDING THAT USERS ORDERS?)</div>
             </div>
               )
           }
