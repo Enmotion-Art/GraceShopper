@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
-import { fetchSingleArt, removeArt } from '../store/art'
 import { postOrder } from '../store/order'
+import { me } from '../store/user'
+
 
 class Cart extends Component {
   constructor() {
@@ -10,14 +11,24 @@ class Cart extends Component {
     this.handleCheckout = this.handleCheckout.bind(this)
   }
 
+  componentDidMount() {
+    this.props.getMeAgain();
+  }
+
   handleCheckout() {
-    this.props.createOrder(JSON.parse(localStorage.getItem('product')))
+    let userId = null;
+    if(this.props.user.id) {
+      userId = this.props.user.id;
+    }
+    let product = JSON.parse(localStorage.getItem('product'));
+    let productId = product.id;
+    this.props.createOrder({ productId, userId})
   }
 
   render() {
-    const cart = JSON.parse(localStorage.getItem('product'))
-    console.log('this.props AGAIN', this.props)
-    if(!cart) {
+    console.log("USER IN CART", this.props.user)
+    let products = JSON.parse(localStorage.getItem('product'))
+    if(!products) {
       return (
         <p>Your cart is empty.</p>
       )
@@ -25,17 +36,17 @@ class Cart extends Component {
       return (
         <div>
           <br />
-          <h1>{cart.title}</h1>
+          <h1>Your Cart</h1>
           <div id="container-row">
             <div id="column">
-              <img src = {cart.image} />
+              <img id="cart-image" src = {products.image} />
             </div>
             <div id="second-column">
-              <p>{cart.description}</p>
-              <p>Style: {cart.category}</p>
-              <p>{cart.width}W x {cart.height}H</p>
-              <p><strong>${cart.price}</strong></p>
-              { cart.quantity === 0 ? <p>Nothing in your cart!</p> :
+              <p>{products.description}</p>
+              <p>Style: {products.category}</p>
+              <p>{products.width}W x {products.height}H</p>
+              <p><strong>${products.price}</strong></p>
+              { products.quantity === 0 ? <p>Nothing in your cart!</p> :
               <button type="submit" onClick={this.handleCheckout}>Checkout</button> }
             </div>
           </div>
@@ -52,6 +63,8 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  createOrder: (art) => dispatch(postOrder(art))
+  createOrder: (art) => dispatch(postOrder(art)),
+  getMeAgain: () => dispatch(me())
 })
+
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Cart))

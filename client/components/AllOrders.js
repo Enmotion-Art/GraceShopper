@@ -31,7 +31,8 @@ class AllOrders extends Component {
 
 const mapStateToProps = state => {
   return {
-    allOrders: state.art.allOrders
+    allOrders: state.art.allOrders,
+    user: state.user
   }
 }
 
