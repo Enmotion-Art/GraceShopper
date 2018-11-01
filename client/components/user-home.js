@@ -10,8 +10,6 @@ import StandardPage from './StandardPage'
 export const UserHome = props => {
   const {email} = props
   const {type} = props
-  console.log('is user home rendering')
-  console.log('props.type', type)
   return (
     <div>
       <h3>Welcome, {email}</h3>

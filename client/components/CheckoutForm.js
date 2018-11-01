@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { putOrder } from '../store/order'
+import PropTypes from 'prop-types'
 
 class CheckoutForm extends React.Component {
   constructor(props) {
@@ -15,7 +16,8 @@ class CheckoutForm extends React.Component {
       state: props.state || '',
       zip: props.zip || '',
       cc: '',
-      sc: ''
+      sc: '',
+      hidden: true
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,28 +33,31 @@ class CheckoutForm extends React.Component {
     console.log("ORDER ON STATE", this.props.order)
     e.preventDefault();
     let order = this.props.order;
-    // for(let key in this.state ) {
-    //   let value = this.state[key]
-    //   this.setState({
-    //     [key]: value.trim()
-    //   })
-    // }
-    // console.log("THIS STATE", this.state)
-    // if(this.state.firstName === '') {
-    //   this.setState({
-    //     firstName: "TRIM WORKED"
-    //   })
-    // }
-    // lastName: props.user.lastName || '',
-    // email: props.user.email || '',
-    // streetNum: props.streetNum || '',
-    // street: props.street || '',
-    // city: props.city || '',
-    // state: props.state || '',
-    // zip: props.zip || '',
-    // cc: '',
-    // sc: ''
-    this.props.updateOrder('processing', order.id, this.state)
+    let orderObj = {};
+    for(let key in this.state ) {
+      let value = this.state[key]
+      if(key !== 'hidden') {
+        orderObj[key] = this.state[key].trim();
+      }
+    }
+
+    let allNotNull = true;
+    for(let key in orderObj) {
+      if(orderObj[key] === null || orderObj[key] === '') {
+        allNotNull = false;
+      }
+    }
+    if(allNotNull) {
+      this.props.updateOrder('processing', order.id, orderObj);
+      this.setState({
+        hidden: true
+      })
+
+    } else {
+      this.setState({
+        hidden: false
+      })
+    }
   }
 
   render() {
@@ -64,6 +69,10 @@ class CheckoutForm extends React.Component {
         <div>
           <form>
               <h3>Customer Information</h3>
+
+              {!this.state.hidden ?
+              <p style={{color:'red'}}>Please complete all fields.</p>
+              : '' }
 
               <label> First Name: </label>
               <input type="text" name="firstName" onChange={this.handleChange} value={this.state.firstName}  />
