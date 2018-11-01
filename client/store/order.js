@@ -41,7 +41,7 @@ export const deleteOrder = (order) => ({
 export const fetchAllOrders = () =>  {
   return async (dispatch) => {
     try {
-      const response = await axios.get('/api/order')
+      const response = await axios.get('/api/orders')
       const allOrders = response.data
       const action = gotAllOrders(allOrders)
       dispatch(action)
