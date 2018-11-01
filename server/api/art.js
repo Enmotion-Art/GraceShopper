@@ -10,6 +10,7 @@ router.get('/', async (req, res, next) => {
     const search = req.query.search;
     const Op = Sequelize.Op
     try {
+
       const response = await Art.findAll( {where:
         {
           [Op.or]: [

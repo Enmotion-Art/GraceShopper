@@ -7,6 +7,7 @@ class AdminPage extends Component {
         return (
           <div>
             <AddArt title='Add A New Piece Of Art'/>
+            <p></p>
             <h2>Orders:</h2>
             <AllOrders />
           </div>
