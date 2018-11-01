@@ -1,22 +1,37 @@
 const router = require('express').Router()
 const Art = require('../db/models/art')
+const Sequelize = require('sequelize')
 module.exports = router
 
 
 router.get('/', async (req, res, next) => {
   if (req.query.search) {
-    const regex = escapeRegex(req.query.search);
-    //need to ignore caps and fuzzy search not exact?
+    //Not secure but works
+    const search = req.query.search;
+    const Op = Sequelize.Op
     try {
-      console.log('regex: ', regex);
-      const response = await Art.findAll( {where:{
-        title: '%' + regex + '%'}} )
-      console.log('response', response);
+
+      const response = await Art.findAll( {where:
+        {
+          [Op.or]: [
+            {
+              title: {
+                [Op.iLike]: search+'%'
+              }
+            },
+            {
+              description: {
+                [Op.iLike]: '%'+search+'%'
+              }
+            }
+          ]
+         }
+      } )
       res.json(response)
     }
       catch (err) {
-      console.log('getArt not working:', err)
-      //next(err)
+      console.log('getSearch not working:', err)
+      next(err)
     }
   } else {
 
@@ -120,5 +135,5 @@ router.delete('/', async (req, res, next) => {
 })
 
 function escapeRegex(text) {
-  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "");
 }

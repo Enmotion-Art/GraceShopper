@@ -10,20 +10,12 @@ const Navbar = ({handleClick, isLoggedIn}) => (
 
     <nav>
 
-
-      <form action='/art' method='GET' className='form-inline'>
-        <div className='form-group'>
-          <input type='text' name='search' placeholder='Art search...' className='form-control'></input>
-          <input type='submit' value='Search' className='btn btn-default'></input>
-        </div>
-      </form>
-
       <div>
         {/* <Link to="/art">Art Shop</Link> */}
           {isLoggedIn ? (
             <div>
               {/* The navbar will show these links after you log in */}
-              <Link to="/">Shop</Link>
+              <Link to="/art">Shop</Link>
               <Link to="/home">Home</Link>
               <Link to="/cart">Cart</Link>
               <a href="#" onClick={handleClick}>
@@ -50,7 +42,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.singleUser.id
   }
 }
 

@@ -4,17 +4,23 @@ import history from '../history'
 /**
  * ACTION TYPES
  */
+const GOT_ALL_USERS = 'GOT_ALL_USERS'
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 
 /**
  * INITIAL STATE
  */
-const defaultUser = {}
+const initialState = {
+  allUsers: [],
+  singleUser: {}
+}
+
 
 /**
  * ACTION CREATORS
  */
+const gotAllUsers = users => ({type: GOT_ALL_USERS, users})
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
 
@@ -31,9 +37,9 @@ export const me = () => async dispatch => {
       console.log('response', response)
       user = response.data
     } else {
-      user = defaultUser
+      user = initialState.singleUser
     }
-    dispatch(getUser(user || defaultUser))
+    dispatch(getUser(user || initialState.singleUser))
   } catch (err) {
     console.error(err)
   }
@@ -67,15 +73,28 @@ export const logout = () => async dispatch => {
   }
 }
 
+export const fetchAllUsers = () => async dispatch => {
+  try {
+    const response = await axios.get('/api/users')
+    const allUsers = response.data
+    const action = gotAllUsers(allUsers)
+    dispatch(action)
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 /**
  * REDUCER
  */
-export default function(state = defaultUser, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
+    case GOT_ALL_USERS:
+      return { ...state, allUsers: action.users }
     case GET_USER:
-      return action.user
+      return { ...state, singleUser: action.user }
     case REMOVE_USER:
-      return defaultUser
+      return { ...state, singleUser: {} }
     default:
       return state
   }
