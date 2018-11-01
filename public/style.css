@@ -1,5 +1,11 @@
+#landingPage {
+  background-image: url('http://www.artsupply.com/Art_Tips/downloaded/201206_02_separator_banner.jpg');
+  background-attachment: scroll;
+
+}
 body {
   font-family: sans-serif;
+
 }
 
 a {
