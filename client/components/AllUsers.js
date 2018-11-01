@@ -14,10 +14,10 @@ class AllUsers extends Component {
     const users = this.props.allUsers
 
       return (
-        <div>
+        <div className='grid'>
           {
             users.map(user =>
-            <div key={user.id}>
+            <div className='grid-child' key={user.id}>
             <NavLink to={`/user/${user.id}`}> {user.id} </NavLink>
             <div>ALSO RENDER DETAILS OF USER HERE (INCLUDING THAT USERS ORDERS?)</div>
             </div>

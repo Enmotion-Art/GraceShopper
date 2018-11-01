@@ -39,7 +39,7 @@ class Cart extends Component {
       )
     } else {
       return (
-        <div>
+        <div className='grid'>
           <br />
           <h1>Your Cart</h1>
           <div id="container-row">

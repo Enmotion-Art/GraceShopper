@@ -6,7 +6,7 @@ import AllUsers from './AllUsers'
 class AdminPage extends Component {
     render() {
         return (
-          <div>
+          <div className='grid-child'>
             <AddArt title='Add A New Piece Of Art'/>
             <p></p>
             <h2>Orders:</h2>

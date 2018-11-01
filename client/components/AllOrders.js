@@ -39,9 +39,9 @@ class AllOrders extends Component {
     const selectedOrders = this.state.selectedOrders
 
       return (
-        <div>
+        <div className='grid'>
 
-          <div>
+          <div className='grid-child'>
             <label>Filter by Status</label>
             <select name='selectedOrders' onChange={this.handleSelect}>
                 <option></option>
@@ -56,7 +56,7 @@ class AllOrders extends Component {
             selectedOrders ?
 
             selectedOrders.map(order =>
-             <div key ={order.id}>
+             <div className='grid-child' key ={order.id}>
               <NavLink to={`/order/${order.id}`}> {order.id} </NavLink>
               <div>ALSO RENDER DETAILS OF ORDER HERE</div>
              </div>
@@ -64,7 +64,7 @@ class AllOrders extends Component {
 
             :
             orders.map(order =>
-            <div key={order.id}>
+            <div className='grid-child' key={order.id}>
             <NavLink to={`/orders/${order.id}`}> {order.id} </NavLink>
             <div>ALSO RENDER DETAILS OF ORDER HERE</div>
             </div>
