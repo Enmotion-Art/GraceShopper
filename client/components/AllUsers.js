@@ -11,8 +11,8 @@ class AllUsers extends Component {
   }
 
   render() {
-    //const users = this.props.allUsers
-    const users = [{id: 1}, {id: 2}, {id: 3}, {id: 4}];
+    const users = this.props.allUsers
+    //const users = [{id: 1}, {id: 2}, {id: 3}, {id: 4}];
 
       return (
         <div>

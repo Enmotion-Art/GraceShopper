@@ -73,7 +73,7 @@ export const logout = () => async dispatch => {
 
 export const fetchAllUsers = () => async dispatch => {
   try {
-    const response = await axios.get('/api/user')
+    const response = await axios.get('/api/users')
     const allUsers = response.data
     const action = gotAllUsers(allUsers)
     dispatch(action)
