@@ -73,7 +73,7 @@ export const fetchAllOrders = () =>  {
        const action = addOrder(newOrder)
        dispatch(action)
        localStorage.setItem('order', JSON.stringify(newOrder))
-       history.push('/cart')
+       history.push('/checkout')
      } catch (err) {
        console.log(err)
      }
