@@ -34,10 +34,14 @@ class CheckoutForm extends React.Component {
   }
 
   render() {
-    let order;
-    if(!this.props.user.id) {
-      order = JSON.parse(localStorage.getItem('product'));
-    }
+    console.log("USER IN CHECKOUT", this.props.user)
+
+    // let order;
+    // if(!this.props.user.id) {
+      let order = JSON.parse(localStorage.getItem('product'));
+    // } else {
+    //   order = this.props.user.orders[0]
+    // }
     return (
       <div id="container-row">
         <div>

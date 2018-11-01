@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import { NavLink, withRouter, Link } from 'react-router-dom'
 import { fetchSingleArt, removeArt } from '../store/art'
-import Axios from 'axios';
+import { postOrder, putOrder } from '../store/order'
 
 
 class SingleArt extends Component {
@@ -24,13 +24,44 @@ class SingleArt extends Component {
     this.props.actions.removeSpecificArt({ id: ArtId });
   }
 
+  // addtoCart(event) {
+  //   event.preventDefault()
+  //   localStorage.setItem('product', JSON.stringify(this.props.singleArt))
+  //   if(this.props.user.id) {
+  //     let orders = this.props.user.orders;
+  //     if(!orders.length) {
+  //       let created = orders.filter(order => order.status === 'created');
+  //       if(!created) {
+  //         let productId = this.props.singleArt.id;
+  //         let userId =this.props.user.id
+  //         this.props.actions.createOrder(productId, userId)
+  //       } else {
+  //         this.props.actions.editOrder('created', created.id)
+  //       }
+  //     }
+  //   }
+  // }
+
   addtoCart(event) {
     event.preventDefault()
     localStorage.setItem('product', JSON.stringify(this.props.singleArt))
-    // this.props.user.id ? await Axios.post('/api/orders', JSON.parse(localStorage.getItem('product')))
+    if(this.props.user.id) {
+      let orders = this.props.user.orders;
+      let productId = this.props.singleArt.id;
+      let userId =this.props.user.id
+      if(!orders.length) {
+        console.log("GETTING HERE")
+        this.props.actions.createOrder({productId, userId})
+      } else {
+        let created = orders.filter(order => order.status === 'created');
+        //we need to pass in the new product and update its association
+        this.props.actions.editOrder('created', created.id)
+      }
+    }
   }
 
   render() {
+    console.log("USER IN SINGLE ART", this.props.user)
     const singleArt = this.props.singleArt
     const user = this.props.user
     return (
@@ -47,7 +78,7 @@ class SingleArt extends Component {
         </button>
         <Link to={`/art/${singleArt.id}/edit`} activeClassName="active" id="editLink">
             Edit
-          </Link> 
+          </Link>
           </ div>
           : <div />
         }
@@ -73,7 +104,7 @@ class SingleArt extends Component {
 
 const mapStateToProps = state => {
   return {
-    singleArt: state.art.singleArt, 
+    singleArt: state.art.singleArt,
     user: state.user
   }
 }
@@ -85,6 +116,12 @@ const mapDispatchToProps = dispatch => {
     },
     removeSpecificArt: function(art) {
       dispatch(removeArt(art))
+    },
+    createOrder: function(order) {
+      dispatch(postOrder(order));
+    },
+    editOrder: function(status, id) {
+      dispatch(putOrder(status, id))
     }
     }
   }

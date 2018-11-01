@@ -3,13 +3,21 @@ const {Order, Art, User} = require('../db/models')
 module.exports = router
 
 router.post('/', async (req, res, next) => {
+  console.log("REQ BODY", req.body)
   try {
     const order = await Order.create({
         status: 'created',
     })
-    const id = req.body.id
-    const currArt = await Art.findById(id)
+    const productId = req.body.productId;
+    const currArt = await Art.findById(productId)
     await order.addArt(currArt)
+    if(req.body.userId) {
+      const userId = req.body.userId;
+      const user = await User.findById(userId);
+      console.log("USER IN POST", user)
+      await user.addOrder(order);
+    }
+    console.log("ORDER IN POST", order)
     res.json(order)
   } catch (err) {
     next(err)

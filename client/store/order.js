@@ -66,13 +66,14 @@ export const fetchAllOrders = () =>  {
 
  export const postOrder = (order) => {
    return async (dispatch) => {
+     console.log("IN THE POST THUNK")
      try {
        const response = await axios.post('/api/orders', order)
        const newOrder = response.data
        const action = addOrder(newOrder)
        dispatch(action)
        localStorage.setItem('order', JSON.stringify(newOrder))
-       history.push('/checkout')
+       history.push('/cart')
      } catch (err) {
        console.log(err)
      }
@@ -86,7 +87,6 @@ export const fetchAllOrders = () =>  {
        const updatedOrder = response.data
        const action = updateOrder(updatedOrder)
        dispatch(action)
-       localStorage.removeItem('order')
        localStorage.removeItem('product')
        history.push('/')
      } catch (err) {

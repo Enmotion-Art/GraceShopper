@@ -48,6 +48,7 @@ class AllArt extends Component {
    }
 
   render() {
+    console.log("USER IN ALL ART", this.props.user)
     const allArt = this.props.allArt
     const selectedArt = this.state.selectedArt
 
@@ -95,7 +96,8 @@ class AllArt extends Component {
 
 const mapStateToProps = state => {
   return {
-    allArt: state.art.allArt
+    allArt: state.art.allArt,
+    user: state.user
   }
 }
 
