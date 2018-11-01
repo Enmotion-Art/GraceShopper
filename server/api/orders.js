@@ -45,9 +45,13 @@ router.get('/', async (req, res, next) => {
 
   //When requesting this route on the checkout button, pass in 'created'; when requesting this route on submit order, pass in 'processing' as the second parameter.
   router.put('/:orderId', async (req, res, next) => {
+    console.log("BODY IN PUT", req.body)
     try {
       const order = await Order.findById(req.params.orderId)
       order.status = req.body.status;
+      if(req.body.orderInfo) {
+        await order.update(req.body.orderInfo)
+      }
       await order.save()
       res.send(order)
     } catch (err) {

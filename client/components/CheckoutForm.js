@@ -28,20 +28,37 @@ class CheckoutForm extends React.Component {
   }
 
   handleSubmit(e) {
+    console.log("ORDER ON STATE", this.props.order)
     e.preventDefault();
-    let submittedOrder = JSON.parse(localStorage.getItem('order'));
-    this.props.updateOrder('processing', submittedOrder.id)
+    let order = this.props.order;
+    // for(let key in this.state ) {
+    //   let value = this.state[key]
+    //   this.setState({
+    //     [key]: value.trim()
+    //   })
+    // }
+    // console.log("THIS STATE", this.state)
+    // if(this.state.firstName === '') {
+    //   this.setState({
+    //     firstName: "TRIM WORKED"
+    //   })
+    // }
+    // lastName: props.user.lastName || '',
+    // email: props.user.email || '',
+    // streetNum: props.streetNum || '',
+    // street: props.street || '',
+    // city: props.city || '',
+    // state: props.state || '',
+    // zip: props.zip || '',
+    // cc: '',
+    // sc: ''
+    this.props.updateOrder('processing', order.id, this.state)
   }
 
   render() {
     console.log("USER IN CHECKOUT", this.props.user)
+    let order = JSON.parse(localStorage.getItem('product'));
 
-    // let order;
-    // if(!this.props.user.id) {
-      let order = JSON.parse(localStorage.getItem('product'));
-    // } else {
-    //   order = this.props.user.orders[0]
-    // }
     return (
       <div id="container-row">
         <div>
@@ -106,7 +123,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  updateOrder: (status, id) => dispatch(putOrder(status, id))
+  updateOrder: (status, id, orderInfo) => dispatch(putOrder(status, id, orderInfo))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CheckoutForm)

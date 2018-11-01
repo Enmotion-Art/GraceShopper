@@ -80,10 +80,10 @@ export const fetchAllOrders = () =>  {
    }
  }
 
- export const putOrder = (status, id) => {
+ export const putOrder = (status, id, orderInfo) => {
    return async (dispatch) => {
      try {
-       const response = await axios.put(`/api/orders/${id}`, { status: status})
+       const response = await axios.put(`/api/orders/${id}`, { status: status, orderInfo: orderInfo })
        const updatedOrder = response.data
        const action = updateOrder(updatedOrder)
        dispatch(action)

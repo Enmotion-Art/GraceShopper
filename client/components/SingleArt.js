@@ -24,24 +24,6 @@ class SingleArt extends Component {
     this.props.actions.removeSpecificArt({ id: ArtId });
   }
 
-  // addtoCart(event) {
-  //   event.preventDefault()
-  //   localStorage.setItem('product', JSON.stringify(this.props.singleArt))
-  //   if(this.props.user.id) {
-  //     let orders = this.props.user.orders;
-  //     if(!orders.length) {
-  //       let created = orders.filter(order => order.status === 'created');
-  //       if(!created) {
-  //         let productId = this.props.singleArt.id;
-  //         let userId =this.props.user.id
-  //         this.props.actions.createOrder(productId, userId)
-  //       } else {
-  //         this.props.actions.editOrder('created', created.id)
-  //       }
-  //     }
-  //   }
-  // }
-
   addtoCart(event) {
     event.preventDefault()
     localStorage.setItem('product', JSON.stringify(this.props.singleArt))

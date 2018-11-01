@@ -31,6 +31,8 @@ class Cart extends Component {
   }
 
   render() {
+    console.log("ORDER ON STATE", this.props.order)
+
     console.log("USER IN CART", this.props.user)
     let products = JSON.parse(localStorage.getItem('product'))
     if(!products) {
@@ -63,7 +65,8 @@ class Cart extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user.singleUser
+    user: state.user.singleUser,
+    order: state.order.singleOrder
   }
 }
 
