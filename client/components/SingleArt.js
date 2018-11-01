@@ -65,10 +65,10 @@ class SingleArt extends Component {
     const singleArt = this.props.singleArt
     const user = this.props.user
     return (
-      <div>
+      <div className='grid'>
         {
           user.UserType === 'admin' ?
-          <div>
+          <div className='grid-child'>
           <button
             type="button"
             id={`${singleArt.id}`}
@@ -84,7 +84,7 @@ class SingleArt extends Component {
         }
         <br />
         <h1>{singleArt.title}</h1>
-        <div id="container-row">
+        <div className='grid-child' id="container-row">
           <div id="column">
             <img src = {singleArt.image} />
           </div>

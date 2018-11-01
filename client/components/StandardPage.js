@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 class StandardPage extends Component {
     render() {
         return (
-            <div>hello!!</div>
+            <div className='grid-child'>hello!!</div>
         )
     }
 }

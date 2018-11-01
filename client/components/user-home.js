@@ -13,7 +13,7 @@ export const UserHome = props => {
   console.log('is user home rendering')
   console.log('props.type', type)
   return (
-    <div>
+    <div className='grid'>
       <h3>Welcome, {email}</h3>
       {
         type === 'admin' ? <AdminPage /> : <StandardPage />

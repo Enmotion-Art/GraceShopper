@@ -29,10 +29,10 @@ class SingleOrder extends Component {
     const user = this.props.user
 
     return (
-      <div>
+      <div className='grid'>
         {
           user.UserType === 'admin' ?
-          <div>
+          <div className='grid-child'>
           <button
             type="button"
             id={`${singleOrder.id}`}
@@ -48,7 +48,7 @@ class SingleOrder extends Component {
         }
         <br />
         <h1>OrderID: {singleOrder.id}</h1>
-        <div id="container-row">
+        <div className='grid-child' id="container-row">
           <div id="second-column">
 
             <p>MORE ORDER INFO HERE</p>
