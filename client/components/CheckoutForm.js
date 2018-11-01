@@ -101,7 +101,7 @@ class CheckoutForm extends React.Component {
   }
 
 const mapStateToProps = (state) => ({
-  user: state.user,
+  user: state.user.singleUser,
   order: state.order.singleOrder
 })
 
