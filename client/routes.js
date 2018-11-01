@@ -10,7 +10,7 @@ import EditArt from './components/EditArt'
 import Cart from './components/Cart'
 import AllOrders from './components/AllOrders'
 import SingleOrder from './components/SingleOrder'
-
+import CheckoutForm from './components/CheckoutForm'
 import {me} from './store'
 
 /**
@@ -36,6 +36,8 @@ class Routes extends Component {
           <Route exact path ="/art/:artId" component={SingleArt} />
           <Route path= "/art/:artId/edit" component={EditArt} />
           <Route path="/cart" component={Cart} />
+          <Route exact path="/checkout" component={CheckoutForm} />
+
 
           {isLoggedIn && (
             <Switch>
