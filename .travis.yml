@@ -22,6 +22,6 @@ before_deploy:
 deploy:
   skip_cleanup: true # prevents travis from deleting the build
   provider: heroku
-  app: enmotion-llc # see README
+  app: enmotion-art # see README
   api_key:
-    secure: c1b9a368-6a02-49fc-bce2-c8c75e7e5c09 # see README
+    secure: 9bdea56c-8085-4647-8a0a-0b4359b4dd85 # see README
