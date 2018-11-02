@@ -75,8 +75,8 @@ class CheckoutForm extends React.Component {
     let order = JSON.parse(localStorage.getItem('product'));
     console.log("ORDER ON STATE", this.props.order)
     return (
-      <div id="container-row">
-        <div>
+      <div className='grid' id="container-row">
+        <div className='grid-child'>
           <form>
               <h3>Customer Information</h3>
 
@@ -111,7 +111,7 @@ class CheckoutForm extends React.Component {
               <p><strong>Subtotal: $XXX</strong></p>
           </form>
         </div>
-        <div id="second-column">
+        <div className='grid-child' id="second-column">
           <form>
             <h3>Payment Information</h3>
             <label> Credit Card Number: </label>
@@ -122,7 +122,7 @@ class CheckoutForm extends React.Component {
 
           </form>
         </div>
-        <div>
+        <div className='grid-child'>
           <div id="second-column">
             {/* <h3>Order Information</h3>
             <p><strong>Item</strong>: {order.title}</p>

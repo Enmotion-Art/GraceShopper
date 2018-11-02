@@ -11,7 +11,7 @@ export const UserHome = props => {
   const {email} = props
   const {type} = props
   return (
-    <div>
+    <div className='grid'>
       <h3>Welcome, {email}</h3>
       {
         type === 'admin' ? <AdminPage /> : <StandardPage />

@@ -27,3 +27,22 @@ router.get('/:userId', async (req, res, next) => {
     next(err)
   }
 })
+
+router.delete('/', async (req, res, next) => {
+  if(!req.user || req.user.UserType !== 'admin') {
+    const error = new Error("Action not permitted");
+    console.error(error)
+    res.status(403).send("Action forbidden")
+  } else if (req.user.UserType === 'admin') {
+    try {
+      await User.destroy({
+        where: {
+          id: req.body.id
+        }
+      });
+      res.json({ deletedUser: req.body.id})
+    } catch (err) {
+      next(err)
+    }
+  }
+})

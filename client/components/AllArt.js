@@ -53,9 +53,9 @@ class AllArt extends Component {
     const selectedArt = this.state.selectedArt
 
     return (
-      <div>
+      <div className='grid'>
 
-        <div>
+        <div className='grid-child'>
             <label>Filter by Price</label>
             <select name='selectedArt' onChange={this.handleSelect}>
                 <option value='priceAll'>All Prices</option>
@@ -66,20 +66,20 @@ class AllArt extends Component {
             </select>
         </div>
 
-        <div>
+        <div className='grid'>
           <h1>Buy Art! Feel Special</h1>
             {
               selectedArt ?
 
                 selectedArt.map(art =>
-                <div key ={art.id}>
+                <div className='grid-child' key ={art.id}>
                 <NavLink to={`/art/${art.id}`}> {art.title} </NavLink>
                 <img id="main-art" src = {art.image} />
                 </div>
                 )
              :
                 allArt.map(art =>
-                <div key ={art.id}>
+                <div className='grid-child' key ={art.id}>
                 <NavLink to={`/art/${art.id}`}> {art.title} </NavLink>
                 <img id="main-art" src = {art.image} />
                 </div>

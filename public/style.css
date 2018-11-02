@@ -58,6 +58,13 @@ form div {
   width: 50px;
 }
 
-#main-art {
-  width: 100px;
+.grid {
+  display: grid;
 }
+
+.grid-child {
+  display:flex;
+  flex-flow:column;
+}
+
+
