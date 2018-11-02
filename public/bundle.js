@@ -2539,7 +2539,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // establishes socket connection
 _reactDom.default.render(_react.default.createElement(_reactRedux.Provider, {
   store: _store.default
-}, _react.default.createElement(_reactRouterDom.BrowserRouter, {
+}, _react.default.createElement(_reactRouterDom.Router, {
   history: _history.default
 }, _react.default.createElement(_app.default, null))), document.getElementById('app'));
 
