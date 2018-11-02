@@ -1,17 +1,23 @@
 import React from 'react'
-import { Provider } from 'react-redux'
-import { Navbar } from './components'
 import Routes from './routes'
-import store from './store/index'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
+import { Redirect } from 'react-router'
+import LandingPage from './components/LandingPage'
+
 
 const App = () => {
   return (
-        <div>
-          <Navbar />
-          <Routes />
-        </div>
+
+      <Switch>
+
+          <Redirect exact path='/' to='/landingPage' />
+          <Route exact path ='/landingPage' component={LandingPage} />
+          <Route component={Routes} />
+
+      </Switch>
+
   )
 }
+
 
 export default App

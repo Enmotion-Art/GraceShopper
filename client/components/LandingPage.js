@@ -1,11 +1,12 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-const LandingPage = () => {
-  return (
+const LandingPage = () => (
+
     <div id='landingPage' className='grid'>
 
-      <NavLink className='grid-child' to='/art' >Welcome to EnMotion Art!</NavLink>
+      <NavLink className='grid-child' to='/art' >
+      <button>Welcome to EnMotion Art!</button></NavLink>
 
 
       <form action='/api/art' method='GET' className='grid-child'>
@@ -15,7 +16,6 @@ const LandingPage = () => {
         </div>
       </form>
       </div>
-  )
-}
+)
 
 export default LandingPage

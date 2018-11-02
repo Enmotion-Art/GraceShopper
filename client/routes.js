@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-
+import { Navbar } from './components'
 import {Login, Signup, UserHome} from './components'
 import AllArt from './components/AllArt'
 import SingleArt from './components/SingleArt'
@@ -11,7 +11,6 @@ import Cart from './components/Cart'
 import AllOrders from './components/AllOrders'
 import SingleOrder from './components/SingleOrder'
 import CheckoutForm from './components/CheckoutForm'
-import LandingPage from './components/LandingPage'
 import {me} from './store'
 
 /**
@@ -26,11 +25,11 @@ class Routes extends Component {
     const {isLoggedIn} = this.props
 
     return (
-        <Switch>
+
+      <div>
+          <Navbar />
 
           {/* Routes placed here are available to all visitors */}
-
-          <Route exact path ="/" component={LandingPage} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route exact path ="/art" component={AllArt} />
@@ -51,9 +50,8 @@ class Routes extends Component {
             </Switch>
           )}
           {/* Displays our Login component as a fallback */}
-          <Route component={LandingPage} />
-        </Switch>
-
+          {/* <Route component={LandingPage} /> */}
+      </div>
     )
   }
 }
