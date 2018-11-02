@@ -74,14 +74,14 @@ class AllArt extends Component {
                 selectedArt.map(art =>
                 <div className='grid-child' key ={art.id}>
                 <NavLink to={`/art/${art.id}`}> {art.title} </NavLink>
-                <img src = {art.image} />
+                <img id="main-art" src = {art.image} />
                 </div>
                 )
              :
                 allArt.map(art =>
                 <div className='grid-child' key ={art.id}>
                 <NavLink to={`/art/${art.id}`}> {art.title} </NavLink>
-                <img src = {art.image} />
+                <img id="main-art" src = {art.image} />
                 </div>
                 )
             }

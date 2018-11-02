@@ -11,6 +11,7 @@ import Cart from './components/Cart'
 import AllOrders from './components/AllOrders'
 import SingleOrder from './components/SingleOrder'
 import CheckoutForm from './components/CheckoutForm'
+import Confirmation from './components/Confirmation'
 import {me} from './store'
 
 /**
@@ -32,6 +33,8 @@ class Routes extends Component {
           {/* Routes placed here are available to all visitors */}
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          <Route path="/confirmation" component={Confirmation} />
+
           <Route exact path ="/art" component={AllArt} />
           <Route exact path ="/art/:artId" component={SingleArt} />
           <Route path= "/art/:artId/edit" component={EditArt} />
@@ -49,8 +52,7 @@ class Routes extends Component {
               <Route exact path ="/order/:orderId" component={SingleOrder} />
             </Switch>
           )}
-          {/* Displays our Login component as a fallback */}
-          {/* <Route component={LandingPage} /> */}
+        
       </div>
     )
   }

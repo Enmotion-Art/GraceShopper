@@ -32,11 +32,9 @@ const deleteUser = (user) => ({type: DELETE_USER}) //deleting from database
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
-    console.log('res.data', res.data)
     let user
     if (res.data.id) {
-      const response = await axios.get(`/api/users/${res.data.id}`)
-      console.log('response', response)
+      const response = await axios.get(`api/users/${res.data.id}`)
       user = response.data
     } else {
       user = initialState.singleUser
@@ -56,8 +54,7 @@ export const auth = (email, password, method) => async dispatch => {
   }
 
   try {
-    const { data } = await axios.get(`/api/users/${res.data.id}`)
-    console.log("DATA IN THUNK", data)
+    const { data } = await axios.get(`api/users/${res.data.id}`)
     dispatch(getUser(data))
     history.push('/home')
   } catch (dispatchOrHistoryErr) {
