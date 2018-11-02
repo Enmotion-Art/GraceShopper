@@ -7,15 +7,11 @@ import LandingPage from './components/LandingPage'
 
 const App = () => {
   return (
-
       <Switch>
-
           <Redirect exact path='/' to='/landingPage' />
           <Route exact path ='/landingPage' component={LandingPage} />
           <Route component={Routes} />
-
       </Switch>
-
   )
 }
 
