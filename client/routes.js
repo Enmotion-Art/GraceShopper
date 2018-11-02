@@ -1,9 +1,9 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {withRouter, Route, Switch} from 'react-router-dom'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { withRouter, Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Navbar } from './components'
-import {Login, Signup, UserHome} from './components'
+import { Login, Signup, UserHome } from './components'
 import AllArt from './components/AllArt'
 import SingleArt from './components/SingleArt'
 import EditArt from './components/EditArt'
@@ -11,7 +11,8 @@ import Cart from './components/Cart'
 import AllOrders from './components/AllOrders'
 import SingleOrder from './components/SingleOrder'
 import CheckoutForm from './components/CheckoutForm'
-import {me} from './store'
+import Confirmation from './components/Confirmation'
+import { me } from './store'
 
 /**
  * COMPONENT
@@ -22,35 +23,36 @@ class Routes extends Component {
   }
 
   render() {
-    const {isLoggedIn} = this.props
+    const { isLoggedIn } = this.props
 
     return (
 
       <div>
-          <Navbar />
+        <Navbar />
 
-          {/* Routes placed here are available to all visitors */}
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={Signup} />
-          <Route exact path ="/art" component={AllArt} />
-          <Route exact path ="/art/:artId" component={SingleArt} />
-          <Route path= "/art/:artId/edit" component={EditArt} />
-          <Route path="/cart" component={Cart} />
-          <Route exact path="/checkout" component={CheckoutForm} />
+        {/* Routes placed here are available to all visitors */}
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
+        <Route path="/confirmation" component={Confirmation} />
+
+        <Route exact path="/art" component={AllArt} />
+        <Route exact path="/art/:artId" component={SingleArt} />
+        <Route path="/art/:artId/edit" component={EditArt} />
+        <Route path="/cart" component={Cart} />
+        <Route exact path="/checkout" component={CheckoutForm} />
 
 
-          {isLoggedIn && (
-            <Switch>
-              {/* Routes placed here are only available after logging in */}
-              {/* <Route path="/home" component={AdminPage} /> */}
-              <Route path="/home" component={UserHome} />
-              {/* BELOW NEED TO BE AVAIL ADMIN ONLY... */}
-              <Route exact path ="/order" component={AllOrders} />
-              <Route exact path ="/order/:orderId" component={SingleOrder} />
-            </Switch>
-          )}
-          {/* Displays our Login component as a fallback */}
-          {/* <Route component={LandingPage} /> */}
+        {isLoggedIn && (
+          <Switch>
+            {/* Routes placed here are only available after logging in */}
+            {/* <Route path="/home" component={AdminPage} /> */}
+            <Route path="/home" component={UserHome} />
+            {/* BELOW NEED TO BE AVAIL ADMIN ONLY... */}
+            <Route exact path="/order" component={AllOrders} />
+            <Route exact path="/order/:orderId" component={SingleOrder} />
+          </Switch>
+        )}
+
       </div>
     )
   }

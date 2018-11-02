@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
-import { postOrder } from '../store/order'
+import { postOrder, putOrder, fetchSingleOrder } from '../store/order'
 import { me } from '../store/user'
 import history from '../history'
+import CartItem from './CartItem'
 
 class Cart extends Component {
   constructor() {
@@ -15,27 +16,38 @@ class Cart extends Component {
     this.props.getMeAgain();
   }
 
+
   handleCheckout() {
-    let userId = null;
-    if(this.props.user.id) {
-      userId = this.props.user.id;
-    }
-    let product = JSON.parse(localStorage.getItem('product'));
-    let productId = product.id;
-    console.log("LOGGED IN USER IN CART", this.props.user.id)
-    if(!this.props.user.id) {
-      this.props.createOrder({ productId, userId}, 'checkout')
-    } else {
-      history.push('/checkout')
-    }
+    history.push('/checkout')
   }
 
   render() {
-    console.log("ORDER ON STATE", this.props.order)
+    let productArr;
+    if (this.props.user.id) {
+      productArr = this.props.user.orders.find(order => order.status === 'created')
+      if (productArr) {
+        productArr = productArr.arts;
+      }
+    } else {
+      productArr = JSON.parse(localStorage.getItem('product'));
+      if (productArr) {
+        productArr = productArr.slice(1)
+      }
+    }
 
-    console.log("USER IN CART", this.props.user)
-    let products = JSON.parse(localStorage.getItem('product'))
-    if(!products) {
+    let productObj = {}
+    if (productArr) {
+      productArr.forEach(product => {
+        if (productObj[product.id]) {
+          productObj[product.id] = productObj[product.id] += 1;
+        } else {
+          productObj[product.id] = 1;
+        }
+      })
+    }
+    let productKeys = Object.keys(productObj);
+
+    if (!productArr) {
       return (
         <p>Your cart is empty.</p>
       )
@@ -44,19 +56,10 @@ class Cart extends Component {
         <div className='grid'>
           <br />
           <h1>Your Cart</h1>
-          <div id="container-row">
-            <div id="column">
-              <img id="cart-image" src = {products.image} />
-            </div>
-            <div id="second-column">
-              <p>{products.description}</p>
-              <p>Style: {products.category}</p>
-              <p>{products.width}W x {products.height}H</p>
-              <p><strong>${products.price}</strong></p>
-              { products.quantity === 0 ? <p>Nothing in your cart!</p> :
-              <button type="submit" onClick={this.handleCheckout}>Checkout</button> }
-            </div>
-          </div>
+          {productKeys.map(key =>
+            <CartItem product={productArr.find(product => product.id === +key)} key={+key} handleCheckout={this.handleCheckout} quantity={productObj[key]} />
+          )}
+          <button type="submit" onClick={this.handleCheckout}>Checkout</button>
         </div>
       )
     }
@@ -71,8 +74,10 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  createOrder: (product, page ) => dispatch(postOrder(product, page)),
-  getMeAgain: () => dispatch(me())
+  createOrder: (product, page) => dispatch(postOrder(product, page)),
+  getUserOrder: (id) => dispatch(fetchSingleOrder(id)),
+  getMeAgain: () => dispatch(me()),
+  editOrder: (status, id, orderInfo, page, prodIds) => dispatch(putOrder(status, id, orderInfo, page, prodIds))
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Cart))
