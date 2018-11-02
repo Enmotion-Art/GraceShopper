@@ -6,7 +6,8 @@ import history from '../history'
  */
 const GOT_ALL_USERS = 'GOT_ALL_USERS'
 const GET_USER = 'GET_USER'
-const REMOVE_USER = 'REMOVE_USER'
+const REMOVE_USER = 'REMOVE_USER' //logging out user
+const DELETE_USER = 'DELETE_USER' //deleting from database
 
 /**
  * INITIAL STATE
@@ -22,7 +23,8 @@ const initialState = {
  */
 const gotAllUsers = users => ({type: GOT_ALL_USERS, users})
 const getUser = user => ({type: GET_USER, user})
-const removeUser = () => ({type: REMOVE_USER})
+const removeUser = () => ({type: REMOVE_USER}) //logging out a user
+const deleteUser = (user) => ({type: DELETE_USER}) //deleting from database
 
 /**
  * THUNK CREATORS
@@ -81,6 +83,14 @@ export const fetchAllUsers = () => async dispatch => {
     dispatch(action)
   } catch (err) {
     console.error(err)
+  }
+}
+
+export const deleteThisUser = (user) => {
+  return async (dispatch) => {
+    const removedUser = await axios.delete('/api/users', { data: user})
+    const action = removeUser(removedUser);
+    dispatch(action)
   }
 }
 
