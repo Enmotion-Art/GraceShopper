@@ -712,13 +712,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 var AllUsers =
 /*#__PURE__*/
@@ -726,26 +726,33 @@ function (_Component) {
   _inherits(AllUsers, _Component);
 
   function AllUsers() {
+    var _this;
+
     _classCallCheck(this, AllUsers);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(AllUsers).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(AllUsers).call(this));
+    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    return _this;
   }
 
   _createClass(AllUsers, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.loadInitialUsers();
+      this.props.actions.loadInitialUsers();
     }
   }, {
     key: "handleClick",
     value: function handleClick(event) {
       event.preventDefault();
-      var UserId = event.target.id; // this.props.actions.removeSpecificArt({ id: UserId }); removespecific user
+      var UserId = event.target.id;
+      this.props.actions.removeSpecificUser({
+        id: UserId
+      });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this2 = this;
 
       var users = this.props.allUsers;
       return _react.default.createElement("div", {
@@ -758,8 +765,8 @@ function (_Component) {
           to: "/user/".concat(user.id)
         }, " ", user.id, " "), _react.default.createElement("button", {
           type: "button",
-          id: "delete".concat(user.id),
-          onClick: _this.handleClick
+          id: "".concat(user.id),
+          onClick: _this2.handleClick
         }, "X"), _react.default.createElement("div", null, "ALSO RENDER DETAILS OF USER HERE (INCLUDING THAT USERS ORDERS?)"));
       }));
     }
@@ -776,8 +783,13 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    loadInitialUsers: function loadInitialUsers() {
-      dispatch((0, _user.fetchAllUsers)());
+    actions: {
+      loadInitialUsers: function loadInitialUsers() {
+        dispatch((0, _user.fetchAllUsers)());
+      },
+      removeSpecificUser: function removeSpecificUser(user) {
+        dispatch((0, _user.deleteThisUser)(user));
+      }
     }
   };
 };
@@ -3328,7 +3340,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = _default;
-exports.fetchAllUsers = exports.logout = exports.auth = exports.me = void 0;
+exports.deleteThisUser = exports.fetchAllUsers = exports.logout = exports.auth = exports.me = void 0;
 
 var _axios = _interopRequireDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 
@@ -3349,7 +3361,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
  */
 var GOT_ALL_USERS = 'GOT_ALL_USERS';
 var GET_USER = 'GET_USER';
-var REMOVE_USER = 'REMOVE_USER';
+var REMOVE_USER = 'REMOVE_USER'; //logging out user
+
+var DELETE_USER = 'DELETE_USER'; //deleting from database
+
 /**
  * INITIAL STATE
  */
@@ -3381,7 +3396,15 @@ var removeUser = function removeUser() {
   return {
     type: REMOVE_USER
   };
-};
+}; //logging out a user
+
+
+var deleteUser = function deleteUser(user) {
+  return {
+    type: DELETE_USER
+  };
+}; //deleting from database
+
 /**
  * THUNK CREATORS
  */
@@ -3610,12 +3633,51 @@ var fetchAllUsers = function fetchAllUsers() {
     }()
   );
 };
+
+exports.fetchAllUsers = fetchAllUsers;
+
+var deleteThisUser = function deleteThisUser(user) {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref6 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee5(dispatch) {
+        var removedUser, action;
+        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return _axios.default.delete('/api/users', {
+                  data: user
+                });
+
+              case 2:
+                removedUser = _context5.sent;
+                action = removeUser(removedUser);
+                dispatch(action);
+
+              case 5:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this);
+      }));
+
+      return function (_x5) {
+        return _ref6.apply(this, arguments);
+      };
+    }()
+  );
+};
 /**
  * REDUCER
  */
 
 
-exports.fetchAllUsers = fetchAllUsers;
+exports.deleteThisUser = deleteThisUser;
 
 function _default() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
