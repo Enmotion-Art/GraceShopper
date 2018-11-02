@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { postOrder, putOrder, fetchSingleOrder } from '../store/order'
 import { me } from '../store/user'
@@ -16,29 +16,30 @@ class Cart extends Component {
     this.props.getMeAgain();
   }
 
+
   handleCheckout() {
     history.push('/checkout')
   }
 
   render() {
     let productArr;
-    if(this.props.user.id) {
+    if (this.props.user.id) {
       productArr = this.props.user.orders.find(order => order.status === 'created')
-      if(productArr) {
+      if (productArr) {
         productArr = productArr.arts;
       }
     } else {
-      productArr =  JSON.parse(localStorage.getItem('product'));
-      if(productArr) {
+      productArr = JSON.parse(localStorage.getItem('product'));
+      if (productArr) {
         productArr = productArr.slice(1)
       }
     }
 
     let productObj = {}
-    if(productArr) {
+    if (productArr) {
       productArr.forEach(product => {
-        if(productObj[product.id]) {
-          productObj[product.id] = productObj[product.id]+=1;
+        if (productObj[product.id]) {
+          productObj[product.id] = productObj[product.id] += 1;
         } else {
           productObj[product.id] = 1;
         }
@@ -46,7 +47,7 @@ class Cart extends Component {
     }
     let productKeys = Object.keys(productObj);
 
-    if(!productArr) {
+    if (!productArr) {
       return (
         <p>Your cart is empty.</p>
       )
@@ -73,7 +74,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  createOrder: (product, page ) => dispatch(postOrder(product, page)),
+  createOrder: (product, page) => dispatch(postOrder(product, page)),
   getUserOrder: (id) => dispatch(fetchSingleOrder(id)),
   getMeAgain: () => dispatch(me()),
   editOrder: (status, id, orderInfo, page, prodIds) => dispatch(putOrder(status, id, orderInfo, page, prodIds))

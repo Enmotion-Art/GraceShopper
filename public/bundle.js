@@ -103,20 +103,28 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
-var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-
-var _components = __webpack_require__(/*! ./components */ "./client/components/index.js");
-
 var _routes = _interopRequireDefault(__webpack_require__(/*! ./routes */ "./client/routes.js"));
 
-var _index = _interopRequireDefault(__webpack_require__(/*! ./store/index */ "./client/store/index.js"));
-
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _reactRouter = __webpack_require__(/*! react-router */ "./node_modules/react-router/es/index.js");
+
+var _LandingPage = _interopRequireDefault(__webpack_require__(/*! ./components/LandingPage */ "./client/components/LandingPage.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var App = function App() {
-  return _react.default.createElement("div", null, _react.default.createElement(_components.Navbar, null), _react.default.createElement(_routes.default, null));
+  return _react.default.createElement(_reactRouterDom.Switch, null, _react.default.createElement(_reactRouter.Redirect, {
+    exact: true,
+    path: "/",
+    to: "/landingPage"
+  }), _react.default.createElement(_reactRouterDom.Route, {
+    exact: true,
+    path: "/landingPage",
+    component: _LandingPage.default
+  }), _react.default.createElement(_reactRouterDom.Route, {
+    component: _routes.default
+  }));
 };
 
 var _default = App;
@@ -482,6 +490,7 @@ function (_Component) {
         }, _react.default.createElement(_reactRouterDom.NavLink, {
           to: "/art/".concat(art.id)
         }, " ", art.title, " "), _react.default.createElement("img", {
+          id: "main-art",
           src: art.image
         }));
       }) : allArt.map(function (art) {
@@ -491,6 +500,7 @@ function (_Component) {
         }, _react.default.createElement(_reactRouterDom.NavLink, {
           to: "/art/".concat(art.id)
         }, " ", art.title, " "), _react.default.createElement("img", {
+          id: "main-art",
           src: art.image
         }));
       })), _react.default.createElement(_Pagination.default, {
@@ -907,6 +917,8 @@ var _user = __webpack_require__(/*! ../store/user */ "./client/store/user.js");
 
 var _history = _interopRequireDefault(__webpack_require__(/*! ../history */ "./client/history.js"));
 
+var _CartItem = _interopRequireDefault(__webpack_require__(/*! ./CartItem */ "./client/components/CartItem.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
@@ -952,49 +964,63 @@ function (_Component) {
   }, {
     key: "handleCheckout",
     value: function handleCheckout() {
-      var userId = null;
-
-      if (this.props.user.id) {
-        userId = this.props.user.id;
-      }
-
-      var product = JSON.parse(localStorage.getItem('product'));
-      var productId = product.id;
-      console.log("LOGGED IN USER IN CART", this.props.user.id);
-
-      if (!this.props.user.id) {
-        this.props.createOrder({
-          productId: productId,
-          userId: userId
-        }, 'checkout');
-      } else {
-        _history.default.push('/checkout');
-      }
+      _history.default.push('/checkout');
     }
   }, {
     key: "render",
     value: function render() {
-      console.log("USER IN CART", this.props.user);
-      var products = JSON.parse(localStorage.getItem('product'));
+      var _this2 = this;
 
-      if (!products) {
+      var productArr;
+
+      if (this.props.user.id) {
+        productArr = this.props.user.orders.find(function (order) {
+          return order.status === 'created';
+        });
+
+        if (productArr) {
+          productArr = productArr.arts;
+        }
+      } else {
+        productArr = JSON.parse(localStorage.getItem('product'));
+
+        if (productArr) {
+          productArr = productArr.slice(1);
+        }
+      }
+
+      var productObj = {};
+
+      if (productArr) {
+        productArr.forEach(function (product) {
+          if (productObj[product.id]) {
+            productObj[product.id] = productObj[product.id] += 1;
+          } else {
+            productObj[product.id] = 1;
+          }
+        });
+      }
+
+      var productKeys = Object.keys(productObj);
+
+      if (!productArr) {
         return _react.default.createElement("p", null, "Your cart is empty.");
       } else {
         return _react.default.createElement("div", {
           className: "grid"
-        }, _react.default.createElement("br", null), _react.default.createElement("h1", null, "Your Cart"), _react.default.createElement("div", {
-          id: "container-row"
-        }, _react.default.createElement("div", {
-          id: "column"
-        }, _react.default.createElement("img", {
-          id: "cart-image",
-          src: products.image
-        })), _react.default.createElement("div", {
-          id: "second-column"
-        }, _react.default.createElement("p", null, products.description), _react.default.createElement("p", null, "Style: ", products.category), _react.default.createElement("p", null, products.width, "W x ", products.height, "H"), _react.default.createElement("p", null, _react.default.createElement("strong", null, "$", products.price)), products.quantity === 0 ? _react.default.createElement("p", null, "Nothing in your cart!") : _react.default.createElement("button", {
+        }, _react.default.createElement("br", null), _react.default.createElement("h1", null, "Your Cart"), productKeys.map(function (key) {
+          return _react.default.createElement(_CartItem.default, {
+            product: productArr.find(function (product) {
+              return product.id === +key;
+            }),
+            key: +key,
+            handleCheckout: _this2.handleCheckout,
+            quantity: productObj[key]
+          });
+        }), _react.default.createElement("button", {
           type: "submit",
           onClick: this.handleCheckout
-        }, "Checkout"))));
+        }, "Checkout"));
       }
     }
   }]);
@@ -1004,7 +1030,8 @@ function (_Component) {
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    user: state.user.singleUser
+    user: state.user.singleUser,
+    order: state.order.singleOrder
   };
 };
 
@@ -1013,13 +1040,66 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     createOrder: function createOrder(product, page) {
       return dispatch((0, _order.postOrder)(product, page));
     },
+    getUserOrder: function getUserOrder(id) {
+      return dispatch((0, _order.fetchSingleOrder)(id));
+    },
     getMeAgain: function getMeAgain() {
       return dispatch((0, _user.me)());
+    },
+    editOrder: function editOrder(status, id, orderInfo, page, prodIds) {
+      return dispatch((0, _order.putOrder)(status, id, orderInfo, page, prodIds));
     }
   };
 };
 
 var _default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Cart));
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./client/components/CartItem.js":
+/*!***************************************!*\
+  !*** ./client/components/CartItem.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var CartItem = function CartItem(props) {
+  console.log("ITEM PROPS", props);
+  return _react.default.createElement("div", {
+    id: "container-row"
+  }, _react.default.createElement("div", {
+    id: "column"
+  }, _react.default.createElement("img", {
+    id: "cart-image",
+    src: props.product.image
+  })), _react.default.createElement("div", {
+    id: "second-column"
+  }, _react.default.createElement("p", null, props.product.description), _react.default.createElement("p", null, "Style: ", props.product.category), _react.default.createElement("p", null, props.product.width, "W x ", props.product.height, "H"), _react.default.createElement("p", null, _react.default.createElement("strong", null, "$", props.product.price)), _react.default.createElement("p", null, _react.default.createElement("strong", null, "Quantity: "), props.quantity)));
+};
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    order: state.order.singleOrder
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(CartItem);
 
 exports.default = _default;
 
@@ -1089,7 +1169,8 @@ function (_React$Component) {
       state: props.state || '',
       zip: props.zip || '',
       cc: '',
-      sc: ''
+      sc: '',
+      hidden: true
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -1105,25 +1186,70 @@ function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      var submittedOrder = JSON.parse(localStorage.getItem('order'));
-      this.props.updateOrder('processing', submittedOrder.id);
+      var order = this.props.order;
+      var orderObj = {};
+      var userId = null;
+
+      for (var key in this.state) {
+        var value = this.state[key];
+
+        if (key !== 'hidden') {
+          orderObj[key] = this.state[key].trim();
+        }
+      }
+
+      var allNotNull = true;
+
+      for (var _key in orderObj) {
+        if (orderObj[_key] === null || orderObj[_key] === '') {
+          allNotNull = false;
+        }
+      }
+
+      if (allNotNull) {
+        this.setState({
+          hidden: true
+        });
+        var productArr;
+
+        if (!this.props.user.id) {
+          productArr = JSON.parse(localStorage.getItem('product')).slice(1);
+        } else {
+          productArr = this.props.user.orders.find(function (order) {
+            return order.status === 'created';
+          }).arts;
+        }
+
+        var productIds = productArr.map(function (product) {
+          return product.id;
+        });
+
+        if (!this.props.user.id) {
+          this.props.createOrder(productIds, orderObj, userId, 'confirmation');
+        } else {
+          this.props.updateOrder('processing', order.id, orderObj, "confirmation", productIds);
+        }
+      } else {
+        this.setState({
+          hidden: false
+        });
+      }
     }
   }, {
     key: "render",
     value: function render() {
-      console.log("USER IN CHECKOUT", this.props.user); // let order;
-      // if(!this.props.user.id) {
-
-      var order = JSON.parse(localStorage.getItem('product')); // } else {
-      //   order = this.props.user.orders[0]
-      // }
-
+      var order = JSON.parse(localStorage.getItem('product'));
+      console.log("ORDER ON STATE", this.props.order);
       return _react.default.createElement("div", {
         className: "grid",
         id: "container-row"
       }, _react.default.createElement("div", {
         className: "grid-child"
-      }, _react.default.createElement("form", null, _react.default.createElement("h3", null, "Customer Information"), _react.default.createElement("label", null, " First Name: "), _react.default.createElement("input", {
+      }, _react.default.createElement("form", null, _react.default.createElement("h3", null, "Customer Information"), !this.state.hidden ? _react.default.createElement("p", {
+        style: {
+          color: 'red'
+        }
+      }, "Please complete all fields.") : '', _react.default.createElement("label", null, " First Name: "), _react.default.createElement("input", {
         type: "text",
         name: "firstName",
         onChange: this.handleChange,
@@ -1180,7 +1306,7 @@ function (_React$Component) {
         className: "grid-child"
       }, _react.default.createElement("div", {
         id: "second-column"
-      }, _react.default.createElement("h3", null, "Order Information"), _react.default.createElement("p", null, _react.default.createElement("strong", null, "Item"), ": ", order.title), _react.default.createElement("p", null, _react.default.createElement("strong", null, "Quantity"), ": ", order.quantity), _react.default.createElement("p", null, _react.default.createElement("strong", null, "Price"), ": ", order.price), _react.default.createElement("button", {
+      }, _react.default.createElement("button", {
         type: "submit",
         onClick: this.handleSubmit
       }, "Place your order"))));
@@ -1199,13 +1325,53 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    updateOrder: function updateOrder(status, id) {
-      return dispatch((0, _order.putOrder)(status, id));
+    updateOrder: function updateOrder(status, id, orderInfo, page, productIds) {
+      return dispatch((0, _order.putOrder)(status, id, orderInfo, page, productIds));
+    },
+    createOrder: function createOrder(product, orderInfo, user, page) {
+      return dispatch((0, _order.postOrder)(product, orderInfo, user, page));
     }
   };
 };
 
 var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(CheckoutForm);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./client/components/Confirmation.js":
+/*!*******************************************!*\
+  !*** ./client/components/Confirmation.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Confirmation = function Confirmation(props) {
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Thank you for your order! Your order number is ", _react.default.createElement("strong", null, "#", props.order.id), "."), _react.default.createElement("div", null, "You'll receive a confirmation email shortly."));
+};
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    order: state.order.singleOrder
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(Confirmation);
 
 exports.default = _default;
 
@@ -1389,7 +1555,7 @@ var LandingPage = function LandingPage() {
   }, _react.default.createElement(_reactRouterDom.NavLink, {
     className: "grid-child",
     to: "/art"
-  }, "Welcome to EnMotion Art!"), _react.default.createElement("form", {
+  }, _react.default.createElement("button", null, "Welcome to EnMotion Art!")), _react.default.createElement("form", {
     action: "/api/art",
     method: "GET",
     className: "grid-child"
@@ -1635,47 +1801,41 @@ function (_Component) {
       this.props.actions.removeSpecificArt({
         id: ArtId
       });
-    } // addtoCart(event) {
-    //   event.preventDefault()
-    //   localStorage.setItem('product', JSON.stringify(this.props.singleArt))
-    //   if(this.props.user.id) {
-    //     let orders = this.props.user.orders;
-    //     if(!orders.length) {
-    //       let created = orders.filter(order => order.status === 'created');
-    //       if(!created) {
-    //         let productId = this.props.singleArt.id;
-    //         let userId =this.props.user.id
-    //         this.props.actions.createOrder(productId, userId)
-    //       } else {
-    //         this.props.actions.editOrder('created', created.id)
-    //       }
-    //     }
-    //   }
-    // }
-
+    }
   }, {
     key: "addtoCart",
     value: function addtoCart(event) {
       event.preventDefault();
-      localStorage.setItem('product', JSON.stringify(this.props.singleArt));
+
+      if (!JSON.parse(localStorage.getItem('product'))) {
+        var setter = [0];
+        localStorage.setItem('product', JSON.stringify(setter));
+      }
+
+      var productArr = JSON.parse(localStorage.getItem('product'));
+      productArr.push(this.props.singleArt);
+      localStorage.setItem('product', JSON.stringify(productArr)); //Load persistent cart for logged in user
 
       if (this.props.user.id) {
         var orders = this.props.user.orders;
-        var productId = this.props.singleArt.id;
-        var userId = this.props.user.id;
+        var productIds = productArr.slice(1).map(function (product) {
+          return product.id;
+        });
+        var userId = this.props.user.id; //Check if this user has any past orders at all and if not, create a new order
 
         if (!orders.length) {
-          console.log("GETTING HERE");
-          this.props.actions.createOrder({
-            productId: productId,
-            userId: userId
-          }, 'cart');
+          this.props.actions.createOrder(productIds, null, userId, '');
         } else {
+          //If there are past orders, see if any of them are a working order, i.e., cart. If there is one, add the product to the working order. If all past orders are complete, i.e., not carts, then create a new order.
           var created = orders.filter(function (order) {
             return order.status === 'created';
-          }); //we need to pass in the new product and update its association
+          });
 
-          this.props.actions.editOrder('created', created.id);
+          if (created.length) {
+            this.props.actions.editOrder('created', created[0].id, null, 'cart', productIds);
+          } else {
+            this.props.actions.createOrder(productIds, null, userId, 'cart');
+          }
         }
       }
     }
@@ -1683,6 +1843,7 @@ function (_Component) {
     key: "render",
     value: function render() {
       console.log("USER IN SINGLE ART", this.props.user);
+      console.log("ORDER ON STATE", this.props.order);
       var singleArt = this.props.singleArt;
       var user = this.props.user;
       return _react.default.createElement("div", {
@@ -1719,7 +1880,8 @@ function (_Component) {
 var mapStateToProps = function mapStateToProps(state) {
   return {
     singleArt: state.art.singleArt,
-    user: state.user.singleUser
+    user: state.user.singleUser,
+    order: state.order.singleOrder
   };
 };
 
@@ -1732,11 +1894,11 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
       removeSpecificArt: function removeSpecificArt(art) {
         dispatch((0, _art.removeArt)(art));
       },
-      createOrder: function createOrder(order, page) {
-        dispatch((0, _order.postOrder)(order, page));
+      createOrder: function createOrder(product, orderInfo, user, page) {
+        dispatch((0, _order.postOrder)(product, orderInfo, user, page));
       },
-      editOrder: function editOrder(status, id) {
-        dispatch((0, _order.putOrder)(status, id));
+      editOrder: function editOrder(status, id, page, orderInfo, productIds) {
+        dispatch((0, _order.putOrder)(status, id, page, orderInfo, productIds));
       }
     }
   };
@@ -1894,6 +2056,14 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
+var _UserOrders = _interopRequireDefault(__webpack_require__(/*! ./UserOrders */ "./client/components/UserOrders.js"));
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -1928,16 +2098,61 @@ function (_Component) {
   _createClass(StandardPage, [{
     key: "render",
     value: function render() {
-      return _react.default.createElement("div", {
+      var user = this.props.user;
+      console.log('USER on StandardPage', user);
+      return _react.default.createElement("div", null, _react.default.createElement("div", {
         className: "grid-child"
-      }, "hello!!");
+      }, "hello!!"), _react.default.createElement("div", null, _react.default.createElement("h2", null, "Your Orders:"), _react.default.createElement(_UserOrders.default, {
+        user: user
+      })));
     }
   }]);
 
   return StandardPage;
 }(_react.Component);
 
-var _default = StandardPage;
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    user: state.user.singleUser
+  };
+};
+
+var _default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps)(StandardPage));
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./client/components/UserOrders.js":
+/*!*****************************************!*\
+  !*** ./client/components/UserOrders.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var UserOrders = function UserOrders(props) {
+  var orders = props.user.orders;
+  console.log("USER ORDERS", orders);
+  return _react.default.createElement("div", null, _react.default.createElement("table", null, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "Order#"), _react.default.createElement("th", null, "Status"), _react.default.createElement("th", null, "Total"))), _react.default.createElement("tbody", null, orders.map(function (order) {
+    return order.status === 'processing' || order.status === 'shipped' ? _react.default.createElement("tr", {
+      key: order.id
+    }, _react.default.createElement("td", null, order.id), _react.default.createElement("td", null, order.status), _react.default.createElement("td", null, order.subtotal)) : null;
+  }))));
+};
+
+var _default = UserOrders;
 exports.default = _default;
 
 /***/ }),
@@ -2022,7 +2237,7 @@ var mapSignup = function mapSignup(state) {
   };
 };
 
-var mapDispatch = function mapDispatch(dispatch) {
+var mapDispatch = function mapDispatch(dispatch, ownProps) {
   return {
     handleSubmit: function handleSubmit(evt) {
       evt.preventDefault();
@@ -2030,6 +2245,7 @@ var mapDispatch = function mapDispatch(dispatch) {
       var email = evt.target.email.value;
       var password = evt.target.password.value;
       dispatch((0, _store.auth)(email, password, formName));
+      ownProps.history.push('/home');
     }
   };
 };
@@ -2234,8 +2450,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var UserHome = function UserHome(props) {
   var email = props.email;
   var type = props.type;
-  console.log('is user home rendering');
-  console.log('props.type', type);
   return _react.default.createElement("div", {
     className: "grid"
   }, _react.default.createElement("h3", null, "Welcome, ", email), type === 'admin' ? _react.default.createElement(_AdminPage.default, null) : _react.default.createElement(_StandardPage.default, null));
@@ -2325,7 +2539,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // establishes socket connection
 _reactDom.default.render(_react.default.createElement(_reactRedux.Provider, {
   store: _store.default
-}, _react.default.createElement(_reactRouterDom.Router, {
+}, _react.default.createElement(_reactRouterDom.BrowserRouter, {
   history: _history.default
 }, _react.default.createElement(_app.default, null))), document.getElementById('app'));
 
@@ -2370,7 +2584,7 @@ var _SingleOrder = _interopRequireDefault(__webpack_require__(/*! ./components/S
 
 var _CheckoutForm = _interopRequireDefault(__webpack_require__(/*! ./components/CheckoutForm */ "./client/components/CheckoutForm.js"));
 
-var _LandingPage = _interopRequireDefault(__webpack_require__(/*! ./components/LandingPage */ "./client/components/LandingPage.js"));
+var _Confirmation = _interopRequireDefault(__webpack_require__(/*! ./components/Confirmation */ "./client/components/Confirmation.js"));
 
 var _store = __webpack_require__(/*! ./store */ "./client/store/index.js");
 
@@ -2419,16 +2633,15 @@ function (_Component) {
     key: "render",
     value: function render() {
       var isLoggedIn = this.props.isLoggedIn;
-      return _react.default.createElement(_reactRouterDom.Switch, null, _react.default.createElement(_reactRouterDom.Route, {
-        exact: true,
-        path: "/",
-        component: _LandingPage.default
-      }), _react.default.createElement(_reactRouterDom.Route, {
+      return _react.default.createElement("div", null, _react.default.createElement(_components.Navbar, null), _react.default.createElement(_reactRouterDom.Route, {
         path: "/login",
         component: _components.Login
       }), _react.default.createElement(_reactRouterDom.Route, {
         path: "/signup",
         component: _components.Signup
+      }), _react.default.createElement(_reactRouterDom.Route, {
+        path: "/confirmation",
+        component: _Confirmation.default
       }), _react.default.createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/art",
@@ -2458,9 +2671,7 @@ function (_Component) {
         exact: true,
         path: "/order/:orderId",
         component: _SingleOrder.default
-      })), _react.default.createElement(_reactRouterDom.Route, {
-        component: _LandingPage.default
-      }));
+      })));
     }
   }]);
 
@@ -3114,7 +3325,7 @@ var fetchSingleOrder = function fetchSingleOrder(id) {
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return _axios.default.get("/api/order/".concat(id));
+                return _axios.default.get("/api/orders/".concat(id));
 
               case 3:
                 response = _context2.sent;
@@ -3146,7 +3357,7 @@ var fetchSingleOrder = function fetchSingleOrder(id) {
 
 exports.fetchSingleOrder = fetchSingleOrder;
 
-var postOrder = function postOrder(order, page) {
+var postOrder = function postOrder(productIds, orderInfo, userId, page) {
   return (
     /*#__PURE__*/
     function () {
@@ -3158,16 +3369,24 @@ var postOrder = function postOrder(order, page) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                console.log("IN THE POST THUNK");
-                _context3.prev = 1;
-                _context3.next = 4;
-                return _axios.default.post('/api/orders', order);
+                _context3.prev = 0;
+                _context3.next = 3;
+                return _axios.default.post('/api/orders', {
+                  productIds: productIds,
+                  orderInfo: orderInfo,
+                  userId: userId
+                });
 
-              case 4:
+              case 3:
                 response = _context3.sent;
                 newOrder = response.data;
                 action = addOrder(newOrder);
                 dispatch(action);
+
+                if (page === 'confirmation') {
+                  localStorage.removeItem('product');
+                }
+
                 localStorage.setItem('order', JSON.stringify(newOrder));
 
                 _history.default.push("/".concat(page));
@@ -3177,7 +3396,7 @@ var postOrder = function postOrder(order, page) {
 
               case 12:
                 _context3.prev = 12;
-                _context3.t0 = _context3["catch"](1);
+                _context3.t0 = _context3["catch"](0);
                 console.log(_context3.t0);
 
               case 15:
@@ -3185,7 +3404,7 @@ var postOrder = function postOrder(order, page) {
                 return _context3.stop();
             }
           }
-        }, _callee3, this, [[1, 12]]);
+        }, _callee3, this, [[0, 12]]);
       }));
 
       return function (_x3) {
@@ -3197,7 +3416,7 @@ var postOrder = function postOrder(order, page) {
 
 exports.postOrder = postOrder;
 
-var putOrder = function putOrder(status, id) {
+var putOrder = function putOrder(status, id, orderInfo, page, productIds) {
   return (
     /*#__PURE__*/
     function () {
@@ -3212,7 +3431,9 @@ var putOrder = function putOrder(status, id) {
                 _context4.prev = 0;
                 _context4.next = 3;
                 return _axios.default.put("/api/orders/".concat(id), {
-                  status: status
+                  status: status,
+                  orderInfo: orderInfo,
+                  productIds: productIds
                 });
 
               case 3:
@@ -3220,9 +3441,12 @@ var putOrder = function putOrder(status, id) {
                 updatedOrder = response.data;
                 action = updateOrder(updatedOrder);
                 dispatch(action);
-                localStorage.removeItem('product');
 
-                _history.default.push('/');
+                if (page === 'confirmation') {
+                  localStorage.removeItem('product');
+                }
+
+                _history.default.push("/".concat(page));
 
                 _context4.next = 14;
                 break;
@@ -3271,7 +3495,7 @@ var removeOrder = function removeOrder(order) {
                 action = deleteOrder(removedOrder);
                 dispatch(action);
 
-                _history.default.push("/order");
+                _history.default.push('/order');
 
               case 6:
               case "end":
@@ -3314,6 +3538,7 @@ var orderReducer = function orderReducer() {
 
     case UPDATE_ORDER:
       return _objectSpread({}, state, {
+        allOrders: _toConsumableArray(state.allOrders).concat([action.order]),
         singleOrder: action.order
       });
 
@@ -3428,42 +3653,40 @@ var me = function me() {
 
               case 3:
                 res = _context.sent;
-                console.log('res.data', res.data);
 
                 if (!res.data.id) {
-                  _context.next = 13;
+                  _context.next = 11;
                   break;
                 }
 
-                _context.next = 8;
-                return _axios.default.get("/api/users/".concat(res.data.id));
+                _context.next = 7;
+                return _axios.default.get("api/users/".concat(res.data.id));
 
-              case 8:
+              case 7:
                 response = _context.sent;
-                console.log('response', response);
                 user = response.data;
-                _context.next = 14;
+                _context.next = 12;
                 break;
 
-              case 13:
+              case 11:
                 user = initialState.singleUser;
 
-              case 14:
+              case 12:
                 dispatch(getUser(user || initialState.singleUser));
-                _context.next = 20;
+                _context.next = 18;
                 break;
 
-              case 17:
-                _context.prev = 17;
+              case 15:
+                _context.prev = 15;
                 _context.t0 = _context["catch"](0);
                 console.error(_context.t0);
 
-              case 20:
+              case 18:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[0, 17]]);
+        }, _callee, this, [[0, 15]]);
       }));
 
       return function (_x) {
@@ -3510,30 +3733,29 @@ var auth = function auth(email, password, method) {
               case 9:
                 _context2.prev = 9;
                 _context2.next = 12;
-                return _axios.default.get("/api/users/".concat(res.data.id));
+                return _axios.default.get("api/users/".concat(res.data.id));
 
               case 12:
                 _ref3 = _context2.sent;
                 data = _ref3.data;
-                console.log("DATA IN THUNK", data);
                 dispatch(getUser(data));
 
                 _history.default.push('/home');
 
-                _context2.next = 22;
+                _context2.next = 21;
                 break;
 
-              case 19:
-                _context2.prev = 19;
+              case 18:
+                _context2.prev = 18;
                 _context2.t1 = _context2["catch"](9);
                 console.error(_context2.t1);
 
-              case 22:
+              case 21:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[0, 6], [9, 19]]);
+        }, _callee2, this, [[0, 6], [9, 18]]);
       }));
 
       return function (_x2) {
@@ -46807,6 +47029,68 @@ var generatePath = function generatePath() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (generatePath);
+
+/***/ }),
+
+/***/ "./node_modules/react-router/es/index.js":
+/*!***********************************************!*\
+  !*** ./node_modules/react-router/es/index.js ***!
+  \***********************************************/
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _MemoryRouter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MemoryRouter */ "./node_modules/react-router/es/MemoryRouter.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MemoryRouter", function() { return _MemoryRouter__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+
+/* harmony import */ var _Prompt__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Prompt */ "./node_modules/react-router/es/Prompt.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Prompt", function() { return _Prompt__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+
+/* harmony import */ var _Redirect__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Redirect */ "./node_modules/react-router/es/Redirect.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return _Redirect__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+
+/* harmony import */ var _Route__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Route */ "./node_modules/react-router/es/Route.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return _Route__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+
+/* harmony import */ var _Router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Router */ "./node_modules/react-router/es/Router.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Router", function() { return _Router__WEBPACK_IMPORTED_MODULE_4__["default"]; });
+
+/* harmony import */ var _StaticRouter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./StaticRouter */ "./node_modules/react-router/es/StaticRouter.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "StaticRouter", function() { return _StaticRouter__WEBPACK_IMPORTED_MODULE_5__["default"]; });
+
+/* harmony import */ var _Switch__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Switch */ "./node_modules/react-router/es/Switch.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Switch", function() { return _Switch__WEBPACK_IMPORTED_MODULE_6__["default"]; });
+
+/* harmony import */ var _generatePath__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./generatePath */ "./node_modules/react-router/es/generatePath.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "generatePath", function() { return _generatePath__WEBPACK_IMPORTED_MODULE_7__["default"]; });
+
+/* harmony import */ var _matchPath__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./matchPath */ "./node_modules/react-router/es/matchPath.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "matchPath", function() { return _matchPath__WEBPACK_IMPORTED_MODULE_8__["default"]; });
+
+/* harmony import */ var _withRouter__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./withRouter */ "./node_modules/react-router/es/withRouter.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "withRouter", function() { return _withRouter__WEBPACK_IMPORTED_MODULE_9__["default"]; });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /***/ }),
 
