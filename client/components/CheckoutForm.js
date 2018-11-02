@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { putOrder } from '../store/order'
-import PropTypes from 'prop-types'
+import { putOrder, postOrder } from '../store/order'
 
 class CheckoutForm extends React.Component {
   constructor(props) {
@@ -30,10 +29,11 @@ class CheckoutForm extends React.Component {
   }
 
   handleSubmit(e) {
-    console.log("ORDER ON STATE", this.props.order)
     e.preventDefault();
     let order = this.props.order;
     let orderObj = {};
+    let userId = null;
+
     for(let key in this.state ) {
       let value = this.state[key]
       if(key !== 'hidden') {
@@ -48,11 +48,22 @@ class CheckoutForm extends React.Component {
       }
     }
     if(allNotNull) {
-      this.props.updateOrder('processing', order.id, orderObj);
       this.setState({
         hidden: true
       })
+      let productArr;
+      if(!this.props.user.id) {
+        productArr = JSON.parse(localStorage.getItem('product')).slice(1);
+      } else {
+        productArr = this.props.user.orders.find(order => order.status === 'created').arts;
+      }
+      let productIds = productArr.map(product => product.id)
 
+      if(!this.props.user.id) {
+        this.props.createOrder(productIds, orderObj, userId, 'confirmation')
+      } else {
+        this.props.updateOrder('processing', order.id, orderObj, "confirmation", productIds);
+      }
     } else {
       this.setState({
         hidden: false
@@ -61,9 +72,8 @@ class CheckoutForm extends React.Component {
   }
 
   render() {
-    console.log("USER IN CHECKOUT", this.props.user)
     let order = JSON.parse(localStorage.getItem('product'));
-
+    console.log("ORDER ON STATE", this.props.order)
     return (
       <div id="container-row">
         <div>
@@ -114,10 +124,10 @@ class CheckoutForm extends React.Component {
         </div>
         <div>
           <div id="second-column">
-            <h3>Order Information</h3>
+            {/* <h3>Order Information</h3>
             <p><strong>Item</strong>: {order.title}</p>
             <p><strong>Quantity</strong>: {order.quantity}</p>
-            <p><strong>Price</strong>: {order.price}</p>
+            <p><strong>Price</strong>: {order.price}</p> */}
             <button type="submit" onClick={this.handleSubmit}>Place your order</button>
           </div>
         </div>
@@ -132,7 +142,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  updateOrder: (status, id, orderInfo) => dispatch(putOrder(status, id, orderInfo))
+  updateOrder: (status, id, orderInfo, page, productIds) => dispatch(putOrder(status, id, orderInfo, page, productIds)),
+  createOrder: (product, orderInfo, user, page) => dispatch(postOrder(product, orderInfo, user, page))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CheckoutForm)

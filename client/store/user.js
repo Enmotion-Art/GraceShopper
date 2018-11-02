@@ -30,11 +30,9 @@ const removeUser = () => ({type: REMOVE_USER})
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
-    console.log('res.data', res.data)
     let user
     if (res.data.id) {
       const response = await axios.get(`api/users/${res.data.id}`)
-      console.log('response', response)
       user = response.data
     } else {
       user = initialState.singleUser
@@ -55,7 +53,6 @@ export const auth = (email, password, method) => async dispatch => {
 
   try {
     const { data } = await axios.get(`api/users/${res.data.id}`)
-    console.log("DATA IN THUNK", data)
     dispatch(getUser(data))
     history.push('/home')
   } catch (dispatchOrHistoryErr) {

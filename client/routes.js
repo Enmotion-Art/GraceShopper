@@ -12,6 +12,8 @@ import AllOrders from './components/AllOrders'
 import SingleOrder from './components/SingleOrder'
 import CheckoutForm from './components/CheckoutForm'
 import LandingPage from './components/LandingPage'
+import Confirmation from './components/Confirmation'
+
 import {me} from './store'
 
 /**
@@ -33,6 +35,8 @@ class Routes extends Component {
           <Route exact path ="/" component={LandingPage} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          <Route path="/confirmation" component={Confirmation} />
+
           <Route exact path ="/art" component={AllArt} />
           <Route exact path ="/art/:artId" component={SingleArt} />
           <Route path= "/art/:artId/edit" component={EditArt} />
