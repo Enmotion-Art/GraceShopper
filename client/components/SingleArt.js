@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { NavLink, withRouter, Link } from 'react-router-dom'
 import { fetchSingleArt, removeArt } from '../store/art'
 import { postOrder, putOrder } from '../store/order'
@@ -13,7 +13,7 @@ class SingleArt extends Component {
   }
 
   componentDidMount() {
-    const id= this.props.match.params.artId
+    const id = this.props.match.params.artId
     this.props.actions.loadSingleArt(id)
     console.log('didMount')
   }
@@ -27,7 +27,7 @@ class SingleArt extends Component {
   addtoCart(event) {
     event.preventDefault()
 
-    if(!JSON.parse(localStorage.getItem('product'))) {
+    if (!JSON.parse(localStorage.getItem('product'))) {
       let setter = [0]
       localStorage.setItem('product', JSON.stringify(setter))
     }
@@ -36,18 +36,18 @@ class SingleArt extends Component {
     localStorage.setItem('product', JSON.stringify(productArr))
 
     //Load persistent cart for logged in user
-    if(this.props.user.id) {
+    if (this.props.user.id) {
       let orders = this.props.user.orders;
       let productIds = productArr.slice(1).map(product => product.id)
-      let userId =this.props.user.id
+      let userId = this.props.user.id
 
-    //Check if this user has any past orders at all and if not, create a new order
-      if(!orders.length) {
+      //Check if this user has any past orders at all and if not, create a new order
+      if (!orders.length) {
         this.props.actions.createOrder(productIds, null, userId, '')
       } else {
-    //If there are past orders, see if any of them are a working order, i.e., cart. If there is one, add the product to the working order. If all past orders are complete, i.e., not carts, then create a new order.
+        //If there are past orders, see if any of them are a working order, i.e., cart. If there is one, add the product to the working order. If all past orders are complete, i.e., not carts, then create a new order.
         let created = orders.filter(order => order.status === 'created');
-        if(created.length) {
+        if (created.length) {
           this.props.actions.editOrder('created', created[0].id, null, 'cart', productIds)
         } else {
           this.props.actions.createOrder(productIds, null, userId, 'cart')
@@ -66,34 +66,33 @@ class SingleArt extends Component {
       <div className='grid'>
         {
           user.UserType === 'admin' ?
-          <div> 
-        <div className='grid-child'>
-          <button
-            type="button"
-            id={`${singleArt.id}`}
-            onClick={this.handleClick}
-            >
-          X
+            <div className='grid-child'>
+              <button
+                type="button"
+                id={`${singleArt.id}`}
+                onClick={this.handleClick}
+              >
+                X
         </button>
-        <Link to={`/art/${singleArt.id}/edit`} activeClassName="active" id="editLink">
-            Edit
+              <Link to={`/art/${singleArt.id}/edit`} activeClassName="active" id="editLink">
+                Edit
           </Link>
-          </ div>
-          : <div />
+            </ div>
+            : <div />
         }
         <br />
         <h1>{singleArt.title}</h1>
         <div className='grid-child' id="container-row">
           <div id="column">
-            <img src = {singleArt.image} />
+            <img src={singleArt.image} />
           </div>
           <div id="second-column">
             <p>{singleArt.description}</p>
             <p>Style: {singleArt.category}</p>
             <p>{singleArt.width}W x {singleArt.height}H</p>
             <p><strong>${singleArt.price}</strong></p>
-            { singleArt.quantity === 0 ? <p>SOLD OUT</p> :
-            <button type="submit" onClick={this.addtoCart}>Add to Cart</button> }
+            {singleArt.quantity === 0 ? <p>SOLD OUT</p> :
+              <button type="submit" onClick={this.addtoCart}>Add to Cart</button>}
           </div>
         </div>
       </div>
@@ -111,18 +110,18 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     actions: {
-    loadSingleArt: function(id) {
+      loadSingleArt: function (id) {
         dispatch(fetchSingleArt(id))
-    },
-    removeSpecificArt: function(art) {
-      dispatch(removeArt(art))
-    },
-    createOrder: function(product, orderInfo, user, page) {
-      dispatch(postOrder(product, orderInfo, user, page));
-    },
-    editOrder: function(status, id, page, orderInfo, productIds ) {
-      dispatch(putOrder(status, id, page, orderInfo, productIds))
-    }
+      },
+      removeSpecificArt: function (art) {
+        dispatch(removeArt(art))
+      },
+      createOrder: function (product, orderInfo, user, page) {
+        dispatch(postOrder(product, orderInfo, user, page));
+      },
+      editOrder: function (status, id, page, orderInfo, productIds) {
+        dispatch(putOrder(status, id, page, orderInfo, productIds))
+      }
     }
   }
 }
