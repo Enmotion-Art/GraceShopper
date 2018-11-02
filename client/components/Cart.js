@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
-import { postOrder, putOrder } from '../store/order'
+import { postOrder, putOrder, fetchSingleOrder } from '../store/order'
 import { me } from '../store/user'
 import history from '../history'
 import CartItem from './CartItem'
@@ -74,6 +74,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   createOrder: (product, page ) => dispatch(postOrder(product, page)),
+  getUserOrder: (id) => dispatch(fetchSingleOrder(id)),
   getMeAgain: () => dispatch(me()),
   editOrder: (status, id, orderInfo, page, prodIds) => dispatch(putOrder(status, id, orderInfo, page, prodIds))
 })
