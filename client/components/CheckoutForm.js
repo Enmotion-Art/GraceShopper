@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { putOrder } from '../store/order'
+import PropTypes from 'prop-types'
 
 class CheckoutForm extends React.Component {
   constructor(props) {
@@ -15,7 +16,8 @@ class CheckoutForm extends React.Component {
       state: props.state || '',
       zip: props.zip || '',
       cc: '',
-      sc: ''
+      sc: '',
+      hidden: true
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,25 +30,49 @@ class CheckoutForm extends React.Component {
   }
 
   handleSubmit(e) {
+    console.log("ORDER ON STATE", this.props.order)
     e.preventDefault();
-    let submittedOrder = JSON.parse(localStorage.getItem('order'));
-    this.props.updateOrder('processing', submittedOrder.id)
+    let order = this.props.order;
+    let orderObj = {};
+    for(let key in this.state ) {
+      let value = this.state[key]
+      if(key !== 'hidden') {
+        orderObj[key] = this.state[key].trim();
+      }
+    }
+
+    let allNotNull = true;
+    for(let key in orderObj) {
+      if(orderObj[key] === null || orderObj[key] === '') {
+        allNotNull = false;
+      }
+    }
+    if(allNotNull) {
+      this.props.updateOrder('processing', order.id, orderObj);
+      this.setState({
+        hidden: true
+      })
+
+    } else {
+      this.setState({
+        hidden: false
+      })
+    }
   }
 
   render() {
     console.log("USER IN CHECKOUT", this.props.user)
+    let order = JSON.parse(localStorage.getItem('product'));
 
-    // let order;
-    // if(!this.props.user.id) {
-      let order = JSON.parse(localStorage.getItem('product'));
-    // } else {
-    //   order = this.props.user.orders[0]
-    // }
     return (
       <div className='grid' id="container-row">
         <div className='grid-child'>
           <form>
               <h3>Customer Information</h3>
+
+              {!this.state.hidden ?
+              <p style={{color:'red'}}>Please complete all fields.</p>
+              : '' }
 
               <label> First Name: </label>
               <input type="text" name="firstName" onChange={this.handleChange} value={this.state.firstName}  />
@@ -106,7 +132,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  updateOrder: (status, id) => dispatch(putOrder(status, id))
+  updateOrder: (status, id, orderInfo) => dispatch(putOrder(status, id, orderInfo))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CheckoutForm)
