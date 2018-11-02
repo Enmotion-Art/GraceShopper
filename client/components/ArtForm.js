@@ -2,8 +2,8 @@ import React from 'react'
 
 const ArtForm = (props) => {
     return (
-      <div>
-        <form>
+      <div className='grid'>
+        <form className='grid-child'>
           <fieldset>
             <legend>{props.title}</legend>
 
@@ -12,7 +12,7 @@ const ArtForm = (props) => {
 
             <label> Description: </label>
             <input type="text" name="description" onChange={props.handleChange} value={props.state.description} />
-  
+
             <label> Price: </label>
             <input type="text" name="price" onChange={props.handleChange} value={props.state.price} />
 
@@ -21,7 +21,7 @@ const ArtForm = (props) => {
 
             <label> Image: </label>
             <input type="text" name="image" onChange={props.handleChange} value={props.state.image} />
-  
+
             <label> Height: </label>
             <input type="text" name="height" onChange={props.handleChange} value={props.state.height} />
 
@@ -33,13 +33,12 @@ const ArtForm = (props) => {
 
             <label> Category: </label>
             <input type="text" name="category" onChange={props.handleChange} value={props.state.category} />
-  
+
             <button type="submit" onClick={props.handleSubmit}> Submit</button>
           </fieldset>
         </form>
       </div>
     )
   }
-  
+
   export default ArtForm
-  

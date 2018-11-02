@@ -10,13 +10,15 @@ class StandardPage extends Component {
         const { user } = this.props
 
         return (
+
             <div>
-                <div>hello!!</div>
+            <div className='grid-child'>hello!!</div>
                 <div>
                     <h2>Your Orders:</h2>
                     <UserOrders user={user} />
                 </div>
             </div>
+
         )
     }
 }
