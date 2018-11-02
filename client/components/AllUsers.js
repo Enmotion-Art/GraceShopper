@@ -1,18 +1,22 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import { NavLink, withRouter } from 'react-router-dom'
-import { fetchAllUsers } from '../store/user'
+import { fetchAllUsers, deleteThisUser } from '../store/user'
 
 
 class AllUsers extends Component {
+  constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this)
+  }
 
   componentDidMount() {
-    this.props.loadInitialUsers()
+    this.props.actions.loadInitialUsers()
   }
 handleClick(event) {
   event.preventDefault();
   const UserId = event.target.id;
-  // this.props.actions.removeSpecificArt({ id: UserId }); removespecific user
+  this.props.actions.removeSpecificUser({ id: UserId });
   }
 
   render() {
@@ -24,7 +28,7 @@ handleClick(event) {
             users.map(user =>
             <div className='grid-child' key={user.id}>
             <NavLink to={`/user/${user.id}`}> {user.id} </NavLink>
-            <button type="button" id={`delete${user.id}`} onClick={this.handleClick}> 
+            <button type="button" id={`${user.id}`} onClick={this.handleClick}> 
             X 
             </button>
             <div>ALSO RENDER DETAILS OF USER HERE (INCLUDING THAT USERS ORDERS?)</div>
@@ -44,8 +48,13 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadInitialUsers: function() {
-      dispatch(fetchAllUsers())
+    actions: {
+      loadInitialUsers: function() {
+        dispatch(fetchAllUsers())
+    },
+    removeSpecificUser: function(user) {
+      dispatch(deleteThisUser(user))
+    }
     }
   }
 }
