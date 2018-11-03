@@ -12,6 +12,8 @@ import AllOrders from './components/AllOrders'
 import SingleOrder from './components/SingleOrder'
 import CheckoutForm from './components/CheckoutForm'
 import Confirmation from './components/Confirmation'
+import ReviewForm from './components/ReviewForm'
+
 import { me } from './store'
 
 /**
@@ -38,6 +40,7 @@ class Routes extends Component {
         <Route exact path="/art" component={AllArt} />
         <Route exact path="/art/:artId" component={SingleArt} />
         <Route path="/art/:artId/edit" component={EditArt} />
+        <Route exact path="/art/:artId/review" component={ReviewForm} />
         <Route path="/cart" component={Cart} />
         <Route exact path="/checkout" component={CheckoutForm} />
 
