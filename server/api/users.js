@@ -46,3 +46,23 @@ router.delete('/', async (req, res, next) => {
     }
   }
 })
+
+router.put('/', async (req, res, next) => {
+  if(!req.user || req.user.UserType !== 'admin') {
+    const error = new Error("Action not permitted");
+    console.error(error)
+    res.status(403).send("Action forbidden")
+  } else if (req.user.UserType === 'admin') {
+    try {
+      console.log('req.body', req.body)
+      console.log('req.params', req.params)
+      let user = await User.findById(req.body.id) //maybe req.body.id
+      await user.update({
+        UserType: 'admin'
+      })
+      res.json({ updatedUser: req.body.id})
+    } catch (err) {
+      next(err)
+    }
+  }
+})

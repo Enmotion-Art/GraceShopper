@@ -97,7 +97,16 @@ class AllOrders extends Component {
                     <td>{order.firstName}</td>
                     <td>{order.lastName}</td>
                     <td>{order.email}</td>
-                    <td>{order.status}</td>
+                    <td>{order.status}
+                    <select name="updatingStatus">
+                        <option />
+                        <option value="created">Created</option>
+                        <option value="processing">Processing</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="cancelled"> Cancelled</option>
+                      </select>
+                      <button type="button" id={`${order.id}`} onClick={this.handleStatus}> Update </button>
+                    </td>
                     <td>{order.subtotal}</td>
                     <td>{order.streetNum}</td>
                     <td>{order.street}</td>
@@ -119,7 +128,16 @@ class AllOrders extends Component {
                     <td>{order.firstName}</td>
                     <td>{order.lastName}</td>
                     <td>{order.email}</td>
-                    <td>{order.status}</td>
+                    <td>{order.status}
+                      <select name="updatingStatus">
+                        <option />
+                        <option value="created">Created</option>
+                        <option value="processing">Processing</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="cancelled"> Cancelled</option>
+                      </select>
+                      <button type="button" id={`${order.id}`} onClick={this.handleStatus}> Update </button>
+                    </td>
                     <td>{order.subtotal}</td>
                     <td>{order.streetNum}</td>
                     <td>{order.street}</td>
