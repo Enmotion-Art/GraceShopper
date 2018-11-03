@@ -1,12 +1,14 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {NavLink, withRouter} from 'react-router-dom'
-import {fetchAllUsers, deleteThisUser} from '../store/user'
+import {fetchAllUsers, deleteThisUser, updateUserStatus} from '../store/user'
+import history from '../history'
 
 class AllUsers extends Component {
   constructor() {
     super()
     this.handleClick = this.handleClick.bind(this)
+    this.handleStatus = this.handleStatus.bind(this)
   }
 
   componentDidMount() {
@@ -16,6 +18,13 @@ class AllUsers extends Component {
     event.preventDefault()
     const UserId = event.target.id
     this.props.actions.removeSpecificUser({id: UserId})
+  }
+
+  handleStatus(event) {
+    event.preventDefault()
+    const UserId = event.target.id
+    this.props.actions.changeUserStatus({id: UserId})
+    history.push('/home')
   }
 
   render() {
@@ -55,7 +64,12 @@ class AllUsers extends Component {
                 <td>{user.firstName}</td>
                 <td>{user.lastName}</td>
                 <td>{user.email}</td>
-                <td>{user.userType}</td>
+                <td>{user.UserType} 
+                  { user.UserType === 'standard' ?
+                  <button type="button" id={`${user.id}`} onClick={this.handleStatus}> Make admin </button>
+                  : <div/>
+                  }
+                  </td>
                 <td>{user.streetNum}</td>
                 <td>{user.street}</td>
                 <td>{user.city}</td>
@@ -86,10 +100,13 @@ const mapDispatchToProps = dispatch => {
         dispatch(fetchAllUsers())
       },
       removeSpecificUser: function(user) {
-        dispatch(deleteThisUser(user))
+        dispatch(deleteThisUser(user));
+      },
+      changeUserStatus: function(user) {
+        dispatch(updateUserStatus(user))
       }
     }
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllUsers)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AllUsers))
