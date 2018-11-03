@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { NavLink, withRouter, Link } from 'react-router-dom'
 import { fetchSingleArt, removeArt } from '../store/art'
 import { postOrder, putOrder } from '../store/order'
+import { fetchReviews } from '../store/review'
+
 
 
 class SingleArt extends Component {
@@ -15,7 +17,7 @@ class SingleArt extends Component {
   componentDidMount() {
     const id = this.props.match.params.artId
     this.props.actions.loadSingleArt(id)
-    console.log('didMount')
+    this.props.actions.onFetchReviews(id)
   }
 
   handleClick(event) {
@@ -59,6 +61,7 @@ class SingleArt extends Component {
   render() {
     console.log("USER IN SINGLE ART", this.props.user)
     console.log("ORDER ON STATE", this.props.order)
+    console.log("REVIEWS IN SINGLE ART", this.props.reviews)
 
     const singleArt = this.props.singleArt
     const user = this.props.user
@@ -94,6 +97,10 @@ class SingleArt extends Component {
             {singleArt.quantity === 0 ? <p>SOLD OUT</p> :
               <button type="submit" onClick={this.addtoCart}>Add to Cart</button>}
           </div>
+
+          <div>
+            <h4>{this.props.reviews.id}</h4>
+          </div>
         </div>
       </div>
     )
@@ -104,7 +111,8 @@ const mapStateToProps = state => {
   return {
     singleArt: state.art.singleArt,
     user: state.user.singleUser,
-    order: state.order.singleOrder
+    order: state.order.singleOrder,
+    reviews: state.review.allReviews
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -121,6 +129,9 @@ const mapDispatchToProps = dispatch => {
       },
       editOrder: function (status, id, page, orderInfo, productIds) {
         dispatch(putOrder(status, id, page, orderInfo, productIds))
+      },
+      onFetchReviews: function (artId) {
+        dispatch(fetchReviews(artId))
       }
     }
   }
