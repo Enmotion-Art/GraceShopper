@@ -38,8 +38,8 @@ class AllOrders extends Component {
 
   render() {
     const orders = this.props.allOrders
+    console.log(orders)
     const selectedOrders = this.state.selectedOrders
-    console.log(selectedOrders);
 
     return (
       <div className="grid">
@@ -97,7 +97,10 @@ class AllOrders extends Component {
                     <td>{order.city}</td>
                     <td>{order.state}</td>
                     <td>{order.zip}</td>
-                    <td>Products Placeholder</td>
+                    <td>{order.arts ?
+                      order.arts.map(art=> art.id).join(', ')
+                      : <div></div>
+                    }</td>
                     <td>{order.createdAt}</td>
                     <td>{order.updatedAt}</td>
                     <td>{order.userId}</td>
@@ -125,7 +128,10 @@ class AllOrders extends Component {
                     <td>{order.city}</td>
                     <td>{order.state}</td>
                     <td>{order.zip}</td>
-                    <td>Products Placeholder</td>
+                    <td>{order.arts ?
+                      order.arts.map(art=> art.id).join(', ')
+                      : <div></div>
+                    }</td>
                     <td>{order.createdAt}</td>
                     <td>{order.updatedAt}</td>
                     <td>{order.userId}</td>
