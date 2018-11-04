@@ -142,7 +142,6 @@ router.delete('/', async (req, res, next) => {
 // POST api/art/:artId/reviews - create review and set relationship with art
 router.post('/:artId/reviews', async (req, res, next) => {
   try {
-    console.log('HIIIIIIIIIIII', req.body)
     let art = await Art.findById(req.params.artId)
     let user = await User.findById(req.body.userId)
     let review = await Review.create(req.body)
@@ -154,13 +153,13 @@ router.post('/:artId/reviews', async (req, res, next) => {
   catch (error) { next(error) }
 })
 
-// GET api/art/:artId/reviews  - get reviews for single art
+// GET api/art/:artId/reviews  - get reviews for single art & eager load related ART and USER
 router.get('/:artId/reviews', async (req, res, next) => {
   try {
     let reviews = await Review.findAll({
       where: {
         artId: req.params.artId,
-      }
+      }, include: [{ model: Art }, { model: User }]
     })
     res.json(reviews)
   }

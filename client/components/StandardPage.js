@@ -8,7 +8,7 @@ class StandardPage extends Component {
     render() {
 
         const { user } = this.props
-        console.log('USER on StandardPage', user)
+        console.log('USER ON STANDARDPAGE', user)
         return (
 
             <div>

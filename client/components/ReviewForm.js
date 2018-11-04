@@ -16,7 +16,7 @@ class ReviewForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
     const artId = this.props.match.params.artId //open to figure out how to get artId
-    const userId = this.props.user.id //open to figure out how to get userId. userId doesn't persist after refresh
+    const userId = 1 //open to figure out how to get userId. userId doesn't persist after refresh
 
     const stars = event.target.stars.value
     const content = event.target.comment.value
@@ -77,7 +77,7 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     onPostReview: (artId, userId, review) => dispatch(postReview(artId, userId, review))
   }

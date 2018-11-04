@@ -37,12 +37,9 @@ export const postReview = (artId, newReview) => {
 export const fetchReviews = (artId) => {
   return async (dispatch) => {
     try {
-      console.log('HISTORY')
-
       const response = await axios.get(`/api/art/${artId}/reviews`)
       const reviews = response.data
       const action = gotReviews(reviews)
-      console.log('HISTORY')
       dispatch(action)
 
     }
