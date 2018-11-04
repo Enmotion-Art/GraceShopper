@@ -56,7 +56,7 @@ class AllOrders extends Component {
         <table class="blueTable">
           <thead>
             <tr>
-              <th>Order ID</th>
+              <th>ID</th>
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>
@@ -67,7 +67,7 @@ class AllOrders extends Component {
               <th>City</th>
               <th>State</th>
               <th>Zip</th>
-              <th>Products</th>
+              <th>Products (ID)</th>
               <th>Created At</th>
               <th>Updated At</th>
               <th>User ID</th>
@@ -77,7 +77,7 @@ class AllOrders extends Component {
             {selectedOrders
               ? selectedOrders.map(order => (
                   <tr key={order.id}>
-                    <td as={NavLink} to={`/order/${order.id}`}>{order.id}</td>
+                    <td>{order.id}</td>
                     <td>{order.firstName}</td>
                     <td>{order.lastName}</td>
                     <td>{order.email}</td>
@@ -98,7 +98,9 @@ class AllOrders extends Component {
                     <td>{order.state}</td>
                     <td>{order.zip}</td>
                     <td>{order.arts ?
-                      order.arts.map(art=> art.id).join(', ')
+                      order.arts.map(art=>
+                         <button><NavLink to={`/art/${art.id}`}>{art.id}</NavLink></button>
+                         )
                       : <div></div>
                     }</td>
                     <td>{order.createdAt}</td>
@@ -108,7 +110,7 @@ class AllOrders extends Component {
                 ))
               : orders.map(order => (
                   <tr key={order.id}>
-                    <td as={NavLink} to={`/order/${order.id}`}>{order.id}</td>
+                    <td>{order.id}</td>
                     <td>{order.firstName}</td>
                     <td>{order.lastName}</td>
                     <td>{order.email}</td>
@@ -129,7 +131,9 @@ class AllOrders extends Component {
                     <td>{order.state}</td>
                     <td>{order.zip}</td>
                     <td>{order.arts ?
-                      order.arts.map(art=> art.id).join(', ')
+                      order.arts.map(art=>
+                        <button><NavLink to={`/art/${art.id}`}>{art.id}</NavLink></button>
+                        )
                       : <div></div>
                     }</td>
                     <td>{order.createdAt}</td>
