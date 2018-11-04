@@ -1,12 +1,15 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {NavLink, withRouter} from 'react-router-dom'
-import {fetchAllUsers, deleteThisUser} from '../store/user'
+import {fetchAllUsers, deleteThisUser, updateUserStatus} from '../store/user'
+import history from '../history'
 
 class AllUsers extends Component {
   constructor() {
     super()
     this.handleClick = this.handleClick.bind(this)
+    this.handleStatus = this.handleStatus.bind(this)
+    this.handleReset = this.handleStatus.bind(this)
   }
 
   componentDidMount() {
@@ -18,6 +21,18 @@ class AllUsers extends Component {
     this.props.actions.removeSpecificUser({id: UserId})
   }
 
+  handleStatus(event) {
+    event.preventDefault()
+    const UserId = event.target.id
+    this.props.actions.changeUserStatus({id: UserId})
+    history.push('/home')
+  }
+
+  handleReset(event) {
+    event.preventDefault()
+    //Trigger Reset code here
+  }
+
   render() {
     const users = this.props.allUsers
 
@@ -26,7 +41,7 @@ class AllUsers extends Component {
         <table class="blueTable">
           <thead>
             <tr>
-              <th>User ID</th>
+              <th>ID</th>
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>
@@ -38,24 +53,23 @@ class AllUsers extends Component {
               <th>Zip</th>
               <th>Created At</th>
               <th>Updated At</th>
-              <th>Remove User</th>
+              <th>Password</th>
+              <th>Remove</th>
             </tr>
           </thead>
           <tbody>
             {users.map(user => (
-              // <div className='grid-child' key={user.id}>
-              // <NavLink to={`/user/${user.id}`}> {user.id} </NavLink>
-              // <button type="button" id={`${user.id}`} onClick={this.handleClick}>
-              // X
-              // </button>
-              // <div>ALSO RENDER DETAILS OF USER HERE (INCLUDING THAT USERS ORDERS?)</div>
-              // </div>
+
               <tr key={user.id}>
-                <td as={NavLink} to={`/user/${user.id}`}>{user.id}</td>
+                <td><button type="button" id={user.id}><NavLink to={`/user/${user.id}`}> {user.id} </NavLink></button></td>
                 <td>{user.firstName}</td>
                 <td>{user.lastName}</td>
                 <td>{user.email}</td>
-                <td>{user.userType}</td>
+                <td>{user.UserType}   {
+                  user.UserType === 'standard' ?
+                  <button type="button" id={`${user.id}`} onClick={this.handleStatus}> Make admin </button>
+                  : <div/>
+                  }</td>
                 <td>{user.streetNum}</td>
                 <td>{user.street}</td>
                 <td>{user.city}</td>
@@ -63,6 +77,7 @@ class AllUsers extends Component {
                 <td>{user.zip}</td>
                 <td>{user.createdAt}</td>
                 <td>{user.updatedAt}</td>
+                <td><button type="button" id={`${user.id}`} onClick={this.handleReset}> Reset </button></td>
                 <td><button type="button" id={`${user.id}`} onClick={this.handleClick}> X </button></td>
               </tr>
             ))}
@@ -86,10 +101,13 @@ const mapDispatchToProps = dispatch => {
         dispatch(fetchAllUsers())
       },
       removeSpecificUser: function(user) {
-        dispatch(deleteThisUser(user))
+        dispatch(deleteThisUser(user));
+      },
+      changeUserStatus: function(user) {
+        dispatch(updateUserStatus(user))
       }
     }
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllUsers)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AllUsers))

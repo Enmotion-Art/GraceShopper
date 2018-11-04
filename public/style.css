@@ -1,5 +1,5 @@
 #landingPage {
-  background-image: url('http://www.artsupply.com/Art_Tips/downloaded/201206_02_separator_banner.jpg');
+  background-image: url('https://ayitaenmotion.files.wordpress.com/2018/11/2018-11-03-2.png');
   background-attachment: scroll;
 
 }
@@ -101,29 +101,45 @@ table.blueTable thead th {
 table.blueTable thead th:first-child {
   border-left: none;
 }
-/*
-table.blueTable tfoot {
-  font-size: 14px;
-  font-weight: bold;
-  color: #FFFFFF;
-  background: #D0E4F5;
-  background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
-  background: -webkit-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
-  background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
-  border-top: 2px solid #444444;
+ /* ReviewForm */
+ /* star ratings */
+.rate {
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+    margin: 0;
+    padding:0;
+    font-family: fontAwesome;
+
 }
-table.blueTable tfoot td {
-  font-size: 14px;
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
 }
-table.blueTable tfoot .links {
-  text-align: right;
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
 }
-table.blueTable tfoot .links a{
-  display: inline-block;
-  background: #1C6EA4;
-  color: #FFFFFF;
-  padding: 2px 8px;
-  border-radius: 5px;
+.rate:not(:checked) > label:before {
+    content: '★ ';
 }
- */
+.rate > input:checked ~ label {
+    color: #ffc700;
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #deb217;
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}
 

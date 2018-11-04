@@ -39,6 +39,7 @@ class AllOrders extends Component {
   render() {
     const orders = this.props.allOrders
     const selectedOrders = this.state.selectedOrders
+    console.log(selectedOrders);
 
     return (
       <div className="grid">
@@ -66,66 +67,65 @@ class AllOrders extends Component {
               <th>City</th>
               <th>State</th>
               <th>Zip</th>
+              <th>Products</th>
               <th>Created At</th>
               <th>Updated At</th>
               <th>User ID</th>
             </tr>
           </thead>
-          {/* <tfoot>
-            <tr>
-              <td colspan="14">
-                <div class="links">
-                  <a href="#">&laquo;</a>{' '}
-                  <a class="active" href="#">
-                    1
-                  </a>{' '}
-                  <a href="#">2</a> <a href="#">3</a> <a href="#">4</a>{' '}
-                  <a href="#">&raquo;</a>
-                </div>
-              </td>
-            </tr>
-          </tfoot> */}
           <tbody>
             {selectedOrders
               ? selectedOrders.map(order => (
-                  // <div className='grid-child' key ={order.id}>
-                  //   <NavLink to={`/order/${order.id}`}> {order.id} </NavLink>
-                  //   <div>ALSO RENDER DETAILS OF ORDER HERE</div>
-                  // </div>
                   <tr key={order.id}>
                     <td as={NavLink} to={`/order/${order.id}`}>{order.id}</td>
                     <td>{order.firstName}</td>
                     <td>{order.lastName}</td>
                     <td>{order.email}</td>
-                    <td>{order.status}</td>
+                    <td>{order.status}
+                    <select name="updatingStatus">
+                        <option />
+                        <option value="created">Created</option>
+                        <option value="processing">Processing</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="cancelled"> Cancelled</option>
+                      </select>
+                      <button type="button" id={`${order.id}`} onClick={this.handleStatus}> Update </button>
+                    </td>
                     <td>{order.subtotal}</td>
                     <td>{order.streetNum}</td>
                     <td>{order.street}</td>
                     <td>{order.city}</td>
                     <td>{order.state}</td>
                     <td>{order.zip}</td>
+                    <td>Products Placeholder</td>
                     <td>{order.createdAt}</td>
                     <td>{order.updatedAt}</td>
                     <td>{order.userId}</td>
                   </tr>
                 ))
               : orders.map(order => (
-                  // <div className='grid-child' key={order.id}>
-                  // <NavLink to={`/orders/${order.id}`}> {order.id} </NavLink>
-                  // <div>ALSO RENDER DETAILS OF ORDER HERE</div>
-                  // </div>
                   <tr key={order.id}>
                     <td as={NavLink} to={`/order/${order.id}`}>{order.id}</td>
                     <td>{order.firstName}</td>
                     <td>{order.lastName}</td>
                     <td>{order.email}</td>
-                    <td>{order.status}</td>
+                    <td>{order.status}
+                      <select name="updatingStatus">
+                        <option />
+                        <option value="created">Created</option>
+                        <option value="processing">Processing</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="cancelled"> Cancelled</option>
+                      </select>
+                      <button type="button" id={`${order.id}`} onClick={this.handleStatus}> Update </button>
+                    </td>
                     <td>{order.subtotal}</td>
                     <td>{order.streetNum}</td>
                     <td>{order.street}</td>
                     <td>{order.city}</td>
                     <td>{order.state}</td>
                     <td>{order.zip}</td>
+                    <td>Products Placeholder</td>
                     <td>{order.createdAt}</td>
                     <td>{order.updatedAt}</td>
                     <td>{order.userId}</td>

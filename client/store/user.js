@@ -9,6 +9,7 @@ const GOT_ALL_USERS = 'GOT_ALL_USERS'
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER' //logging out user
 const DELETE_USER = 'DELETE_USER' //deleting from database
+const UPDATE_STATUS = 'UPDATE_STATUS'
 
 /**
  * INITIAL STATE
@@ -18,14 +19,14 @@ const initialState = {
   singleUser: {}
 }
 
-
 /**
  * ACTION CREATORS
  */
 const gotAllUsers = users => ({type: GOT_ALL_USERS, users})
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER}) //logging out a user
-const deleteUser = (user) => ({type: DELETE_USER}) //deleting from database
+const deleteUser = (user) => ({type: DELETE_USER}) //deleting from database, this may be redundant
+const updateStatus = (user) => ({type: UPDATE_STATUS})
 
 /**
  * THUNK CREATORS
@@ -105,6 +106,14 @@ export const deleteThisUser = (user) => {
   }
 }
 
+export const updateUserStatus = (user) => {
+  return async (dispatch) => {
+    const updatedUser = await axios.put('/api/users', user)
+    const action = updateStatus(updatedUser)
+    dispatch(action)
+  }
+}
+
 /**
  * REDUCER
  */
@@ -116,6 +125,8 @@ export default function(state = initialState, action) {
       return { ...state, singleUser: action.user }
     case REMOVE_USER:
       return { ...state, singleUser: {} }
+    case UPDATE_STATUS:
+      return {...state}
     default:
       return state
   }

@@ -2,8 +2,13 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { fetchSingleArt, removeArt } from '../store/art'
+
 import { me } from '../store/user'
-import { putOrder } from '../store/order'
+
+import { postOrder, putOrder } from '../store/order'
+import { fetchReviews } from '../store/review'
+
+
 
 
 class SingleArt extends Component {
@@ -16,7 +21,7 @@ class SingleArt extends Component {
   componentDidMount() {
     const id = this.props.match.params.artId
     this.props.actions.loadSingleArt(id)
-    console.log('didMount')
+    this.props.actions.onFetchReviews(id)
   }
 
   handleClick(event) {
@@ -41,9 +46,7 @@ class SingleArt extends Component {
   }
 
   render() {
-    console.log("USER IN SINGLE ART", this.props.user)
-    console.log("ORDER ON STATE IN SINGLE ART", this.props.order)
-
+ 
     const singleArt = this.props.singleArt
     const user = this.props.user
     return (
@@ -78,6 +81,10 @@ class SingleArt extends Component {
             {singleArt.quantity === 0 ? <p>SOLD OUT</p> :
               <button type="submit" onClick={this.addtoCart}>Add to Cart</button>}
           </div>
+
+          <div>
+            <h4>{this.props.reviews.id}</h4>
+          </div>
         </div>
       </div>
     )
@@ -88,7 +95,8 @@ const mapStateToProps = state => {
   return {
     singleArt: state.art.singleArt,
     user: state.user.singleUser,
-    order: state.order.singleOrder
+    order: state.order.singleOrder,
+    reviews: state.review.allReviews
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -103,7 +111,12 @@ const mapDispatchToProps = dispatch => {
       editOrder: function (status, id, page, orderInfo, productIds) {
         dispatch(putOrder(status, id, page, orderInfo, productIds))
       },
-      getMeAgain: function () { dispatch(me())}
+      getMeAgain: function () { dispatch(me())
+      },
+      onFetchReviews: function (artId) {
+        dispatch(fetchReviews(artId))
+      }
+
     }
   }
 }
