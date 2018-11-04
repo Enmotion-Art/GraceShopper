@@ -7,16 +7,16 @@ class CheckoutForm extends React.Component {
     super(props)
     this.state = {
       firstName: props.user.firstName || '',
-      lastName: props.user.lastName || '',
+      lastName: 'Smith',
       email: props.user.email || '',
-      streetNum: props.streetNum || '',
-      street: props.street || '',
-      city: props.city || '',
-      state: props.state || '',
-      zip: props.zip || '',
-      cc: '',
-      sc: '',
-      hidden: true
+      streetNum: '11',
+      street: "Main Street",
+      city: "NYC",
+      state: "NY ",
+      zip: '11102',
+      cc: '123456781234',
+      sc: '123',
+      hidden: true,
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,13 +29,9 @@ class CheckoutForm extends React.Component {
   }
 
   handleSubmit(e) {
-    e.preventDefault();
-    let order = this.props.order;
+    e.preventDefault()
     let orderObj = {};
-    let userId = null;
-
     for(let key in this.state ) {
-      let value = this.state[key]
       if(key !== 'hidden') {
         orderObj[key] = this.state[key].trim();
       }
@@ -47,22 +43,14 @@ class CheckoutForm extends React.Component {
         allNotNull = false;
       }
     }
-    if(allNotNull) {
-      this.setState({
-        hidden: true
-      })
-      let productArr;
-      if(!this.props.user.id) {
-        productArr = JSON.parse(localStorage.getItem('product')).slice(1);
-      } else {
-        productArr = this.props.user.orders.find(order => order.status === 'created').arts;
-      }
-      let productIds = productArr.map(product => product.id)
 
+    if(allNotNull) {
       if(!this.props.user.id) {
-        this.props.createOrder(productIds, orderObj, userId, 'confirmation')
+        let productArr = JSON.parse(localStorage.getItem('product'));
+        let productIds = productArr.map(product => product.id)
+        this.props.createOrder(productIds, orderObj, null, 'confirmation')
       } else {
-        this.props.updateOrder('processing', order.id, orderObj, "confirmation", productIds);
+        this.props.updateOrder('processing', this.props.order.id, orderObj, "confirmation");
       }
     } else {
       this.setState({
@@ -72,8 +60,6 @@ class CheckoutForm extends React.Component {
   }
 
   render() {
-    let order = JSON.parse(localStorage.getItem('product'));
-    console.log("ORDER ON STATE", this.props.order)
     return (
       <div className='grid' id="container-row">
         <div className='grid-child'>
@@ -108,7 +94,6 @@ class CheckoutForm extends React.Component {
               <label> Zip Code: </label>
               <input type="text" name="zip" onChange={this.handleChange} value={this.state.zip} />
 
-              <p><strong>Subtotal: $XXX</strong></p>
           </form>
         </div>
         <div className='grid-child' id="second-column">
@@ -119,16 +104,12 @@ class CheckoutForm extends React.Component {
 
             <label> Security Code: </label>
             <input type="text" name="sc" onChange={this.handleChange} value={this.state.sc} />
-
           </form>
-        </div>
-        <div className='grid-child'>
-          <div id="second-column">
-            {/* <h3>Order Information</h3>
-            <p><strong>Item</strong>: {order.title}</p>
-            <p><strong>Quantity</strong>: {order.quantity}</p>
-            <p><strong>Price</strong>: {order.price}</p> */}
-            <button type="submit" onClick={this.handleSubmit}>Place your order</button>
+          <div>
+            <div>
+              <p><strong>Total to Charge: $TBD</strong></p>
+              <button type="submit" onClick={this.handleSubmit}>Place your order</button>
+            </div>
           </div>
         </div>
       </div>
@@ -143,7 +124,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   updateOrder: (status, id, orderInfo, page, productIds) => dispatch(putOrder(status, id, orderInfo, page, productIds)),
-  createOrder: (product, orderInfo, user, page) => dispatch(postOrder(product, orderInfo, user, page))
+  createOrder: (product, orderInfo, user, page) => dispatch(postOrder(product, orderInfo, user, page)),
+  // fetchUserOrder: (id) => dispatch(fetchUserOrder(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CheckoutForm)

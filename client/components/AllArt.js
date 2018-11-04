@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { NavLink, withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { fetchAllArt } from '../store/art'
 import Pagination from './Pagination';
-
+import { me } from '../store/user'
+import SingleArt from './SingleArt'
 
 class AllArt extends Component {
   constructor(props) {
@@ -18,8 +19,8 @@ class AllArt extends Component {
 
   componentDidMount() {
     this.props.loadInitialArt()
+    this.props.getMeAgain()
   }
-
 
   artFilter (category) {
     const allArt = this.props.allArt
@@ -44,11 +45,12 @@ class AllArt extends Component {
        renderedArt: renderedArt,
        activePage: page
       });
-
    }
 
   render() {
     console.log("USER IN ALL ART", this.props.user)
+    console.log("ORDER IN ALL ART", this.props.order)
+
     const allArt = this.props.allArt
     const selectedArt = this.state.selectedArt
 
@@ -73,14 +75,14 @@ class AllArt extends Component {
 
                 selectedArt.map(art =>
                 <div className='grid-child' key ={art.id}>
-                <NavLink to={`/art/${art.id}`}> {art.title} </NavLink>
+                <Link to={`/art/${art.id}`}> {art.title} </Link>
                 <img id="main-art" src = {art.image} />
                 </div>
                 )
              :
                 allArt.map(art =>
                 <div className='grid-child' key ={art.id}>
-                <NavLink to={`/art/${art.id}`}> {art.title} </NavLink>
+                <Link to={`/art/${art.id}`}> {art.title} </Link>
                 <img id="main-art" src = {art.image} />
                 </div>
                 )
@@ -97,7 +99,8 @@ class AllArt extends Component {
 const mapStateToProps = state => {
   return {
     allArt: state.art.allArt,
-    user: state.user
+    user: state.user,
+    order: state.order
   }
 }
 
@@ -105,6 +108,9 @@ const mapDispatchToProps = dispatch => {
   return {
     loadInitialArt: function() {
       dispatch(fetchAllArt())
+    },
+    getMeAgain: function() {
+      dispatch(me())
     }
   }
 }

@@ -11,12 +11,14 @@ export const GOT_SINGLE_ORDER = 'GOT_SINGLE_ORDER'
 export const ADD_ORDER = 'ADD_ORDER'
 export const UPDATE_ORDER = 'UPDATE_ORDER'
 export const DELETE_ORDER = 'DELETE_ORDER'
+const REMOVED_ORDER_PRODUCT = 'REMOVED_ORDER_PRODUCT'
 
 //ACTION CREATORS
 export const gotAllOrders = (allOrders) => ({
   type: GOT_ALL_ORDERS,
   allOrders
 })
+
 export const gotSingleOrder = (order) => ({
   type: GOT_SINGLE_ORDER,
   order
@@ -34,6 +36,11 @@ export const updateOrder = (order) => ({
 
 export const deleteOrder = (order) => ({
   type: DELETE_ORDER,
+  order
+})
+
+export const removeOrderProduct = (order) => ({
+  type: REMOVED_ORDER_PRODUCT,
   order
 })
 
@@ -67,15 +74,17 @@ export const fetchAllOrders = () =>  {
  export const postOrder = (productIds, orderInfo, userId, page) => {
    return async (dispatch) => {
      try {
-       const response = await axios.post('/api/orders', { productIds,  orderInfo, userId })
-       const newOrder = response.data
-       const action = addOrder(newOrder)
-       dispatch(action)
-       if(page === 'confirmation') {
-        localStorage.removeItem('product')
+        const response = await axios.post('/api/orders', { productIds,  orderInfo, userId })
+        let newOrder = response.data
+        if(page === 'confirmation') {
+          localStorage.removeItem('product');
+          newOrder = {};
         }
-       localStorage.setItem('order', JSON.stringify(newOrder))
-       history.push(`/${page}`)
+        const action = addOrder(newOrder)
+        dispatch(action)
+        if(page) {
+          history.push(`/${page}`)
+        }
      } catch (err) {
        console.log(err)
      }
@@ -85,14 +94,18 @@ export const fetchAllOrders = () =>  {
 export const putOrder = (status, id, orderInfo, page, productIds) => {
    return async (dispatch) => {
     try {
-      const response = await axios.put(`/api/orders/${id}`, { status: status, orderInfo: orderInfo, productIds: productIds })
-      const updatedOrder = response.data
-      const action = updateOrder(updatedOrder)
-      dispatch(action)
+      const response = await axios.put(`/api/orders/${id}`, { status: status, orderInfo: orderInfo, productIds: productIds, orderId: id })
+      let updatedOrder = response.data
       if(page === 'confirmation') {
-      localStorage.removeItem('product')
+        localStorage.removeItem('product');
+        updatedOrder = {};
+        dispatch(updateOrder({}))
+      } else {
+        dispatch(updateOrder(updatedOrder))
       }
-      history.push(`/${page}`)
+      if(page) {
+        history.push(`/${page}`)
+      }
     } catch (err) {
       console.log(err)
     }
@@ -108,6 +121,13 @@ export const removeOrder = (order) => {
    }
 }
 
+export const deleteOrderProduct = (orderId, productId, self) => {
+  return async (dispatch) => {
+    const { data } = await axios.delete(`/api/orders/${orderId}/${productId}`)
+    dispatch(removeOrderProduct(data));
+  }
+}
+
 //ORDER REDUCER
 
 export const orderReducer = (state = initialState, action) => {
@@ -120,6 +140,8 @@ export const orderReducer = (state = initialState, action) => {
       return {...state, allOrders: [...state.allOrders, action.order], singleOrder: action.order }
     case UPDATE_ORDER:
       return {...state, allOrders: [...state.allOrders, action.order], singleOrder: action.order }
+    case REMOVED_ORDER_PRODUCT:
+      return {...state, singleOrder: action.order }
     default:
       return state
   }
