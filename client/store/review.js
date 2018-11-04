@@ -37,10 +37,14 @@ export const postReview = (artId, newReview) => {
 export const fetchReviews = (artId) => {
   return async (dispatch) => {
     try {
+      console.log('HISTORY')
+
       const response = await axios.get(`/api/art/${artId}/reviews`)
       const reviews = response.data
       const action = gotReviews(reviews)
+      console.log('HISTORY')
       dispatch(action)
+
     }
     catch (err) { console.log(err) }
   }
@@ -54,7 +58,7 @@ export const reviewReducer = (state = initialState, action) => {
     case ADD_REVIEW:
       return { ...state, allReviews: [...state.allReviews, action.review], singleReview: action.review }
     case GOT_REVIEWS:
-      return { ...state, allReviews: [...state.allReviews, action.reviews] }
+      return { ...state, allReviews: action.reviews }
     default:
       return state
   }

@@ -38,7 +38,7 @@ export const deleteOrder = (order) => ({
 })
 
 //THUNK CREATORS
-export const fetchAllOrders = () =>  {
+export const fetchAllOrders = () => {
   return async (dispatch) => {
     try {
       const response = await axios.get('/api/orders')
@@ -49,9 +49,9 @@ export const fetchAllOrders = () =>  {
       console.log(err)
     }
   }
- }
+}
 
- export const fetchSingleOrder = (id) =>  {
+export const fetchSingleOrder = (id) => {
   return async (dispatch) => {
     try {
       const response = await axios.get(`/api/orders/${id}`)
@@ -62,35 +62,35 @@ export const fetchAllOrders = () =>  {
       console.log(err)
     }
   }
- }
+}
 
- export const postOrder = (productIds, orderInfo, userId, page) => {
-   return async (dispatch) => {
-     try {
-       const response = await axios.post('/api/orders', { productIds,  orderInfo, userId })
-       const newOrder = response.data
-       const action = addOrder(newOrder)
-       dispatch(action)
-       if(page === 'confirmation') {
+export const postOrder = (productIds, orderInfo, userId, page) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post('/api/orders', { productIds, orderInfo, userId })
+      const newOrder = response.data
+      const action = addOrder(newOrder)
+      dispatch(action)
+      if (page === 'confirmation') {
         localStorage.removeItem('product')
-        }
-       localStorage.setItem('order', JSON.stringify(newOrder))
-       history.push(`/${page}`)
-     } catch (err) {
-       console.log(err)
-     }
-   }
- }
+      }
+      localStorage.setItem('order', JSON.stringify(newOrder))
+      history.push(`/${page}`)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
 
 export const putOrder = (status, id, orderInfo, page, productIds) => {
-   return async (dispatch) => {
+  return async (dispatch) => {
     try {
       const response = await axios.put(`/api/orders/${id}`, { status: status, orderInfo: orderInfo, productIds: productIds })
       const updatedOrder = response.data
       const action = updateOrder(updatedOrder)
       dispatch(action)
-      if(page === 'confirmation') {
-      localStorage.removeItem('product')
+      if (page === 'confirmation') {
+        localStorage.removeItem('product')
       }
       history.push(`/${page}`)
     } catch (err) {
@@ -100,12 +100,12 @@ export const putOrder = (status, id, orderInfo, page, productIds) => {
 }
 
 export const removeOrder = (order) => {
-   return async (dispatch) => {
-     const removedOrder = await axios.delete('/api/order', { data: order })
-     const action = deleteOrder(removedOrder);
-     dispatch(action)
-     history.push('/order')
-   }
+  return async (dispatch) => {
+    const removedOrder = await axios.delete('/api/order', { data: order })
+    const action = deleteOrder(removedOrder);
+    dispatch(action)
+    history.push('/order')
+  }
 }
 
 //ORDER REDUCER
@@ -117,9 +117,9 @@ export const orderReducer = (state = initialState, action) => {
     case GOT_SINGLE_ORDER:
       return { ...state, singleOrder: action.order }
     case ADD_ORDER:
-      return {...state, allOrders: [...state.allOrders, action.order], singleOrder: action.order }
+      return { ...state, allOrders: [...state.allOrders, action.order], singleOrder: action.order }
     case UPDATE_ORDER:
-      return {...state, allOrders: [...state.allOrders, action.order], singleOrder: action.order }
+      return { ...state, allOrders: [...state.allOrders, action.order], singleOrder: action.order }
     default:
       return state
   }

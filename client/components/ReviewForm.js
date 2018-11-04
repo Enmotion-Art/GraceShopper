@@ -7,39 +7,32 @@ import { postReview } from '../store/review'
 class ReviewForm extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      stars: 0,
-      comment: ''
-    }
+    this.state = {}
 
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleChange = this.handleChange.bind(this)
   }
 
-
-  handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value,
-    })
-    console.log('STATE IN REVIEW', this.state)
-  }
 
   handleSubmit(event) {
     event.preventDefault()
     const artId = this.props.match.params.artId //open to figure out how to get artId
+    const userId = this.props.user.id //open to figure out how to get userId. userId doesn't persist after refresh
+
     const stars = event.target.stars.value
     const content = event.target.comment.value
-    console.log('STARS', stars)
-    console.log('CONTENT', content)
     this.props.onPostReview(artId,
       {
         stars,
-        content
+        content,
+        userId
       })
+
+    this.props.history.push(`/art/${artId}`)
+
   }
 
   render() {
-    console.log(this.props)
+    console.log("USER IN REVIEWFORM", this.props.user)
 
 
     return (
@@ -49,25 +42,26 @@ class ReviewForm extends React.Component {
             <h2>Review Below</h2>
             <label>Overall Rating</label>
             <div className="rate">
-              <input type="radio" id="star5" name="stars" value="5" onClick={this.handleChange} />
+              <input type="radio" id="star5" name="stars" value="5" />
               <label htmlFor="star5" title="text">5 stars</label>
-              <input type="radio" id="star4" name="stars" value="4" onClick={this.handleChange} />
+              <input type="radio" id="star4" name="stars" value="4" />
               <label htmlFor="star4" title="text">4 stars</label>
-              <input type="radio" id="star3" name="stars" value="3" onClick={this.handleChange} />
+              <input type="radio" id="star3" name="stars" value="3" />
               <label htmlFor="star3" title="text">3 stars</label>
-              <input type="radio" id="star2" name="stars" value="2" onClick={this.handleChange} />
+              <input type="radio" id="star2" name="stars" value="2" />
               <label htmlFor="star2" title="text">2 stars</label>
-              <input type="radio" id="star1" name="stars" value="1" onClick={this.handleChange} />
+              <input type="radio" id="star1" name="stars" value="1" />
               <label htmlFor="star1" title="text">1 star</label>
             </div>
-            <p></p>
+
+            <p />
 
             <textarea name="comment" rows="4" cols="50" onChange={this.handleChange} />
-            <p></p>
+
+            <p />
 
             <button type="submit">Submit</button>
           </form>
-
         </div>
       </div>
     )
@@ -83,9 +77,9 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onPostReview: (artId, review) => dispatch(postReview(artId, review))
+    onPostReview: (artId, userId, review) => dispatch(postReview(artId, userId, review))
   }
 }
 

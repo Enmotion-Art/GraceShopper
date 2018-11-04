@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const Art = require('../db/models/art')
+const User = require('../db/models/user')
 const Review = require('../db/models/review')
 const Sequelize = require('sequelize')
 module.exports = router
@@ -141,9 +142,12 @@ router.delete('/', async (req, res, next) => {
 // POST api/art/:artId/reviews - create review and set relationship with art
 router.post('/:artId/reviews', async (req, res, next) => {
   try {
+    console.log('HIIIIIIIIIIII', req.body)
     let art = await Art.findById(req.params.artId)
+    let user = await User.findById(req.body.userId)
     let review = await Review.create(req.body)
     review.setArt(art)
+    review.setUser(user)
 
     res.status(201).json(review)
   }
