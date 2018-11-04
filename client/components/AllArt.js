@@ -48,8 +48,8 @@ class AllArt extends Component {
   }
 
   render() {
-    console.log("USER IN ALL ART", this.props.user)
     const allArt = this.props.allArt
+    const filteredArt = allArt.filter(elem => elem.quantity > 0)
     const selectedArt = this.state.selectedArt
 
     return (
@@ -78,7 +78,7 @@ class AllArt extends Component {
                 </div>
               )
               :
-              allArt.map(art =>
+              filteredArt.map(art =>
                 <div className='grid-child' key={art.id}>
                   <NavLink to={`/art/${art.id}`}> {art.title} </NavLink>
                   <NavLink to={`/art/${art.id}`}><img id="main-art" src={art.image} /> </NavLink>
