@@ -1,11 +1,10 @@
 const router = require('express').Router()
-const {Order, Art, User } = require('../db/models')
+const {Order, Art, User, OrderProduct } = require('../db/models')
 module.exports = router
 
 router.post('/', async (req, res, next) => {
-  console.log("REQ BODY", req.body)
   try {
-    const order = await Order.create({
+    let order = await Order.create({
       status: 'processing'
     })
 
@@ -22,10 +21,20 @@ router.post('/', async (req, res, next) => {
 
     await order.save();
 
-    const productIds = req.body.productIds;
-    console.log('PRODUCT IDS IN POST', productIds)
-    let currArt = await Promise.all(productIds.map(productId => Art.findById(productId)));
-    await Promise.all(currArt.map(art => order.addArt(art)));
+    if(req.body.productIds) {
+      const productIds = req.body.productIds;
+      let countedProducts = await OrderProduct.findQuantity(productIds);
+
+      let orderArt = await Promise.all(Object.keys(countedProducts).map(productId => Art.findById(productId)));
+      await Promise.all(orderArt.map(art => order.addArt(art)));
+      await OrderProduct.setQuantity(countedProducts, order.id);
+
+    }
+    order = await Order.findOne({
+      where: {
+        id: order.id
+      }, include: [{model: Art, OrderProduct, User }]
+    })
 
     res.json(order)
   } catch (err) {
@@ -35,7 +44,7 @@ router.post('/', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const orders = await Order.findAll();
+    const orders = await Order.findAll({include: [{model: Art}]});
     res.send(orders)
   } catch (err) {
     next(err)
@@ -47,7 +56,7 @@ router.get('/:orderId', async (req, res, next) => {
     const order = await Order.findOne({
       where: {
         id: req.params.orderId
-      }, include: [{model: Art}]
+      }, include: [{model: OrderProduct, Art}]
     })
     res.send(order)
   } catch (err) {
@@ -55,20 +64,46 @@ router.get('/:orderId', async (req, res, next) => {
   }
 })
 
+router.delete('/:orderId/:productId', async(req, res, next) => {
+  try{
+    await OrderProduct.destroy({
+      where: {
+        orderId: req.params.orderId,
+        artId: req.params.productId
+    }})
+    const order = await Order.findOne({
+      where: {
+        id: req.params.orderId
+      }, include: [{model: Art, OrderProduct }]
+    })
+    res.status(202).send(order)
+  } catch(err) {
+    next(err)
+  }
+})
+
 router.put('/:orderId', async (req, res, next) => {
   try {
-    const order = await Order.findById(req.params.orderId)
+    const order = await Order.findOne({
+      where: {
+        id: req.params.orderId
+      }, include: [{model: Art, OrderProduct }]
+    })
     order.status = req.body.status;
-
-    if(req.body.productIds) {
-      await Promise.all(req.body.productIds.map(id => order.addArt(id) ))
-    }
 
     if(req.body.orderInfo) {
       await order.update(req.body.orderInfo)
     }
 
     await order.save()
+    if(req.body.productIds) {
+      const productIds = req.body.productIds;
+      let countedProducts = await OrderProduct.findQuantity(productIds);
+      let orderArt = await Promise.all(Object.keys(countedProducts).map(productId =>
+        Art.findById(productId)));
+      await Promise.all(orderArt.map(art => order.addArt(art)));
+      await OrderProduct.setQuantity(countedProducts, order.id);
+    }
     res.send(order)
   } catch (err) {
     next(err)

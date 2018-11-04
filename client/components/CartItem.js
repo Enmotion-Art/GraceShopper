@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 
 const CartItem = (props) => {
   console.log("ITEM PROPS", props)
+  let quantity = props.quantity;
+
   return (
     <div id="container-row">
       <div id="column">
@@ -13,14 +15,15 @@ const CartItem = (props) => {
         <p>Style: {props.product.category}</p>
         <p>{props.product.width}W x {props.product.height}H</p>
         <p><strong>${props.product.price}</strong></p>
-        <p><strong>Quantity: </strong>{props.quantity}</p>
+        <p><strong>Quantity: </strong>{quantity}</p>
       </div>
   </div>
   )
 }
 
 const mapStateToProps = state => ({
-  order: state.order.singleOrder
+  order: state.order.singleOrder,
+  user: state.user.singleUser
 })
 
 export default connect(mapStateToProps)(CartItem)

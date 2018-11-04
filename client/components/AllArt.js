@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { NavLink, withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { fetchAllArt } from '../store/art'
 import Pagination from './Pagination';
-
+import { me } from '../store/user'
+import SingleArt from './SingleArt'
 
 class AllArt extends Component {
   constructor(props) {
@@ -18,76 +19,80 @@ class AllArt extends Component {
 
   componentDidMount() {
     this.props.loadInitialArt()
+    this.props.getMeAgain()
   }
 
 
   artFilter (category) {
+
     const allArt = this.props.allArt
 
     if (category === 'priceAll') return allArt
-    if (category === 'priceOne') return allArt.filter(art => art.price<100)
-    if (category === 'priceTwo') return allArt.filter(art => art.price<301 && art.price>=100)
-    if (category === 'priceThree') return allArt.filter(art => art.price<500 && art.price>300)
-    if (category === 'priceFour') return allArt.filter(art => art.price>500)
+    if (category === 'priceOne') return allArt.filter(art => art.price < 100)
+    if (category === 'priceTwo') return allArt.filter(art => art.price < 301 && art.price >= 100)
+    if (category === 'priceThree') return allArt.filter(art => art.price < 500 && art.price > 300)
+    if (category === 'priceFour') return allArt.filter(art => art.price > 500)
   }
 
   handleSelect(event) {
     const category = event.target.value
     this.setState({
-        [event.target.name]: this.artFilter(category)
-       });
-   }
+      [event.target.name]: this.artFilter(category)
+    });
+  }
 
-   handlePageChange(page) {
-     const renderedArt = this.props.allArt.slice((page-1)*2, (page-1) *2 + 2)
-     this.setState({
-       renderedArt: renderedArt,
-       activePage: page
-      });
 
-   }
+  handlePageChange(page) {
+    const renderedArt = this.props.allArt.slice((page - 1) * 2, (page - 1) * 2 + 2)
+    this.setState({
+      renderedArt: renderedArt,
+      activePage: page
+    });
+
+  }
 
   render() {
-    console.log("USER IN ALL ART", this.props.user)
     const allArt = this.props.allArt
+    const filteredArt = allArt.filter(elem => elem.quantity > 0)
     const selectedArt = this.state.selectedArt
 
     return (
       <div className='grid'>
 
         <div className='grid-child'>
-            <label>Filter by Price</label>
-            <select name='selectedArt' onChange={this.handleSelect}>
-                <option value='priceAll'>All Prices</option>
-                <option value='priceOne'  >Under $100</option>
-                <option value='priceTwo'  >$100 - $300 </option>
-                <option value='priceThree'  > $301 - $500</option>
-                <option value='priceFour'  > Over $500</option>
-            </select>
+          <label>Filter by Price</label>
+          <select name='selectedArt' onChange={this.handleSelect}>
+            <option value='priceAll'>All Prices</option>
+            <option value='priceOne'  >Under $100</option>
+            <option value='priceTwo'  >$100 - $300 </option>
+            <option value='priceThree'  > $301 - $500</option>
+            <option value='priceFour'  > Over $500</option>
+          </select>
         </div>
 
         <div className='grid'>
           <h1>Buy Art! Feel Special</h1>
-            {
-              selectedArt ?
+          {
+            selectedArt ?
 
-                selectedArt.map(art =>
-                <div className='grid-child' key ={art.id}>
-                <NavLink to={`/art/${art.id}`}> {art.title} </NavLink>
-                <img id="main-art" src = {art.image} />
+
+              selectedArt.map(art =>
+                <div className='grid-child' key={art.id}>
+                  <NavLink to={`/art/${art.id}`}> {art.title} </NavLink>
+                  <img id="main-art" src={art.image} />
                 </div>
-                )
-             :
-                allArt.map(art =>
-                <div className='grid-child' key ={art.id}>
-                <NavLink to={`/art/${art.id}`}> {art.title} </NavLink>
-                <img id="main-art" src = {art.image} />
+              )
+              :
+              filteredArt.map(art =>
+                <div className='grid-child' key={art.id}>
+                  <NavLink to={`/art/${art.id}`}> {art.title} </NavLink>
+                  <NavLink to={`/art/${art.id}`}><img id="main-art" src={art.image} /> </NavLink>
                 </div>
-                )
-            }
+              )
+          }
         </div>
 
-        <Pagination allArt={allArt}/>
+        {/* <Pagination allArt={allArt} /> */}
 
       </div>
     )
@@ -97,14 +102,18 @@ class AllArt extends Component {
 const mapStateToProps = state => {
   return {
     allArt: state.art.allArt,
-    user: state.user
+    user: state.user,
+    order: state.order
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadInitialArt: function() {
+    loadInitialArt: function () {
       dispatch(fetchAllArt())
+    },
+    getMeAgain: function() {
+      dispatch(me())
     }
   }
 }

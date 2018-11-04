@@ -8,11 +8,11 @@ import StandardPage from './StandardPage'
  * COMPONENT
  */
 export const UserHome = props => {
-  const {email} = props
+  const {firstName} = props
   const {type} = props
   return (
     <div className='grid'>
-      <h3>Welcome, {email}</h3>
+      <h3>Welcome, {firstName}!</h3>
       {
         type === 'admin' ? <AdminPage /> : <StandardPage />
       }
@@ -25,8 +25,10 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
+    firstName: state.user.singleUser.firstName,
     email: state.user.singleUser.email,
-    type: state.user.singleUser.UserType
+    type: state.user.singleUser.UserType,
+    order: state.order.singleOrder
   }
 }
 
@@ -36,5 +38,5 @@ export default connect(mapState)(UserHome)
  * PROP TYPES
  */
 UserHome.propTypes = {
-  email: PropTypes.string,
+  firstName: PropTypes.string,
 }

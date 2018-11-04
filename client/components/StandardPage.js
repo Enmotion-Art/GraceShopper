@@ -19,8 +19,7 @@ class StandardPage extends Component {
         return (
 
             <div>
-                <div className='grid-child'>hello!!</div>
-                <div>
+                <div className='grid-child'>
                     <h2>Your Orders:</h2>
                     <UserOrders user={user} />
                 </div>

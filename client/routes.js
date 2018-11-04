@@ -15,6 +15,7 @@ import Confirmation from './components/Confirmation'
 import ReviewForm from './components/ReviewForm'
 
 import { me } from './store'
+import { fetchUserOrder } from './store/order'
 
 /**
  * COMPONENT
@@ -69,7 +70,8 @@ const mapState = state => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.singleUser.id,
-    type: state.user.singleUser.UserType
+    type: state.user.singleUser.UserType,
+    user: state.user.singleUser
   }
 }
 

@@ -38,6 +38,7 @@ class AllOrders extends Component {
 
   render() {
     const orders = this.props.allOrders
+    console.log(orders)
     const selectedOrders = this.state.selectedOrders
 
     return (
@@ -55,7 +56,7 @@ class AllOrders extends Component {
         <table class="blueTable">
           <thead>
             <tr>
-              <th>Order ID</th>
+              <th>ID</th>
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>
@@ -66,66 +67,75 @@ class AllOrders extends Component {
               <th>City</th>
               <th>State</th>
               <th>Zip</th>
+              <th>Products (ID)</th>
               <th>Created At</th>
               <th>Updated At</th>
               <th>User ID</th>
             </tr>
           </thead>
-          {/* <tfoot>
-            <tr>
-              <td colspan="14">
-                <div class="links">
-                  <a href="#">&laquo;</a>{' '}
-                  <a class="active" href="#">
-                    1
-                  </a>{' '}
-                  <a href="#">2</a> <a href="#">3</a> <a href="#">4</a>{' '}
-                  <a href="#">&raquo;</a>
-                </div>
-              </td>
-            </tr>
-          </tfoot> */}
           <tbody>
             {selectedOrders
               ? selectedOrders.map(order => (
-                  // <div className='grid-child' key ={order.id}>
-                  //   <NavLink to={`/order/${order.id}`}> {order.id} </NavLink>
-                  //   <div>ALSO RENDER DETAILS OF ORDER HERE</div>
-                  // </div>
                   <tr key={order.id}>
-                    <td as={NavLink} to={`/order/${order.id}`}>{order.id}</td>
+                    <td>{order.id}</td>
                     <td>{order.firstName}</td>
                     <td>{order.lastName}</td>
                     <td>{order.email}</td>
-                    <td>{order.status}</td>
+                    <td>{order.status}
+                    <select name="updatingStatus">
+                        <option />
+                        <option value="created">Created</option>
+                        <option value="processing">Processing</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="cancelled"> Cancelled</option>
+                      </select>
+                      <button type="button" id={`${order.id}`} onClick={this.handleStatus}> Update </button>
+                    </td>
                     <td>{order.subtotal}</td>
                     <td>{order.streetNum}</td>
                     <td>{order.street}</td>
                     <td>{order.city}</td>
                     <td>{order.state}</td>
                     <td>{order.zip}</td>
+                    <td>{order.arts ?
+                      order.arts.map(art=>
+                         <button><NavLink to={`/art/${art.id}`}>{art.id}</NavLink></button>
+                         )
+                      : <div></div>
+                    }</td>
                     <td>{order.createdAt}</td>
                     <td>{order.updatedAt}</td>
                     <td>{order.userId}</td>
                   </tr>
                 ))
               : orders.map(order => (
-                  // <div className='grid-child' key={order.id}>
-                  // <NavLink to={`/orders/${order.id}`}> {order.id} </NavLink>
-                  // <div>ALSO RENDER DETAILS OF ORDER HERE</div>
-                  // </div>
                   <tr key={order.id}>
-                    <td as={NavLink} to={`/order/${order.id}`}>{order.id}</td>
+                    <td>{order.id}</td>
                     <td>{order.firstName}</td>
                     <td>{order.lastName}</td>
                     <td>{order.email}</td>
-                    <td>{order.status}</td>
+                    <td>{order.status}
+                      <select name="updatingStatus">
+                        <option />
+                        <option value="created">Created</option>
+                        <option value="processing">Processing</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="cancelled"> Cancelled</option>
+                      </select>
+                      <button type="button" id={`${order.id}`} onClick={this.handleStatus}> Update </button>
+                    </td>
                     <td>{order.subtotal}</td>
                     <td>{order.streetNum}</td>
                     <td>{order.street}</td>
                     <td>{order.city}</td>
                     <td>{order.state}</td>
                     <td>{order.zip}</td>
+                    <td>{order.arts ?
+                      order.arts.map(art=>
+                        <button><NavLink to={`/art/${art.id}`}>{art.id}</NavLink></button>
+                        )
+                      : <div></div>
+                    }</td>
                     <td>{order.createdAt}</td>
                     <td>{order.updatedAt}</td>
                     <td>{order.userId}</td>
