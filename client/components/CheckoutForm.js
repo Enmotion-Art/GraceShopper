@@ -125,7 +125,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   updateOrder: (status, id, orderInfo, page, productIds) => dispatch(putOrder(status, id, orderInfo, page, productIds)),
   createOrder: (product, orderInfo, user, page) => dispatch(postOrder(product, orderInfo, user, page)),
-  // fetchUserOrder: (id) => dispatch(fetchUserOrder(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CheckoutForm)

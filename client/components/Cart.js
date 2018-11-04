@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { withRouter, Link } from 'react-router-dom'
-import { postOrder, putOrder, fetchSingleOrder, deleteOrderProduct } from '../store/order'
+import { withRouter } from 'react-router-dom'
 import { me } from '../store/user'
 import history from '../history'
 import CartItem from './CartItem'
@@ -10,10 +9,18 @@ class Cart extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      order: props.order
+      order: props.order,
+      quantity: '',
+      refresh: false
     }
     this.handleCheckout = this.handleCheckout.bind(this)
-    this.delete = this.delete.bind(this)
+    this.triggerRefresh = this.triggerRefresh.bind(this)
+  }
+
+  triggerRefresh() {
+    this.setState({
+      refresh: !this.state.refresh
+    })
   }
 
   componentDidMount() {
@@ -22,25 +29,6 @@ class Cart extends Component {
 
   handleCheckout() {
     history.push('/checkout')
-  }
-
-  delete(id) {
-    if(this.props.user.id) {
-      this.props.removeProduct(this.props.order.id, id)
-    } else {
-      let productArr = JSON.parse(localStorage.getItem('product'));
-      console.log("PRODUCT ARR IN DELETE", productArr)
-      let oneLessItem = productArr.filter(product => product.id !== id);
-      if(!oneLessItem.length) {
-        localStorage.removeItem('product')
-      } else {
-        localStorage.setItem('product', JSON.stringify(oneLessItem));
-      }
-    }
-
-    this.setState({
-      order: this.props.order
-    })
   }
 
   render() {
@@ -86,9 +74,8 @@ class Cart extends Component {
             total += product.price * quantity;
 
             return <div key={+key} id="container-row">
-                <CartItem product={product} quantity={quantity}   allItems={productArr} />
-                <div id="second-column">
-                  <button onClick={() => this.delete(product.id)}>Delete Item</button>
+              <div>
+                <CartItem product={product} quantity={quantity} refresh={this.triggerRefresh}/>
                 </div>
               </div>
             }
@@ -112,12 +99,10 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  createOrder: (product, page) => dispatch(postOrder(product, page)),
-  getUserOrder: (id) => dispatch(fetchSingleOrder(id)),
+  // createOrder: (product, page) => dispatch(postOrder(product, page)),
   getMeAgain: () => dispatch(me()),
-  editOrder: (status, id, orderInfo, page, prodIds) => dispatch(putOrder(status, id, orderInfo, page, prodIds)),
-  removeProduct: (orderId, productId) => dispatch(deleteOrderProduct(orderId, productId)),
-  // fetchUserOrder: (id) => dispatch(fetchUserOrder(id))
+  // editOrder: (status, id, orderInfo, page, prodIds) => dispatch(putOrder(status, id, orderInfo, page, prodIds)),
+  // changeProduct: (orderId, productId, quantity) => dispatch(changeOrderProduct(orderId, productId, quantity)),
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Cart))
