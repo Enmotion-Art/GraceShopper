@@ -31,6 +31,7 @@ class AllUsers extends Component {
   handleReset(event) {
     event.preventDefault()
     //Trigger Reset code here
+    //hmmm how do we want to go about this?
   }
 
   render() {
@@ -61,7 +62,7 @@ class AllUsers extends Component {
             {users.map(user => (
 
               <tr key={user.id}>
-                <td><button type="button" id={user.id}><NavLink to={`/user/${user.id}`}> {user.id} </NavLink></button></td>
+                <td>{user.id}</td>
                 <td>{user.firstName}</td>
                 <td>{user.lastName}</td>
                 <td>{user.email}</td>
