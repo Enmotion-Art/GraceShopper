@@ -1,14 +1,21 @@
 import React, { Component } from 'react'
 import UserOrders from './UserOrders'
+import { me } from '../store/user'
 import { NavLink, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import store from '../store';
 
 
 class StandardPage extends Component {
-    render() {
+    componentDidMount() {
+        //To trigger a refresh so that new orders places will show in the standard page
+        store.dispatch(me())
+    }
 
+    render() {
         const { user } = this.props
         console.log('USER ON STANDARDPAGE', user)
+        console.log()
         return (
 
             <div>

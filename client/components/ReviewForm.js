@@ -16,7 +16,7 @@ class ReviewForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
     const artId = this.props.match.params.artId //open to figure out how to get artId
-    const userId = 1 //open to figure out how to get userId. userId doesn't persist after refresh
+    const userId = this.props.user.id//open to figure out how to get userId. userId doesn't persist after refresh
 
     const stars = event.target.stars.value
     const content = event.target.comment.value
