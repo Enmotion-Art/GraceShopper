@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { NavLink, withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { fetchAllArt } from '../store/art'
 import Pagination from './Pagination';
-
+import { me } from '../store/user'
+import SingleArt from './SingleArt'
 
 class AllArt extends Component {
   constructor(props) {
@@ -18,10 +19,12 @@ class AllArt extends Component {
 
   componentDidMount() {
     this.props.loadInitialArt()
+    this.props.getMeAgain()
   }
 
 
-  artFilter(category) {
+  artFilter (category) {
+
     const allArt = this.props.allArt
 
     if (category === 'priceAll') return allArt
@@ -37,6 +40,7 @@ class AllArt extends Component {
       [event.target.name]: this.artFilter(category)
     });
   }
+
 
   handlePageChange(page) {
     const renderedArt = this.props.allArt.slice((page - 1) * 2, (page - 1) * 2 + 2)
@@ -71,6 +75,7 @@ class AllArt extends Component {
           {
             selectedArt ?
 
+
               selectedArt.map(art =>
                 <div className='grid-child' key={art.id}>
                   <NavLink to={`/art/${art.id}`}> {art.title} </NavLink>
@@ -97,7 +102,8 @@ class AllArt extends Component {
 const mapStateToProps = state => {
   return {
     allArt: state.art.allArt,
-    user: state.user
+    user: state.user,
+    order: state.order
   }
 }
 
@@ -105,6 +111,9 @@ const mapDispatchToProps = dispatch => {
   return {
     loadInitialArt: function () {
       dispatch(fetchAllArt())
+    },
+    getMeAgain: function() {
+      dispatch(me())
     }
   }
 }

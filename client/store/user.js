@@ -1,9 +1,10 @@
 import axios from 'axios'
 import history from '../history'
-
+import { gotSingleOrder } from './order'
 /**
  * ACTION TYPES
  */
+
 const GOT_ALL_USERS = 'GOT_ALL_USERS'
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER' //logging out user
@@ -33,10 +34,23 @@ const updateStatus = (user) => ({type: UPDATE_STATUS})
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
-    let user
+    let user;
     if (res.data.id) {
       const response = await axios.get(`api/users/${res.data.id}`)
       user = response.data
+      let order = user.orders.find(workingOrder => workingOrder.status === 'created');
+        if(!order) {
+          order = await axios.post('/api/orders', { userId: user.id });
+          order = order.data;
+        }
+      let addedProducts = JSON.parse(localStorage.getItem('product'));
+      if(addedProducts) {
+        let prodIds = addedProducts.map(prod => prod.id)
+        order = await axios.put(`/api/orders/${order.id}`, { status: 'created', productIds: prodIds, orderId: order.id })
+        order = order.data;
+        localStorage.removeItem('product')
+      }
+      dispatch(gotSingleOrder(order))
     } else {
       user = initialState.singleUser
     }
