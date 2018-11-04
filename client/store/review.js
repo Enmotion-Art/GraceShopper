@@ -41,6 +41,7 @@ export const fetchReviews = (artId) => {
       const reviews = response.data
       const action = gotReviews(reviews)
       dispatch(action)
+
     }
     catch (err) { console.log(err) }
   }
@@ -54,7 +55,7 @@ export const reviewReducer = (state = initialState, action) => {
     case ADD_REVIEW:
       return { ...state, allReviews: [...state.allReviews, action.review], singleReview: action.review }
     case GOT_REVIEWS:
-      return { ...state, allReviews: [...state.allReviews, action.reviews] }
+      return { ...state, allReviews: action.reviews }
     default:
       return state
   }

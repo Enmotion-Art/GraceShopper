@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const Art = require('../db/models/art')
+const User = require('../db/models/user')
 const Review = require('../db/models/review')
 const Sequelize = require('sequelize')
 module.exports = router
@@ -142,21 +143,23 @@ router.delete('/', async (req, res, next) => {
 router.post('/:artId/reviews', async (req, res, next) => {
   try {
     let art = await Art.findById(req.params.artId)
+    let user = await User.findById(req.body.userId)
     let review = await Review.create(req.body)
     review.setArt(art)
+    review.setUser(user)
 
     res.status(201).json(review)
   }
   catch (error) { next(error) }
 })
 
-// GET api/art/:artId/reviews  - get reviews for single art
+// GET api/art/:artId/reviews  - get reviews for single art & eager load related ART and USER
 router.get('/:artId/reviews', async (req, res, next) => {
   try {
     let reviews = await Review.findAll({
       where: {
         artId: req.params.artId,
-      }
+      }, include: [{ model: Art }, { model: User }]
     })
     res.json(reviews)
   }

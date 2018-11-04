@@ -7,6 +7,9 @@ import { me } from '../store/user'
 
 import { postOrder, putOrder } from '../store/order'
 import { fetchReviews } from '../store/review'
+import Reviews from './Reviews'
+import { me } from '../store/user'
+import store from '../store';
 
 
 
@@ -22,6 +25,9 @@ class SingleArt extends Component {
     const id = this.props.match.params.artId
     this.props.actions.loadSingleArt(id)
     this.props.actions.onFetchReviews(id)
+    store.dispatch(me())
+
+
   }
 
   handleClick(event) {
@@ -46,9 +52,14 @@ class SingleArt extends Component {
   }
 
   render() {
- 
+
+    console.log("USER IN SINGLE ART", this.props.user)
+    console.log("ORDER ON STATE", this.props.order)
+    console.log("REVIEWS IN SINGLE ART", this.props.reviews)
+    
     const singleArt = this.props.singleArt
     const user = this.props.user
+
     return (
       <div className='grid'>
         {
@@ -82,9 +93,15 @@ class SingleArt extends Component {
               <button type="submit" onClick={this.addtoCart}>Add to Cart</button>}
           </div>
 
-          <div>
-            <h4>{this.props.reviews.id}</h4>
-          </div>
+          <p></p>
+          <hr width="100%" align="LEFT"></hr>
+          {
+            this.props.reviews.length ?
+              <div>
+                <Reviews reviews={this.props.reviews} artId={this.props.singleArt.id} userId={this.props.user.id} />
+              </div>
+              : null
+          }
         </div>
       </div>
     )

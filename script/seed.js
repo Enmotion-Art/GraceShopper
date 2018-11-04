@@ -1,10 +1,10 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Art} = require('../server/db/models')
-const {green, red} = require('chalk')
+const { User, Art, Review } = require('../server/db/models')
+const { green, red } = require('chalk')
 
-const arts = [ {
+const arts = [{
   title: 'Profile on Canvas',
   description: 'Handmade; Materials: canvas, acrylic',
   price: 325.00,
@@ -133,30 +133,57 @@ const users = [{
 }
 ]
 
+
+const reviews = [{
+  stars: 5,
+  content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget enim metus. Duis ut lectus ac mi laoreet bibendum nec sit amet dolor. Nunc aliquam lorem quis vulputate tincidunt. Nulla mattis pharetra nisi, id venenatis est hendrerit et. Vivamus euismod placerat justo, ac sollicitudin dui facilisis ac. Aliquam molestie nisi mollis rhoncus mollis. Donec ac odio nec massa pretium facilisis nec et enim. Nullam vel condimentum eros.',
+  userId: 1,
+  artId: 1
+}, {
+  stars: 4,
+  content: 'Sed felis purus, tristique et dignissim id, pretium eu felis. Aenean mi sem, lobortis eu est in, eleifend condimentum ipsum. Cras condimentum congue purus, a finibus ipsum vehicula ac. Vestibulum ornare rutrum enim. Suspendisse vitae elit ac metus sodales lacinia sed eu ipsum. Nullam tincidunt sit amet ante quis posuere.',
+  userId: 1,
+  artId: 1
+}, {
+  stars: 3,
+  content: 'liquam molestie nisi mollis rhoncus mollis. Donec ac odio nec massa pretium facilisis nec et enim. Nullam vel condimentum eros. Nunc eget lorem nisi. Aenean cursus consectetur dui, at ultrices justo rutrum at. Vivamus dapibus posuere augue et fringilla. Suspendisse nibh nibh, maximus egestas posuere a, euismod in ante. Aenean fermentum orci sit amet luctus mollis. Aenean finibus ipsum ut purus mollis, non venenatis tortor efficitur.',
+  userId: 1,
+  artId: 1
+}, {
+  stars: 4,
+  content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget enim metus. Duis ut lectus ac mi laoreet bibendum nec sit amet dolor. Nunc aliquam lorem quis vulputate tincidunt. Nulla mattis pharetra nisi, id venenatis est hendrerit et. Vivamus euismod placerat justo, ac sollicitudin dui facilisis ac',
+  userId: 1,
+  artId: 2
+}
+]
+
 const seed = () =>
   Promise.all(arts.map(elem => Art.create(elem))
   )
-  .then(() =>
-  Promise.all(users.map(elem => User.create(elem))
-  )
-);
-
-const main= () => {
+    .then(() =>
+      Promise.all(users.map(elem => User.create(elem))
+      )
+    )
+    .then(() =>
+      Promise.all(reviews.map(elem => Review.create(elem))
+      )
+    )
+const main = () => {
   console.log('Syncing the db...');
-  db.sync({force: true})
-      .then(() => {
-        console.log(green('Seeding the database...'));
-        return seed();
-      })
-      .catch(err => {
-        console.error(red('Oh noes! Something went wrong!'))
-        console.error(err);
-      })
-      .then(() => {
-        db.close();
-        console.log(green('Seeded Successfully!!'));
-        return null;
-      })
+  db.sync({ force: true })
+    .then(() => {
+      console.log(green('Seeding the database...'));
+      return seed();
+    })
+    .catch(err => {
+      console.error(red('Oh noes! Something went wrong!'))
+      console.error(err);
+    })
+    .then(() => {
+      db.close();
+      console.log(green('Seeded Successfully!!'));
+      return null;
+    })
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded ${arts.length} users`)

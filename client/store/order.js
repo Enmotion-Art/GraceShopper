@@ -45,7 +45,7 @@ export const removeOrderProduct = (order) => ({
 })
 
 //THUNK CREATORS
-export const fetchAllOrders = () =>  {
+export const fetchAllOrders = () => {
   return async (dispatch) => {
     try {
       const response = await axios.get('/api/orders')
@@ -56,9 +56,9 @@ export const fetchAllOrders = () =>  {
       console.log(err)
     }
   }
- }
+}
 
- export const fetchSingleOrder = (id) =>  {
+export const fetchSingleOrder = (id) => {
   return async (dispatch) => {
     try {
       const response = await axios.get(`/api/orders/${id}`)
@@ -69,7 +69,8 @@ export const fetchAllOrders = () =>  {
       console.log(err)
     }
   }
- }
+}
+
 
  export const postOrder = (productIds, orderInfo, userId, page) => {
    return async (dispatch) => {
@@ -91,8 +92,9 @@ export const fetchAllOrders = () =>  {
    }
  }
 
+
 export const putOrder = (status, id, orderInfo, page, productIds) => {
-   return async (dispatch) => {
+  return async (dispatch) => {
     try {
       const response = await axios.put(`/api/orders/${id}`, { status: status, orderInfo: orderInfo, productIds: productIds, orderId: id })
       let updatedOrder = response.data
@@ -113,12 +115,12 @@ export const putOrder = (status, id, orderInfo, page, productIds) => {
 }
 
 export const removeOrder = (order) => {
-   return async (dispatch) => {
-     const removedOrder = await axios.delete('/api/order', { data: order })
-     const action = deleteOrder(removedOrder);
-     dispatch(action)
-     history.push('/order')
-   }
+  return async (dispatch) => {
+    const removedOrder = await axios.delete('/api/order', { data: order })
+    const action = deleteOrder(removedOrder);
+    dispatch(action)
+    history.push('/order')
+  }
 }
 
 export const deleteOrderProduct = (orderId, productId, self) => {
@@ -137,7 +139,7 @@ export const orderReducer = (state = initialState, action) => {
     case GOT_SINGLE_ORDER:
       return { ...state, singleOrder: action.order }
     case ADD_ORDER:
-      return {...state, allOrders: [...state.allOrders, action.order], singleOrder: action.order }
+      return { ...state, allOrders: [...state.allOrders, action.order], singleOrder: action.order }
     case UPDATE_ORDER:
       return {...state, allOrders: [...state.allOrders, action.order], singleOrder: action.order }
     case REMOVED_ORDER_PRODUCT:

@@ -2,39 +2,71 @@ import React, { Component } from 'react'
 import { NavLink, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-
-const Reviews = (props) => {
-  const reviews = this.props.reviews
-  return (
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th>Order#</th>
-            <th>Status</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            orders.map(order =>
-              order.status === 'processing' || order.status === 'shipped' ?
-                <tr key={order.id}>
-                  <td>{order.id}</td>
-                  <td>{order.status}</td>
-                  <td>{order.subtotal}</td>
-                </tr>
-
-                : null
-            )
-          }
-        </tbody>
-      </table>
-    </div>
-
-  )
+//Helper function to show stars given by a user
+const printStars = (stars) => {
+  let output = []
+  let count = 0
+  while (count < 5) {
+    if (count < stars)
+      output.push(<span className="fa fa-star checked" key={count} />)
+    else
+      output.push(<span className="fa fa-star" key={count} />)
+    count++
+  }
+  return output
 }
 
+// Helper function to format Date (i.e. November 3rd, 2018 )
+const formatDate = (date) => {
+  const dateformat = require('dateformat')
+  return dateformat(date, 'mmmm dS, yyyy')
+}
+
+//Helper function to calculate average stars for a single product
+const avgStars = (reviews) => {
+  let result = 0
+  reviews.forEach(review =>
+    result += review.stars
+  )
+  let average = Math.round(result / (reviews.length * 5) * 5)
+  let output = [];
+  let count = 0;
+  while (count < 5) {
+    if (count < average)
+      output.push(<span className="fa fa-star checked" key={count} />)
+    else
+      output.push(<span className="fa fa-star" key={count} />)
+    count++
+  }
+  return output
+}
+
+
+const Reviews = (props) => {
+  const reviews = props.reviews
+  const user = props.user
+  console.log('USER IN REVIEWS', user)
+
+  return (
+    <div>
+      <h4>Customer Reviews</h4>
+      <p>{reviews.length} customer reviews</p>
+      <p>Avg rating: {avgStars(reviews)}</p>
+      <hr width="60%" align="LEFT" color='lightgrey' />
+      {
+        reviews.map(review =>
+          <div key={review.id} >
+            {/* <p>Reviewed By: {review.user.firstName} {review.user.lastName} </p> */}
+            <p>{formatDate(review.createdAt)}</p>
+            <p>{printStars(review.stars)}</p>
+            <p>{review.content}</p>
+            <hr width="60%" align="LEFT" color='lightgrey' />
+          </div>
+        )
+      }
+    </div>
+  )
+}
 
 const mapStateToProps = state => {
   return {
@@ -42,6 +74,7 @@ const mapStateToProps = state => {
     reviews: state.review.allReviews
   }
 }
+
 
 
 export default withRouter(connect(mapStateToProps)(Reviews))
