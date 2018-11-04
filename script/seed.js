@@ -8,7 +8,7 @@ const arts = [ {
   title: 'Profile on Canvas',
   description: 'Handmade; Materials: canvas, acrylic',
   price: 325.00,
-  quantity: 1,
+  quantity: 5,
   image: 'https://i.etsystatic.com/17185369/r/il/93061f/1437515490/il_570xN.1437515490_nksd.jpg',
   height: 30,
   width: 20,
@@ -17,7 +17,7 @@ const arts = [ {
   title: 'Horse on Canvas',
   description: 'Handmade; Materials: canvas, acrylic',
   price: 65.00,
-  quantity: 1,
+  quantity: 4,
   image: 'https://i.etsystatic.com/17185369/r/il/3dffa3/1484708013/il_570xN.1484708013_4kj2.jpg',
   height: 12,
   width: 12,
@@ -26,7 +26,7 @@ const arts = [ {
   title: 'Sankofa',
   description: 'Handmade; Materials: canvas, acrylic',
   price: 65.00,
-  quantity: 1,
+  quantity: 3,
   image: 'https://i.etsystatic.com/17185369/r/il/95c154/1437477952/il_570xN.1437477952_5e2l.jpg',
   height: 12,
   width: 12,
@@ -35,7 +35,7 @@ const arts = [ {
   title: 'Goddess',
   description: 'Handmade; Materials: canvas, oil paint',
   price: 55.00,
-  quantity: 1,
+  quantity: 2,
   image: 'https://i.etsystatic.com/17185369/r/il/3142af/1484726583/il_570xN.1484726583_r2tp.jpg',
   height: 14,
   width: 11,
@@ -53,7 +53,7 @@ const arts = [ {
   title: 'Phoenix on Canvas',
   description: 'Handmade; Materials: canvas, acrylic',
   price: 225.00,
-  quantity: 1,
+  quantity: 2,
   image: 'https://i.etsystatic.com/17185369/r/il/fc3c44/1437506008/il_570xN.1437506008_nkwe.jpg',
   height: 20,
   width: 20,
@@ -62,7 +62,7 @@ const arts = [ {
   title: 'Emerging on Canvas',
   description: 'Handmade; Materials: canvas, acrylic',
   price: 180.00,
-  quantity: 1,
+  quantity: 3,
   image: 'https://i.etsystatic.com/17185369/r/il/d30c93/1484747031/il_570xN.1484747031_tldq.jpg',
   height: 20,
   width: 16,
@@ -71,29 +71,65 @@ const arts = [ {
   title: 'Arrow on Paper',
   description: 'Handmade; Materials: canvas, acrylic',
   price: 45.00,
-  quantity: 1,
+  quantity: 4,
   image: 'https://i.etsystatic.com/17185369/r/il/bab126/1437485136/il_570xN.1437485136_dagi.jpg',
   height: 9,
   width: 11,
   category: 'Social Justice'
+}, {
+  title: 'Zero Quantity Test',
+  description: 'test',
+  price: 500.00,
+  quantity: 0,
+  image: 'http://www.flexibleproduction.com/wp-content/uploads/2017/06/test-intelligenza-sociale.jpg',
+  height: 5,
+  width: 5,
+  category: 'Test'
 }
 ]
 
 const users = [{
   firstName: 'Cody',
+  lastName: 'Puppy',
   email: 'cody@email.com',
   password: '123',
   UserType: 'standard'
 }, {
   firstName: 'Murphy',
+  lastName: 'Dear',
   email: 'murphy@email.com',
   password: '123',
   UserType: 'standard'
 }, {
   firstName: 'Lexi',
+  lastName: 'Admin',
   email: 'lexi@email.com',
   password: '123',
+  UserType: 'standard'
+}, {
+  firstName: 'Lee',
+  lastName: 'Kirincich',
+  email: 'le@email.com',
+  password: '123',
   UserType: 'admin'
+}, {
+  firstName: 'Erica',
+  lastName: 'Luong',
+  email: 'erica@email.com',
+  password: '123',
+  UserType: 'admin'
+}, {
+  firstName: 'Mags',
+  lastName: 'Walker',
+  email: 'mags@email.com',
+  password: '123',
+  UserType: 'standard'
+}, {
+  firstName: 'Adrienne',
+  lastName: 'Johnson',
+  email: 'adrienne@email.com',
+  password: '123',
+  UserType: 'standard'
 }
 ]
 
