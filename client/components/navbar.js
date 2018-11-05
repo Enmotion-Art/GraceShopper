@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Navbar = ({handleClick, isLoggedIn}, props) => (
   <div className='grid'>
     <h1>EnMotion, LLC</h1>
 
@@ -42,7 +42,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.singleUser.id
+    isLoggedIn: !!state.user.singleUser.id,
   }
 }
 
