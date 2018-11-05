@@ -17,15 +17,35 @@ class CheckoutForm extends React.Component {
       cc: '123456781234',
       sc: '123',
       hidden: true,
+      promo: '',
+      subtotal: this.calculatePrice()
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.promoChange = this.promoChange.bind(this);
+    this.promoSubmit = this.promoSubmit.bind(this);
   }
 
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value,
     })
+  }
+
+  promoChange(e) {
+    this.setState({
+      promo: e.target.value,
+    })
+  }
+
+  promoSubmit(e) {
+    e.preventDefault();
+    if(this.state.promo.toLowerCase() === 'luigiwuzhurr') {
+      let newPrice = Math.floor(this.calculatePrice()/2)
+      this.setState({
+        subtotal: newPrice
+      })
+    }
   }
 
   calculatePrice() {
@@ -45,7 +65,10 @@ class CheckoutForm extends React.Component {
     e.preventDefault()
     let orderObj = {};
     for(let key in this.state ) {
-      if(key !== 'hidden') {
+      if(key !== 'hidden' && key !== 'promo') {
+        if(key === 'subtotal') {
+          orderObj[key] = +this.state.subtotal;
+        }
         orderObj[key] = this.state[key].trim();
       }
     }
@@ -56,8 +79,6 @@ class CheckoutForm extends React.Component {
         allNotNull = false;
       }
     }
-
-    orderObj.subtotal = this.calculatePrice()
 
     if(allNotNull) {
       if(!this.props.user.id) {
@@ -121,10 +142,17 @@ class CheckoutForm extends React.Component {
             <input type="text" name="sc" onChange={this.handleChange} value={this.state.sc} />
           </form>
           <div>
+            <br />
+            <div>
+              <label>Promo Code:</label>
+              <input type="text" name="promo" onChange={this.promoChange} value={this.state.promo} />
+              <button type="submit" onClick={this.promoSubmit}>Apply Promo</button>
+            </div>
             <div>
               { JSON.parse(localStorage.getItem('product')) || this.props.order.id ?
-              <p><strong>Total to Charge: ${this.calculatePrice()}</strong></p>
+              <p><strong>Total to Charge: ${this.state.subtotal}</strong></p>
               : <p /> }
+
               <button type="submit" onClick={this.handleSubmit}>Place your order</button>
             </div>
           </div>

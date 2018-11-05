@@ -54,6 +54,7 @@ class AllArt extends Component {
     const selectedArt = this.state.selectedArt
 
     return (
+
       <div className='main-container'>
         <div>
           <p></p>
@@ -76,6 +77,10 @@ class AllArt extends Component {
           <p></p>
           <p></p>
         <div className='grid'>
+          {this.props.user.singleUser.id ?
+          <h1>Welcome, {this.props.user.singleUser.firstName}!</h1>
+          : <h1 />}
+
 
           {
             selectedArt ?

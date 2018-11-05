@@ -73,7 +73,11 @@ export const auth = (email, password, method) => async dispatch => {
   try {
     const { data } = await axios.get(`/api/users/${res.data.id}`)
     dispatch(getUser(data))
-    history.push('/home')
+    if(data.UserType === 'admin') {
+      history.push('/home')
+    } else {
+      history.push('/art')
+    }
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }
