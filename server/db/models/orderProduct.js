@@ -9,7 +9,7 @@ const OrderProduct = db.define('cart', {
 })
 
 OrderProduct.findQuantity = function(productIds) {
-  console.log("IN FIND QUANTITY", productIds )
+  // console.log("IN FIND QUANTITY", productIds )
   let obj = {};
   productIds.forEach(product => {
     if(obj[product]) {

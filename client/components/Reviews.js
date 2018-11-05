@@ -45,7 +45,7 @@ const avgStars = (reviews) => {
 const Reviews = (props) => {
   const reviews = props.reviews
   const user = props.user
-  console.log('USER IN REVIEWS', user)
+  // console.log('USER IN REVIEWS', user)
 
   return (
     <div>

@@ -65,7 +65,7 @@ router.get('/:orderId', async (req, res, next) => {
 })
 
 router.put('/:orderId/:productId', async(req, res, next) => {
-  console.log("REQ BODY IN PUT" , req.body)
+  // console.log("REQ BODY IN PUT" , req.body)
   try{
     if(req.body.quantity === '0') {
       await OrderProduct.destroy({
@@ -94,7 +94,7 @@ router.put('/:orderId/:productId', async(req, res, next) => {
 })
 
 router.put('/:orderId', async (req, res, next) => {
-  console.log('req magssss', req)
+  // console.log('req magssss', req)
   try {
     const order = await Order.findOne({
       where: {

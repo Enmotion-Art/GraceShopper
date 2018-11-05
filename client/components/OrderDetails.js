@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 const OrderDetails = (props) => {
   const order = props.order[0]
   const products = props.order[0].arts
-  console.log('PRODUCTS in ORDER DETAILS', props)
+  // console.log('PRODUCTS in ORDER DETAILS', props)
 
   return (
     <div>

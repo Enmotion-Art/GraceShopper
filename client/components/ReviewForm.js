@@ -32,8 +32,8 @@ class ReviewForm extends React.Component {
   }
 
   render() {
-    console.log("USER IN REVIEWFORM", this.props.user)
-    console.log('HISTORY IN REVIEWFORM', this.props)
+    // console.log("USER IN REVIEWFORM", this.props.user)
+    // console.log('HISTORY IN REVIEWFORM', this.props)
 
     if (this.props.user.id)
       return (
