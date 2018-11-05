@@ -45,7 +45,7 @@ export const me = () => async dispatch => {
         }
       let addedProducts = JSON.parse(localStorage.getItem('product'));
       if(addedProducts) {
-        let prodIds = addedProducts.map(prod => prod.id)
+        let prodIds = addedProducts.map(prod => prod.id).slice(1)
         order = await axios.put(`/api/orders/${order.id}`, { status: 'created', productIds: prodIds, orderId: order.id })
         order = order.data;
         localStorage.removeItem('product')
@@ -53,6 +53,7 @@ export const me = () => async dispatch => {
       dispatch(gotSingleOrder(order))
     } else {
       user = initialState.singleUser
+      console.log('user before dispatch', user)
     }
     dispatch(getUser(user || initialState.singleUser))
   } catch (err) {
