@@ -1,19 +1,22 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {NavLink, withRouter} from 'react-router-dom'
-import {fetchAllOrders} from '../store/order'
+import {fetchAllOrders, updateOrderStatus} from '../store/order'
 
 class AllOrders extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedOrders: null //inital null value to account for when an order doesn't match any category. Has to do with if/else stmt in the render. Subject to change.
+      selectedOrders: null, //inital null value to account for when an order doesn't match any category. Has to do with if/else stmt in the render. Subject to change.
+      updatedOrderStatus: ''
     }
     this.handleSelect = this.handleSelect.bind(this)
+    this.handleStatus = this.handleStatus.bind(this)
+    this.handleUpdate = this.handleUpdate.bind(this)
   }
 
   componentDidMount() {
-    this.props.loadInitialOrders()
+    this.props.actions.loadInitialOrders()
   }
 
   orderFilter(status) {
@@ -34,6 +37,23 @@ class AllOrders extends Component {
     this.setState({
       [event.target.name]: this.orderFilter(status)
     })
+  }
+
+  handleStatus(event) {
+    const updatedStatus = event.target.value
+    console.log('event', event.target.value)
+    this.setState({
+      [event.target.name]: updatedStatus
+    })
+    console.log('state', this.state)
+  }
+
+  handleUpdate(event) {
+    console.log('event.target.id', event.target.id)
+    const orderId = event.target.id
+    const updatedStatus = this.state.updatedOrderStatus
+    this.props.actions.changeOrderStatus({status: updatedStatus}, orderId)
+    console.log('updatedStatus', updatedStatus)
   }
 
   render() {
@@ -82,14 +102,14 @@ class AllOrders extends Component {
                     <td>{order.lastName}</td>
                     <td>{order.email}</td>
                     <td>{order.status}
-                    <select name="updatingStatus">
+                    <select name="updatedOrderStatus" onChange={this.handleStatus}>
                         <option />
                         <option value="created">Created</option>
                         <option value="processing">Processing</option>
                         <option value="shipped">Shipped</option>
                         <option value="cancelled"> Cancelled</option>
                       </select>
-                      <button type="button" id={`${order.id}`} onClick={this.handleStatus}> Update </button>
+                      <button type="button" id={`${order.id}`} onClick={this.handleUpdate}> Update </button>
                     </td>
                     <td>{order.subtotal}</td>
                     <td>{order.streetNum}</td>
@@ -115,14 +135,14 @@ class AllOrders extends Component {
                     <td>{order.lastName}</td>
                     <td>{order.email}</td>
                     <td>{order.status}
-                      <select name="updatingStatus">
+                      <select name="updatedOrderStatus" onChange={this.handleStatus}>
                         <option />
                         <option value="created">Created</option>
                         <option value="processing">Processing</option>
                         <option value="shipped">Shipped</option>
                         <option value="cancelled"> Cancelled</option>
                       </select>
-                      <button type="button" id={`${order.id}`} onClick={this.handleStatus}> Update </button>
+                      <button type="button" id={`${order.id}`} onClick={this.handleUpdate}> Update </button>
                     </td>
                     <td>{order.subtotal}</td>
                     <td>{order.streetNum}</td>
@@ -157,8 +177,13 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadInitialOrders: function() {
-      dispatch(fetchAllOrders())
+    actions: {
+      loadInitialOrders: function() {
+        dispatch(fetchAllOrders())
+    },
+    changeOrderStatus: function(order, orderId) {
+      dispatch(updateOrderStatus(order, orderId))
+    }
     }
   }
 }
