@@ -44,8 +44,9 @@ export const me = () => async dispatch => {
           order = order.data;
         }
       let addedProducts = JSON.parse(localStorage.getItem('product'));
+      console.log("ADDED PRODUCTS")
       if(addedProducts) {
-        let prodIds = addedProducts.map(prod => prod.id).slice(1)
+        let prodIds = addedProducts.map(prod => prod.id);
         order = await axios.put(`/api/orders/${order.id}`, { status: 'created', productIds: prodIds, orderId: order.id })
         order = order.data;
         localStorage.removeItem('product')
@@ -63,6 +64,7 @@ export const me = () => async dispatch => {
 
 export const auth = (email, password, method) => async dispatch => {
   let res
+  console.log("HITTING HERE")
   try {
     res = await axios.post(`/auth/${method}`, {email, password})
   } catch (authError) {
@@ -82,8 +84,6 @@ export const logout = () => async dispatch => {
   try {
     await axios.post('/auth/logout')
     dispatch(removeUser())
-    dispatch(gotSingleOrder({}))
-
     history.push('/login')
   } catch (err) {
     console.error(err)
