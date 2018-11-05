@@ -32,8 +32,8 @@ class Cart extends Component {
   }
 
   render() {
-    console.log("USER IN CART", this.props.user)
-    console.log("ORDER ON STATE IN CART", this.props.order)
+    // console.log("USER IN CART", this.props.user)
+    // console.log("ORDER ON STATE IN CART", this.props.order)
     let productArr;
     if(this.props.user.id) {
       productArr = this.props.order.arts;
