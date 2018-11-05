@@ -7,6 +7,7 @@ import store from '../store';
 
 
 class StandardPage extends Component {
+
     componentDidMount() {
         //To trigger a refresh so that new orders places will show in the standard page
         store.dispatch(me())
@@ -15,7 +16,6 @@ class StandardPage extends Component {
     render() {
         const { user } = this.props
         console.log('USER ON STANDARDPAGE', user)
-        console.log()
         return (
 
             <div>
@@ -24,7 +24,6 @@ class StandardPage extends Component {
                     <UserOrders user={user} />
                 </div>
             </div>
-
         )
     }
 }

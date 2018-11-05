@@ -33,37 +33,43 @@ class ReviewForm extends React.Component {
 
   render() {
     console.log("USER IN REVIEWFORM", this.props.user)
+    console.log('HISTORY IN REVIEWFORM', this.props)
 
+    if (this.props.user.id)
+      return (
+        <div className='grid' id="container-row">
+          <div className='grid-child'>
+            <form id='reviewForm' onSubmit={this.handleSubmit}>
+              <h2>Review Below</h2>
+              <label>Overall Rating</label>
+              <div className="rate">
+                <input type="radio" id="star5" name="stars" value="5" />
+                <label htmlFor="star5" title="text">5 stars</label>
+                <input type="radio" id="star4" name="stars" value="4" />
+                <label htmlFor="star4" title="text">4 stars</label>
+                <input type="radio" id="star3" name="stars" value="3" />
+                <label htmlFor="star3" title="text">3 stars</label>
+                <input type="radio" id="star2" name="stars" value="2" />
+                <label htmlFor="star2" title="text">2 stars</label>
+                <input type="radio" id="star1" name="stars" value="1" />
+                <label htmlFor="star1" title="text">1 star</label>
+              </div>
 
-    return (
-      <div className='grid' id="container-row">
-        <div className='grid-child'>
-          <form id='reviewForm' onSubmit={this.handleSubmit}>
-            <h2>Review Below</h2>
-            <label>Overall Rating</label>
-            <div className="rate">
-              <input type="radio" id="star5" name="stars" value="5" />
-              <label htmlFor="star5" title="text">5 stars</label>
-              <input type="radio" id="star4" name="stars" value="4" />
-              <label htmlFor="star4" title="text">4 stars</label>
-              <input type="radio" id="star3" name="stars" value="3" />
-              <label htmlFor="star3" title="text">3 stars</label>
-              <input type="radio" id="star2" name="stars" value="2" />
-              <label htmlFor="star2" title="text">2 stars</label>
-              <input type="radio" id="star1" name="stars" value="1" />
-              <label htmlFor="star1" title="text">1 star</label>
-            </div>
+              <p />
 
-            <p />
+              <textarea name="comment" rows="4" cols="50" onChange={this.handleChange} />
 
-            <textarea name="comment" rows="4" cols="50" onChange={this.handleChange} />
+              <p />
 
-            <p />
-
-            <button type="submit">Submit</button>
-          </form>
+              <button type="submit">Submit</button>
+            </form>
+          </div>
         </div>
-      </div>
+      )
+
+    else return (
+      // this.props.history.push('/')
+      <div></div>
     )
   }
 }
