@@ -94,7 +94,7 @@ router.put('/:orderId/:productId', async(req, res, next) => {
 })
 
 router.put('/:orderId', async (req, res, next) => {
-  // console.log('req magssss', req)
+  console.log('req magssss', req)
   try {
     const order = await Order.findOne({
       where: {

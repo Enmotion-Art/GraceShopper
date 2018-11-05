@@ -4,16 +4,14 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn}, props) => (
-  <div className='grid'>
-    <h1>EnMotion, LLC</h1>
 
-    <nav>
 
-      <div className='grid'>
+const Navbar = ({handleClick, isLoggedIn}) => (
+  <div className='navgrid' id='navContainer'>
+    <nav className='nav-child'>
         {/* <Link to="/art">Art Shop</Link> */}
           {isLoggedIn ? (
-            <div>
+            <div classname='links'>
               {/* The navbar will show these links after you log in */}
               <Link to="/art">Shop</Link>
               <Link to="/home">Home</Link>
@@ -23,7 +21,7 @@ const Navbar = ({handleClick, isLoggedIn}, props) => (
               </a>
             </div>
           ) : (
-            <div>
+            <div classname='links'>
               {/* The navbar will show these links before you log in */}
               <Link to="/art">Shop</Link>
               <Link to="/login">Login</Link>
@@ -31,9 +29,11 @@ const Navbar = ({handleClick, isLoggedIn}, props) => (
               <Link to="/cart">Cart</Link>
             </div>
           )}
-      </div>
+
     </nav>
-    <hr />
+    <div className='grid-child' id='navTitle'></div>
+    <div className='grid-child' id='navTitle'>EnMotion Art</div>
+
   </div>
 )
 
