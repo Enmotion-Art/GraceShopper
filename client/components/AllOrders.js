@@ -53,7 +53,7 @@ class AllOrders extends Component {
     const orderId = event.target.id
     const updatedStatus = this.state.updatedOrderStatus
     this.props.actions.changeOrderStatus({status: updatedStatus}, orderId)
-    // console.log('updatedStatus', updatedStatus)
+    console.log('updatedStatus', updatedStatus)
   }
 
   render() {
