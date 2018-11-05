@@ -141,7 +141,6 @@ export const updateOrderStatus = (order, orderId) => {
 //ORDER REDUCER
 
 export const orderReducer = (state = initialState, action) => {
-  const newOrderList = state.allOrders.slice().filter(order => order.id !== action.order.id) //This is used for update order! So the updated order immediately renders
   switch (action.type) {
     case GOT_ALL_ORDERS:
       return { ...state, allOrders: action.allOrders }
@@ -149,8 +148,10 @@ export const orderReducer = (state = initialState, action) => {
       return { ...state, singleOrder: action.order }
     case ADD_ORDER:
       return { ...state, allOrders: [...state.allOrders, action.order], singleOrder: action.order }
-    case UPDATE_ORDER:
+    case UPDATE_ORDER: {
+      const newOrderList = state.allOrders.slice().filter(order => order.id !== action.order.id) //This is used for update order! So the updated order immediately renders
       return {...state, allOrders: [...newOrderList, action.order], singleOrder: action.order }
+    }
     case CHANGED_ORDER_PRODUCT:
       return {...state, singleOrder: action.order }
     default:
