@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { fetchSingleArt, removeArt } from '../store/art'
 
-import { me } from '../store/user'
 
 import { postOrder, putOrder } from '../store/order'
 import { fetchReviews } from '../store/review'
