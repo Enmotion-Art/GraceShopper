@@ -186,7 +186,7 @@ const main = () => {
     })
 
   console.log(`seeded ${users.length} users`)
-  console.log(`seeded ${arts.length} users`)
+  console.log(`seeded ${arts.length} arts`)
 }
 main();
 
