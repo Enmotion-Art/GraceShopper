@@ -47,9 +47,9 @@ class SingleArt extends Component {
 
   render() {
 
-    console.log("USER IN SINGLE ART", this.props.user)
-    console.log("ORDER ON STATE", this.props.order)
-    console.log("REVIEWS IN SINGLE ART", this.props.reviews)
+    // console.log("USER IN SINGLE ART", this.props.user)
+    // console.log("ORDER ON STATE", this.props.order)
+    // console.log("REVIEWS IN SINGLE ART", this.props.reviews)
 
     const singleArt = this.props.singleArt
     const user = this.props.user
