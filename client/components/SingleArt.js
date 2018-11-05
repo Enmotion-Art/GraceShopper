@@ -6,7 +6,6 @@ import { postOrder, putOrder } from '../store/order'
 import { fetchReviews } from '../store/review'
 import Reviews from './Reviews'
 import { me } from '../store/user'
-import store from '../store';
 
 
 
@@ -22,7 +21,7 @@ class SingleArt extends Component {
     const id = this.props.match.params.artId
     this.props.actions.loadSingleArt(id)
     this.props.actions.onFetchReviews(id)
-    store.dispatch(me())
+    this.props.actions.getMeAgain()
   }
 
   handleClick(event) {
