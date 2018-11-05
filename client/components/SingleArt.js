@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { fetchSingleArt, removeArt } from '../store/art'
-
-import { me } from '../store/user'
-
 import { postOrder, putOrder } from '../store/order'
 import { fetchReviews } from '../store/review'
 import Reviews from './Reviews'
@@ -26,8 +23,6 @@ class SingleArt extends Component {
     this.props.actions.loadSingleArt(id)
     this.props.actions.onFetchReviews(id)
     store.dispatch(me())
-
-
   }
 
   handleClick(event) {
@@ -56,7 +51,7 @@ class SingleArt extends Component {
     console.log("USER IN SINGLE ART", this.props.user)
     console.log("ORDER ON STATE", this.props.order)
     console.log("REVIEWS IN SINGLE ART", this.props.reviews)
-    
+
     const singleArt = this.props.singleArt
     const user = this.props.user
 

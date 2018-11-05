@@ -38,6 +38,7 @@ export const me = () => async dispatch => {
     if (res.data.id) {
       const response = await axios.get(`api/users/${res.data.id}`)
       user = response.data
+      console.log("USER IN ME THUNK", user)
       let order = user.orders.find(workingOrder => workingOrder.status === 'created');
         if(!order) {
           order = await axios.post('/api/orders', { userId: user.id });
@@ -81,6 +82,8 @@ export const logout = () => async dispatch => {
   try {
     await axios.post('/auth/logout')
     dispatch(removeUser())
+    dispatch(gotSingleOrder({}))
+
     history.push('/login')
   } catch (err) {
     console.error(err)

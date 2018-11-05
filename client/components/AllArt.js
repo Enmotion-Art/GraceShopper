@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link, withRouter } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 import { fetchAllArt } from '../store/art'
 import Pagination from './Pagination';
 import { me } from '../store/user'
-import SingleArt from './SingleArt'
 
 class AllArt extends Component {
   constructor(props) {
@@ -19,9 +18,7 @@ class AllArt extends Component {
 
   componentDidMount() {
     this.props.loadInitialArt()
-    this.props.getMeAgain()
   }
-
 
   artFilter (category) {
 
