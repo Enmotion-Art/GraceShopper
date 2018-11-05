@@ -28,6 +28,19 @@ class CheckoutForm extends React.Component {
     })
   }
 
+  calculatePrice() {
+    let subtotal = 0;
+    if(this.props.user.id) {
+      this.props.order.arts.forEach(product =>
+        {subtotal += (product.price * product.cart.quantity);
+        return subtotal })
+    } else {
+      let products = JSON.parse(localStorage.getItem('product'));
+      products.forEach(product => subtotal += +product.price)
+    }
+    return subtotal;
+  }
+
   handleSubmit(e) {
     e.preventDefault()
     let orderObj = {};
@@ -43,6 +56,8 @@ class CheckoutForm extends React.Component {
         allNotNull = false;
       }
     }
+
+    orderObj.subtotal = this.calculatePrice()
 
     if(allNotNull) {
       if(!this.props.user.id) {
@@ -107,7 +122,9 @@ class CheckoutForm extends React.Component {
           </form>
           <div>
             <div>
-              <p><strong>Total to Charge: $TBD</strong></p>
+              { JSON.parse(localStorage.getItem('product')) || this.props.order.id ?
+              <p><strong>Total to Charge: ${this.calculatePrice()}</strong></p>
+              : <p /> }
               <button type="submit" onClick={this.handleSubmit}>Place your order</button>
             </div>
           </div>

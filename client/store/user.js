@@ -36,7 +36,7 @@ export const me = () => async dispatch => {
     const res = await axios.get('/auth/me')
     let user;
     if (res.data.id) {
-      const response = await axios.get(`api/users/${res.data.id}`)
+      const response = await axios.get(`/api/users/${res.data.id}`)
       user = response.data
       let order = user.orders.find(workingOrder => workingOrder.status === 'created');
         if(!order) {
@@ -70,7 +70,7 @@ export const auth = (email, password, method) => async dispatch => {
   }
 
   try {
-    const { data } = await axios.get(`api/users/${res.data.id}`)
+    const { data } = await axios.get(`/api/users/${res.data.id}`)
     dispatch(getUser(data))
     history.push('/home')
   } catch (dispatchOrHistoryErr) {
@@ -82,6 +82,8 @@ export const logout = () => async dispatch => {
   try {
     await axios.post('/auth/logout')
     dispatch(removeUser())
+    dispatch(gotSingleOrder({}))
+
     history.push('/login')
   } catch (err) {
     console.error(err)

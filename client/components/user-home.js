@@ -10,9 +10,9 @@ import { me } from '../store/user'
  */
 class UserHome extends React.Component {
 
-  componentDidMount() {
-    this.props.getMeAgain()
-  }
+  //Refetching the user keeps the SingleArt from logging the user out (temporarily) on refresh but it messes up how the cart persists from an un-auth session to a logged in session. Commenting it out for now
+  //   this.props.getMeAgain()
+  // }
 
   render() {
     const {firstName} = this.props
