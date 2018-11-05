@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link, withRouter } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 import { fetchAllArt } from '../store/art'
 import Pagination from './Pagination';
 import { me } from '../store/user'
