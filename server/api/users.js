@@ -24,7 +24,7 @@ router.get('/:userId', async (req, res, next) => {
       }, include: [{model: Order, OrderProduct,
           include: [{ model:  Art }]}],
     })
-    console.log("USER IN API", user)
+    // console.log("USER IN API", user)
     res.json(user)
   } catch (err) {
     next(err)
@@ -58,8 +58,8 @@ router.put('/', async (req, res, next) => {
     res.status(403).send("Action forbidden")
   } else if (req.user.UserType === 'admin') {
     try {
-      console.log('req.body', req.body)
-      console.log('req.params', req.params)
+      // console.log('req.body', req.body)
+      // console.log('req.params', req.params)
       let user = await User.findById(req.body.id) //maybe req.body.id
       await user.update({
         UserType: 'admin'
