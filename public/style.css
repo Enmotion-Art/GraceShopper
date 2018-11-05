@@ -1,11 +1,31 @@
 #landingPage {
+  display: flex;
   background-image: url('https://ayitaenmotion.files.wordpress.com/2018/11/2018-11-03-2.png');
-  background-attachment: scroll;
-
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  justify-content:center
 }
+
+#landingLink {
+
+  margin-top: 175px;
+  /* top: 50%;
+  left: 50%; */
+  /* margin-top: -100px; */
+  /* margin-left: -100px; */
+
+
+  font-family: serif;
+  font-size: 1.5em;
+  font-weight:bold;
+  color: #233237;
+}
+
 body {
   font-family: sans-serif;
-
+  height: 100%
 }
 
 a {
@@ -58,28 +78,113 @@ form div {
   width: 50px;
 }
 
+/* GRID CSS */
+
+#app {
+  background: #18121E
+}
+
+.navgrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap:1em
+}
+
+.nav-child {
+  display:flex;
+  flex-flow: row;
+  padding: 10px;
+  text-align: right
+}
+
+#navContainer {
+  background: rgb(152, 75, 76, .85);
+  opacity: 1;
+  border-radius: 0 0 15px 20px;
+  padding: 20px;
+  width: 200px;
+  height: 60px;
+  position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+#navTitle {
+  background: rgb(152, 75, 76, 0);
+  font-family: serif;
+  font-size: 2em;
+  text-decoration-color: #233237;
+  font-weight:bold;
+  text-align: center
+}
+
+:link {
+  color: #eac67a
+}
+
+a:hover {
+  color: #233237;
+}
+
+a:active {
+  color: #233237;
+}
+
+:visited {
+  color: #EAC67A
+}
+
 .grid {
   display: grid;
-  /* grid-template-columns: 1fr, 1fr, 1fr; */
-  grid-template-columns: repeat(2, 1fr);
-  /* grid-column-gap:1em;
-  grid-row-gap:1em; */
+  grid-template-columns: repeat(3, 1fr);
   grid-gap:1em;
   grid-auto-rows:500px;
 }
 
-.grid > div{
-  background:#eee;
-  padding:1em;
-}
-
-.grid > div:nth-child(odd){
-  background:#ddd;
-}
-
 .grid-child {
   display:flex;
-  flex-flow:column;
+  flex-flow: row;
+  padding: 10px;
+  text-align: right
+}
+
+.flex-col {
+  display:flex;
+  flex-flow: column;
+  padding: 10px;
+  text-align: right;
+  color: #984B43;
+}
+
+.main-container {
+  padding-top: 100px;
+}
+
+.header {
+  font-family: serif;
+  font-size: 2em;
+  color: #EAC67A;
+  font-weight: bold;
+  text-align: left
+}
+
+.label {
+  color:  #984B43;
+}
+
+#price {
+  color:  #984B43;
+}
+
+img {
+  border-radius: 8px;
+  border: 10px solid #ddd;
+  padding: 5px;
+  width: 300px;
+}
+
+img:hover {
+  box-shadow: 0 0 8px 4px rgba(221, 230, 233, 0.5);
 }
 
 /* ORDER TABLE  */

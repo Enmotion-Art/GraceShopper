@@ -5,15 +5,12 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <h1>EnMotion, LLC</h1>
+  <div className='navgrid' id='navContainer'>
+    <nav className='nav-child'>
 
-    <nav>
-
-      <div className=''>
         {/* <Link to="/art">Art Shop</Link> */}
           {isLoggedIn ? (
-            <div>
+            <div classname='links'>
               {/* The navbar will show these links after you log in */}
               <Link to="/art">Shop</Link>
               <Link to="/home">Home</Link>
@@ -23,7 +20,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
               </a>
             </div>
           ) : (
-            <div>
+            <div classname='links'>
               {/* The navbar will show these links before you log in */}
               <Link to="/art">Shop</Link>
               <Link to="/login">Login</Link>
@@ -31,9 +28,11 @@ const Navbar = ({handleClick, isLoggedIn}) => (
               <Link to="/cart">Cart</Link>
             </div>
           )}
-      </div>
+
     </nav>
-    <hr />
+    <div className='grid-child' id='navTitle'></div>
+    <div className='grid-child' id='navTitle'>EnMotion Art</div>
+
   </div>
 )
 
