@@ -4,9 +4,9 @@ import { NavLink } from 'react-router-dom'
 
 const LandingPage = () => {
   return (
-    <div id='landingPage' className='grid'>
-
-      <NavLink className='grid-child' to='/art' >Welcome to EnMotion Art!</NavLink>
+    <div id='landingPage' >
+      <div id='landingLink'>
+      <button align='center' id='landingLink'><NavLink id='landingLink' to='/art' >Welcome to EnMotion Art!</NavLink></button>
 
 
       {/* <form action='/api/art' method='GET' className='grid-child'>
@@ -15,6 +15,8 @@ const LandingPage = () => {
           <input type='submit' value='Search' className='btn btn-default'></input>
         </div>
       </form> */}
+
+      </div>
       </div>
   )
 }

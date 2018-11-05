@@ -54,10 +54,15 @@ class AllArt extends Component {
     const selectedArt = this.state.selectedArt
 
     return (
-      <div className='grid'>
-
-        <div className='grid-child'>
-          <label>Filter by Price</label>
+      <div className='main-container'>
+        <div>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+        </div>
+        <div>
+          <label className='label'>Filter by Price</label>
           <select name='selectedArt' onChange={this.handleSelect}>
             <option value='priceAll'>All Prices</option>
             <option value='priceOne'  >Under $100</option>
@@ -66,31 +71,41 @@ class AllArt extends Component {
             <option value='priceFour'  > Over $500</option>
           </select>
         </div>
-
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
         <div className='grid'>
-          <h1>Buy Art! Feel Special</h1>
+
           {
             selectedArt ?
 
 
               selectedArt.map(art =>
                 <div className='grid-child' key={art.id}>
-                  <NavLink to={`/art/${art.id}`}> {art.title} </NavLink>
-                  <img id="main-art" src={art.image} />
+                <div>
+                  <NavLink to={`/art/${art.id}`}><img id="main-art" src={art.image} /> </NavLink>
+                </div>
+                <div className='flex-col'>
+                  <NavLink to={`/art/${art.id}`}>{art.title}</NavLink>
+                  <div id='price'>{`$ ${art.price}`}</div>
+                </div>
                 </div>
               )
               :
               filteredArt.map(art =>
                 <div className='grid-child' key={art.id}>
-                  <NavLink to={`/art/${art.id}`}> {art.title} </NavLink>
+                <div>
                   <NavLink to={`/art/${art.id}`}><img id="main-art" src={art.image} /> </NavLink>
+                </div>
+                <div className='flex-col'>
+                  <NavLink to={`/art/${art.id}`}>{art.title}</NavLink>
+                  <div id='price'>{`$ ${art.price}`}</div>
+                </div>
                 </div>
               )
           }
         </div>
-
-        {/* <Pagination allArt={allArt} /> */}
-
       </div>
     )
   }
