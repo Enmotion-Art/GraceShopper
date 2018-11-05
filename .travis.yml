@@ -16,12 +16,12 @@ install:
 before_script:
   - psql -c 'create database "graceshopper-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 
-before_deploy:
-  - npm run build-client # make the bundle
-  - rm -rf node_modules # omit from the tarball, since we skip cleanup
-deploy:
-  skip_cleanup: true # prevents travis from deleting the build
-  provider: heroku
-  app: enmotion-art # see README
-  api_key:
-    secure: 9bdea56c-8085-4647-8a0a-0b4359b4dd85 # see README
+# before_deploy:
+#   - npm run build-client # make the bundle
+#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
+# deploy:
+#   skip_cleanup: true # prevents travis from deleting the build
+#   provider: heroku
+#   app: enmotion-art # see README
+#   api_key:
+#     secure: 9bdea56c-8085-4647-8a0a-0b4359b4dd85 # see README
