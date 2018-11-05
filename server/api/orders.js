@@ -64,13 +64,24 @@ router.get('/:orderId', async (req, res, next) => {
   }
 })
 
-router.delete('/:orderId/:productId', async(req, res, next) => {
+router.put('/:orderId/:productId', async(req, res, next) => {
+  console.log("REQ BODY IN PUT" , req.body)
   try{
-    await OrderProduct.destroy({
-      where: {
-        orderId: req.params.orderId,
-        artId: req.params.productId
-    }})
+    if(req.body.quantity === '0') {
+      await OrderProduct.destroy({
+        where: {
+          orderId: req.params.orderId,
+          artId: req.params.productId
+      }})
+    } else {
+      await OrderProduct.update({
+        quantity: req.body.quantity},
+          {where: {
+          orderId: req.params.orderId,
+          artId: req.params.productId
+          }}
+      )
+    }
     const order = await Order.findOne({
       where: {
         id: req.params.orderId

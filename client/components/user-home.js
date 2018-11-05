@@ -3,21 +3,29 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import AdminPage from './AdminPage'
 import StandardPage from './StandardPage'
+import { me } from '../store/user'
 
 /**
  * COMPONENT
  */
-export const UserHome = props => {
-  const {firstName} = props
-  const {type} = props
-  return (
-    <div className='grid'>
-      <h3>Welcome, {firstName}!</h3>
-      {
-        type === 'admin' ? <AdminPage /> : <StandardPage />
-      }
-    </div>
-  )
+class UserHome extends React.Component {
+
+  componentDidMount() {
+    this.props.getMeAgain()
+  }
+
+  render() {
+    const {firstName} = this.props
+    const {type} = this.props
+    return (
+      <div className='grid'>
+        <h3>Welcome, {firstName}!</h3>
+        {
+          type === 'admin' ? <AdminPage /> : <StandardPage />
+        }
+      </div>
+    )
+  }
 }
 
 /**
@@ -32,7 +40,11 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState)(UserHome)
+const mapDispatch = dispatch => ({
+  getMeAgain: () => dispatch(me())
+})
+
+export default connect(mapState, mapDispatch)(UserHome)
 
 /**
  * PROP TYPES

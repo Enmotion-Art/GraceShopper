@@ -11,7 +11,7 @@ export const GOT_SINGLE_ORDER = 'GOT_SINGLE_ORDER'
 export const ADD_ORDER = 'ADD_ORDER'
 export const UPDATE_ORDER = 'UPDATE_ORDER'
 export const DELETE_ORDER = 'DELETE_ORDER'
-const REMOVED_ORDER_PRODUCT = 'REMOVED_ORDER_PRODUCT'
+const CHANGED_ORDER_PRODUCT = 'CHANGED_ORDER_PRODUCT'
 
 //ACTION CREATORS
 export const gotAllOrders = (allOrders) => ({
@@ -39,8 +39,8 @@ export const deleteOrder = (order) => ({
   order
 })
 
-export const removeOrderProduct = (order) => ({
-  type: REMOVED_ORDER_PRODUCT,
+export const changedOrderProduct = (order) => ({
+  type: CHANGED_ORDER_PRODUCT,
   order
 })
 
@@ -123,10 +123,10 @@ export const removeOrder = (order) => {
   }
 }
 
-export const deleteOrderProduct = (orderId, productId, self) => {
+export const changeOrderProduct = (orderId, productId, quantity) => {
   return async (dispatch) => {
-    const { data } = await axios.delete(`/api/orders/${orderId}/${productId}`)
-    dispatch(removeOrderProduct(data));
+    const { data } = await axios.put(`/api/orders/${orderId}/${productId}`, { quantity: quantity })
+    dispatch(changedOrderProduct(data));
   }
 }
 
@@ -142,7 +142,7 @@ export const orderReducer = (state = initialState, action) => {
       return { ...state, allOrders: [...state.allOrders, action.order], singleOrder: action.order }
     case UPDATE_ORDER:
       return {...state, allOrders: [...state.allOrders, action.order], singleOrder: action.order }
-    case REMOVED_ORDER_PRODUCT:
+    case CHANGED_ORDER_PRODUCT:
       return {...state, singleOrder: action.order }
     default:
       return state
