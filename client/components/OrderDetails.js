@@ -3,9 +3,9 @@ import { NavLink } from 'react-router-dom'
 
 
 const OrderDetails = (props) => {
-  const order = props.order
+  const order = props.order[0]
   const products = props.order[0].arts
-  console.log('PRODUCTS in ORDER DETAILS', products)
+  console.log('PRODUCTS in ORDER DETAILS', props)
 
   return (
     <div>
@@ -25,7 +25,12 @@ const OrderDetails = (props) => {
                 <td>{product.id}</td>
                 <td>{product.title}</td>
                 <td>${product.price}</td>
-                <td><NavLink to={`/art/${product.id}/review`}>Leave Review</NavLink></td>
+                {
+                  order.status === 'shipped' ?
+                    < td > <NavLink to={`/art/${product.id}/review`}>Leave Review</NavLink></td>
+                    : null
+                }
+
               </tr>
             )
           }
