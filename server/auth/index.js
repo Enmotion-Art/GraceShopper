@@ -39,10 +39,6 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', (req, res) => {
-  if(req.user.dataValues) {
-    req.user = req.user.dataValues
-  }
-  console.log("REQ USER DATA VALUES", req.user.dataValues)
   res.json(req.user)
 })
 
