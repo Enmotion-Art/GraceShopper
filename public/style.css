@@ -81,7 +81,8 @@ form div {
 /* GRID CSS */
 
 #app {
-  background: #18121E
+  /* background: #18121E */
+background: grey
 }
 
 .navgrid {

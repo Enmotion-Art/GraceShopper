@@ -10,6 +10,7 @@ const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
   return (
+    <div className='main-container'>
     <div className='grid'>
       <form className='grid-child' onSubmit={handleSubmit} name={name}>
         <div>
@@ -30,6 +31,7 @@ const AuthForm = props => {
         {error && error.response && <div> {error.response.data} </div>}
       </form>
       <a href="/auth/google">{displayName} with Google</a>
+    </div>
     </div>
   )
 }
