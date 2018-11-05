@@ -60,6 +60,21 @@ form div {
 
 .grid {
   display: grid;
+  /* grid-template-columns: 1fr, 1fr, 1fr; */
+  grid-template-columns: repeat(2, 1fr);
+  /* grid-column-gap:1em;
+  grid-row-gap:1em; */
+  grid-gap:1em;
+  grid-auto-rows:500px;
+}
+
+.grid > div{
+  background:#eee;
+  padding:1em;
+}
+
+.grid > div:nth-child(odd){
+  background:#ddd;
 }
 
 .grid-child {
@@ -101,31 +116,7 @@ table.blueTable thead th {
 table.blueTable thead th:first-child {
   border-left: none;
 }
-/*
-table.blueTable tfoot {
-  font-size: 14px;
-  font-weight: bold;
-  color: #FFFFFF;
-  background: #D0E4F5;
-  background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
-  background: -webkit-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
-  background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
-  border-top: 2px solid #444444;
-}
-table.blueTable tfoot td {
-  font-size: 14px;
-}
-table.blueTable tfoot .links {
-  text-align: right;
-}
-table.blueTable tfoot .links a{
-  display: inline-block;
-  background: #1C6EA4;
-  color: #FFFFFF;
-  padding: 2px 8px;
-  border-radius: 5px;
-}
- */
+
 
  /* ReviewForm Start */
  /* star ratings */

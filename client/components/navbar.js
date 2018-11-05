@@ -5,12 +5,12 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
-  <div className='grid'>
+  <div>
     <h1>EnMotion, LLC</h1>
 
     <nav>
 
-      <div className='grid'>
+      <div className=''>
         {/* <Link to="/art">Art Shop</Link> */}
           {isLoggedIn ? (
             <div>

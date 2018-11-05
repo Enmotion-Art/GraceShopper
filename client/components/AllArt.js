@@ -54,9 +54,9 @@ class AllArt extends Component {
     const selectedArt = this.state.selectedArt
 
     return (
-      <div className='grid'>
-
-        <div className='grid-child'>
+      <div className=''>
+        <h1>Buy Art! Feel Special</h1>
+        <div className=''>
           <label>Filter by Price</label>
           <select name='selectedArt' onChange={this.handleSelect}>
             <option value='priceAll'>All Prices</option>
@@ -68,7 +68,7 @@ class AllArt extends Component {
         </div>
 
         <div className='grid'>
-          <h1>Buy Art! Feel Special</h1>
+
           {
             selectedArt ?
 
