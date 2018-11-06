@@ -22,8 +22,8 @@ const initialState = {
 /**
  * ACTION CREATORS
  */
-const gotAllUsers = users => ({type: GOT_ALL_USERS, users})
 const getUser = user => ({type: GET_USER, user})
+const gotAllUsers = users => ({type: GOT_ALL_USERS, users})
 const removeUser = () => ({type: REMOVE_USER}) //logging out a user
 const deleteUser = (user) => ({type: DELETE_USER}) //deleting from database, this may be redundant
 const updateStatus = (user) => ({type: UPDATE_STATUS})
@@ -32,7 +32,6 @@ const updateStatus = (user) => ({type: UPDATE_STATUS})
  * THUNK CREATORS
  */
 export const me = () => async dispatch => {
-  console.log("I AM HERE")
   try {
     const res = await axios.get('/auth/me')
     let user;
@@ -45,7 +44,6 @@ export const me = () => async dispatch => {
           order = order.data;
         }
       let addedProducts = JSON.parse(localStorage.getItem('product'));
-      // console.log("ADDED PRODUCTS")
       if(addedProducts) {
         let prodIds = addedProducts.map(prod => prod.id);
         order = await axios.put(`/api/orders/${order.id}`, { status: 'created', productIds: prodIds, orderId: order.id })

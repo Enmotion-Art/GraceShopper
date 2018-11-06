@@ -16,6 +16,7 @@ class AllArt extends Component {
 
   componentDidMount() {
     this.props.loadInitialArt();
+    this.props.getMeAgain()
   }
 
   artFilter (category) {
@@ -73,7 +74,7 @@ class AllArt extends Component {
             <option value='priceFour'  > Over $500</option>
           </select>
         </div>
-          {/* <p></p>
+          <p></p>
           <p></p>
           <p></p>
           <p></p>

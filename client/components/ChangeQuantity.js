@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { putOrder } from '../store/order'
 import { me } from '../store/user';
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 class ChangeQuantity extends React.Component {
   constructor(props) {
@@ -19,6 +21,9 @@ class ChangeQuantity extends React.Component {
       quantity: e.target.value,
     })
   }
+  notify = () => toast("Item added to cart!", {
+    position: toast.POSITION.TOP_LEFT, autoClose: 2000
+  });
 
   changeQuantity(id, quant) {
     if(!quant) {
@@ -88,7 +93,9 @@ class ChangeQuantity extends React.Component {
             <option value="4">4</option>
           </select>
 
-          <button onClick={() => this.changeQuantity(this.props.product.id)}>{this.props.label}</button>
+          <button onClick={() => {this.changeQuantity(this.props.product.id); this.notify()}}>{this.props.label}</button>
+          <ToastContainer />
+
         </div>
         {!this.state.hidden ? <p>Please select a quantity.</p>
         : <p />}
