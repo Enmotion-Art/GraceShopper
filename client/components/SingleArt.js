@@ -53,7 +53,7 @@ class SingleArt extends Component {
                 {
                   user.UserType === 'admin' ?
                     <div>
-                      <hr width="50%" align="RIGHT" color='white' size="1"/>
+                      <hr width="50%" align="RIGHT" color='black' size="1"/>
                       <h4 className = "yellow">Admin Functions</h4>
 
                       <button
@@ -64,7 +64,7 @@ class SingleArt extends Component {
                         Delete
                       </button>
                       <p></p>
-                      <button><Link to={`/art/${singleArt.id}/edit`} activeClassName="active" id="editLink" style={{color:"black"}}>
+                      <button><Link to={`/art/${singleArt.id}/edit`} activeClassName="active" id="editLink" style={{color:"white"}}>
                         Edit
                   </Link></button>
                     </ div>
