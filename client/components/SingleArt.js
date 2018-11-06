@@ -32,22 +32,7 @@ class SingleArt extends Component {
 
     return (
       <div className='main-container'>
-        {
-          user.UserType === 'admin' ?
-            <div className='grid-child'>
-              <button
-                type="button"
-                id={`${singleArt.id}`}
-                onClick={this.handleClick}
-              >
-                X
-        </button>
-              <Link to={`/art/${singleArt.id}/edit`} activeClassName="active" id="editLink">
-                Edit
-          </Link>
-            </ div>
-            : <div />
-        }
+
         <br />
         <div>
         <h1 className='yellow'>{singleArt.title}</h1>
@@ -61,6 +46,31 @@ class SingleArt extends Component {
             <p>{singleArt.width}W x {singleArt.height}H</p>
             <p><strong>${singleArt.price}</strong></p>
               <ChangeQuantity product={this.props.singleArt} label="Add to Cart" />
+              <p />
+              <p />
+
+              <div>
+                {
+                  user.UserType === 'admin' ?
+                    <div>
+                      <hr width="50%" align="RIGHT" color='white' size="1"/>
+                      <h4 className = "yellow">Admin Functions</h4>
+
+                      <button
+                        type="button"
+                        id={`${singleArt.id}`}
+                        onClick={this.handleClick}
+                      >
+                        Delete
+                      </button>
+                      <p></p>
+                      <button><Link to={`/art/${singleArt.id}/edit`} activeClassName="active" id="editLink" style={{color:"black"}}>
+                        Edit
+                  </Link></button>
+                    </ div>
+                    : <div />
+              }
+          </div>
           </div>
           </div>
           <p></p>

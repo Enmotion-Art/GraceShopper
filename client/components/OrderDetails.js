@@ -30,7 +30,7 @@ const OrderDetails = (props) => {
                 <td>
                 {
                   order.status === 'shipped' ?
-                    <button><NavLink to={`/art/${product.id}/review`}>Leave Review</NavLink> </button>
+                    <button><NavLink to={`/art/${product.id}/review`} style={{color:"black"}}>Leave Review</NavLink> </button>
                     : 'N/A'
                 }
                 </td>

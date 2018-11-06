@@ -74,7 +74,7 @@ class AllOrders extends Component {
             <option value="cancelled"> Cancelled</option>
           </select>
         </div>
-        <table class="blueTable">
+        <table className="blueTable">
           <thead>
             <tr>
               <th>ID</th>
@@ -120,7 +120,7 @@ class AllOrders extends Component {
                     <td>{order.zip}</td>
                     <td>{order.arts ?
                       order.arts.map(art=>
-                         <button><NavLink to={`/art/${art.id}`}>{art.id}</NavLink></button>
+                         <button><NavLink to={`/art/${art.id}`} style={{color:"#984B43"}}>{art.id}</NavLink></button>
                          )
                       : <div></div>
                     }</td>
@@ -153,7 +153,7 @@ class AllOrders extends Component {
                     <td>{order.zip}</td>
                     <td>{order.arts ?
                       order.arts.map(art=>
-                        <button><NavLink to={`/art/${art.id}`}>{art.id}</NavLink></button>
+                        <button key={art.id}><NavLink to={`/art/${art.id}`} style={{color:"#984B43"}}>{art.id}</NavLink></button>
                         )
                       : <div></div>
                     }</td>

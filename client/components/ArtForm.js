@@ -2,7 +2,7 @@ import React from 'react'
 
 const ArtForm = (props) => {
     return (
-      <div>
+      <div className='main-container'>
         <form >
           <fieldset>
             <legend className='yellow'>{props.title}</legend>

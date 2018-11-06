@@ -39,7 +39,7 @@ class AllUsers extends Component {
 
     return (
       <div className="orders-grid">
-        <table class="blueTable">
+        <table className="blueTable">
           <thead>
             <tr>
               <th>ID</th>
