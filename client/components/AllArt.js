@@ -15,8 +15,7 @@ class AllArt extends Component {
   }
 
   componentDidMount() {
-    this.props.loadInitialArt()
-    this.props.getMeAgain()
+    this.props.loadInitialArt();
   }
 
   artFilter (category) {
