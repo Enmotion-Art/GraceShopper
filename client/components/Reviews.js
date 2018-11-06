@@ -49,10 +49,10 @@ const Reviews = (props) => {
 
   return (
     <div className='review-container'>
-      <h4>Customer Reviews</h4>
-      <p>{reviews.length} customer reviews</p>
-      <p>Avg rating: {avgStars(reviews)}</p>
-      <hr width="60%" align="LEFT" color='lightgrey' />
+      <h3>Customer Reviews</h3>
+      <p><strong>{reviews.length} customer reviews</strong></p>
+      <p><strong>Avg ratings: {avgStars(reviews)}</strong></p>
+      <hr width="100%" align="LEFT" color='#233237' size="25"/>
       {
         reviews.map(review =>
           <div key={review.id} >
@@ -60,7 +60,7 @@ const Reviews = (props) => {
             <p>{formatDate(review.createdAt)}</p>
             <p>{printStars(review.stars)}</p>
             <p>{review.content}</p>
-            <hr width="60%" align="LEFT" color='lightgrey' />
+            <hr width="100%" align="LEFT" color='lightgrey' />
           </div>
         )
       }
