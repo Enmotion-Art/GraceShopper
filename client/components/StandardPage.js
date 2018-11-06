@@ -18,7 +18,7 @@ class StandardPage extends Component {
         // console.log('USER ON STANDARDPAGE', user)
         return (
 
-            <div>
+            <div className='main-container'>
                 <div className='grid-child'>
                     <h2 className='yellow'>Your Orders:</h2>
                     <UserOrders user={user} />

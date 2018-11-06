@@ -33,6 +33,7 @@ const AuthForm = props => {
       <a href="/auth/google">{displayName} with Google</a>
       </div>
     </div>
+    </div>
   )
 }
 
@@ -55,7 +56,8 @@ const mapSignup = state => {
   return {
     name: 'signup',
     displayName: 'Sign Up',
-    error: state.user.error
+    error: state.user.error,
+    user: state.user
   }
 }
 
@@ -67,7 +69,6 @@ const mapDispatch = (dispatch, ownProps) => {
       const email = evt.target.email.value
       const password = evt.target.password.value
       dispatch(auth(email, password, formName))
-      ownProps.history.push('/home')
     }
   }
 }

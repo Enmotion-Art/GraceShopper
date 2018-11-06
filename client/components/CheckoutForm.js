@@ -17,15 +17,42 @@ class CheckoutForm extends React.Component {
       cc: '123456781234',
       sc: '123',
       hidden: true,
+      promo: '',
+      subtotal: this.calculatePrice(),
+      hidden2: "true"
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.promoChange = this.promoChange.bind(this);
+    this.promoSubmit = this.promoSubmit.bind(this);
   }
 
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value,
     })
+  }
+
+  promoChange(e) {
+    this.setState({
+      promo: e.target.value,
+    })
+  }
+
+  promoSubmit(e) {
+    e.preventDefault();
+    if(this.state.promo.toLowerCase() === 'luigiwuzhurr') {
+      let newPrice = String(Math.floor(this.calculatePrice()/2))
+      this.setState({
+        subtotal: newPrice,
+        hidden2: 'valid'
+      })
+    } else {
+      this.setState({
+        hidden2: 'false',
+        promo: ''
+      })
+    }
   }
 
   calculatePrice() {
@@ -43,9 +70,13 @@ class CheckoutForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
+    this.setState({
+      hidden2: 'valid'
+    })
+
     let orderObj = {};
     for(let key in this.state ) {
-      if(key !== 'hidden') {
+      if(key !== 'hidden' && key !=='hidden2') {
         orderObj[key] = this.state[key].trim();
       }
     }
@@ -57,8 +88,6 @@ class CheckoutForm extends React.Component {
       }
     }
 
-    orderObj.subtotal = this.calculatePrice()
-
     if(allNotNull) {
       if(!this.props.user.id) {
         let productArr = JSON.parse(localStorage.getItem('product'));
@@ -69,7 +98,8 @@ class CheckoutForm extends React.Component {
       }
     } else {
       this.setState({
-        hidden: false
+        hidden: false,
+        hidden2: 'false'
       })
     }
   }
@@ -121,10 +151,25 @@ class CheckoutForm extends React.Component {
             <input type="text" name="sc" onChange={this.handleChange} value={this.state.sc} />
           </form>
           <div>
+            <br />
+            <div>
+              <label>Promo Code:</label>
+              <input type="text" name="promo" onChange={this.promoChange} value={this.state.promo} />
+
+              {this.state.hidden2 === 'false' ?
+              <p style={{color:'blue'}}>Invalid promo code.</p>
+              : this.state.hidden2 === 'valid' ?
+              <p style={{color:'blue'}}>Your promo code has been applied.</p>
+              :
+              <p />
+               }
+              <button type="submit" onClick={this.promoSubmit}>Apply Promo</button>
+            </div>
             <div>
               { JSON.parse(localStorage.getItem('product')) || this.props.order.id ?
-              <p><strong>Total to Charge: ${this.calculatePrice()}</strong></p>
+              <p><strong>Total to Charge: ${this.state.subtotal}</strong></p>
               : <p /> }
+
               <button type="submit" onClick={this.handleSubmit}>Place your order</button>
             </div>
           </div>
