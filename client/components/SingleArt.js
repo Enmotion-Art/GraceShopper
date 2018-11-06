@@ -2,19 +2,15 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { fetchSingleArt, removeArt } from '../store/art'
-import { postOrder, putOrder } from '../store/order'
 import { fetchReviews } from '../store/review'
 import Reviews from './Reviews'
 import { me } from '../store/user'
-
-
-
+import ChangeQuantity from './ChangeQuantity'
 
 class SingleArt extends Component {
   constructor() {
     super();
     this.handleClick = this.handleClick.bind(this)
-    this.addtoCart = this.addtoCart.bind(this)
   }
 
   componentDidMount() {
@@ -30,27 +26,7 @@ class SingleArt extends Component {
     this.props.actions.removeSpecificArt({ id: ArtId });
   }
 
-  addtoCart(event) {
-    event.preventDefault()
-    if(!this.props.user.id) {
-      if (!JSON.parse(localStorage.getItem('product'))) {
-        localStorage.setItem('product', JSON.stringify([this.props.singleArt]))
-      } else {
-        let productArr = JSON.parse(localStorage.getItem('product'));
-        productArr.push(this.props.singleArt)
-        localStorage.setItem('product', JSON.stringify(productArr))
-      }
-    } else {
-      this.props.actions.editOrder('created', this.props.order.id, null, null, [this.props.singleArt.id])
-    }
-  }
-
   render() {
-
-    // console.log("USER IN SINGLE ART", this.props.user)
-    // console.log("ORDER ON STATE", this.props.order)
-    // console.log("REVIEWS IN SINGLE ART", this.props.reviews)
-
     const singleArt = this.props.singleArt
     const user = this.props.user
 
@@ -84,8 +60,7 @@ class SingleArt extends Component {
             <p>Style: {singleArt.category}</p>
             <p>{singleArt.width}W x {singleArt.height}H</p>
             <p><strong>${singleArt.price}</strong></p>
-            {singleArt.quantity === 0 ? <p>SOLD OUT</p> :
-              <button type="submit" onClick={this.addtoCart}>Add to Cart</button>}
+              <ChangeQuantity product={this.props.singleArt} label="Add to Cart" />
           </div>
           </div>
           <p></p>
@@ -119,9 +94,6 @@ const mapDispatchToProps = dispatch => {
       },
       removeSpecificArt: function (art) {
         dispatch(removeArt(art))
-      },
-      editOrder: function (status, id, page, orderInfo, productIds) {
-        dispatch(putOrder(status, id, page, orderInfo, productIds))
       },
       getMeAgain: function () { dispatch(me())
       },

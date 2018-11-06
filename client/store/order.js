@@ -93,10 +93,13 @@ export const fetchSingleOrder = (id) => {
  }
 
 
-export const putOrder = (status, id, orderInfo, page, productIds) => {
+export const putOrder = (status, id, orderInfo, page, productIds, quant) => {
   return async (dispatch) => {
     try {
       const response = await axios.put(`/api/orders/${id}`, { status: status, orderInfo: orderInfo, productIds: productIds, orderId: id })
+      if(quant) {
+        dispatch(changeOrderProduct(id, productIds[0], quant))
+      }
       let updatedOrder = response.data
       if(page === 'confirmation') {
         localStorage.removeItem('product');
