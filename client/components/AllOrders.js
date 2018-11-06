@@ -65,6 +65,7 @@ class AllOrders extends Component {
       <div className="orders-grid">
         <div >
           <label className='yellow'>Filter by Status</label>
+          <p />
           <select name="selectedOrders" onChange={this.handleSelect}>
             <option />
             <option value="created">Created</option>

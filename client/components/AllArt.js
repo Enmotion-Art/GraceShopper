@@ -61,6 +61,7 @@ class AllArt extends Component {
         </div>
         <div>
           <label className='red'>Filter by Price</label>
+          <p />
           <select name='selectedArt' onChange={this.handleSelect}>
             <option value='priceAll'>All Prices</option>
             <option value='priceOne'  >Under $100</option>
