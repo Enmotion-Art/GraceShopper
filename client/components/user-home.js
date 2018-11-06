@@ -21,7 +21,7 @@ class UserHome extends React.Component {
     const { type } = this.props
     return (
       <div className='main-container'>
-        <h3>Welcome, {firstName}!</h3>
+        <h1 className='red'>Welcome, {firstName}!</h1>
         {
           type === 'admin' ? <AdminPage /> : <StandardPage />
         }

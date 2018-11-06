@@ -56,13 +56,13 @@ class Cart extends Component {
 
     if (!productArr || !productArr.length) {
       return (
-        <p>Your cart is empty.</p>
+        <p className='main-container'>Your cart is empty.</p>
       )
     } else {
       return (
-        <div className='grid'>
+        <div className='main-container'>
           <br />
-          <h1>Your Cart</h1>
+          <h1 className='yellow'>Your Cart</h1>
           {productKeys.map(key => {
             let product = productArr.find(prod => prod.id === +key);
             let quantity;
@@ -80,8 +80,8 @@ class Cart extends Component {
               </div>
             }
           )}
-          <div>
-            <strong>Total: </strong>${total}
+          <div className='red'>
+            <strong className='yellow'>Total: </strong>${total}
           </div>
           <button type="submit" onClick={this.handleCheckout}>Checkout</button>
         </div>

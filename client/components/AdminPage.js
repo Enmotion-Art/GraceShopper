@@ -6,14 +6,20 @@ import AllUsers from './AllUsers'
 class AdminPage extends Component {
     render() {
         return (
-          <div className='grid-child'>
-            <AddArt title='Add A New Piece Of Art'/>
-            <p></p>
-            <h2>Orders:</h2>
-            <AllOrders />
-            <p></p>
-            <h2>Users:</h2>
-            <AllUsers />
+          <div className='admin-grid'>
+            <div className='admin-grid-child'>
+              <AddArt title='Add A New Piece Of Art'/>
+            </div>
+             <div className='admin-grid-child'>
+              <div>
+                <h2 className='yellow'>Orders:</h2>
+                <AllOrders />
+              </div>
+              <div>
+                <h2 className='yellow'>Users:</h2>
+                <AllUsers />
+            </div>
+            </div>
           </div>
         )
     }

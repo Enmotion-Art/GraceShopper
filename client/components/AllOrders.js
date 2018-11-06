@@ -62,9 +62,9 @@ class AllOrders extends Component {
     const selectedOrders = this.state.selectedOrders
 
     return (
-      <div className="grid">
-        <div className="grid-child">
-          <label>Filter by Status</label>
+      <div className="orders-grid">
+        <div >
+          <label className='yellow'>Filter by Status</label>
           <select name="selectedOrders" onChange={this.handleSelect}>
             <option />
             <option value="created">Created</option>

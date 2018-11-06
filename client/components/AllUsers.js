@@ -38,7 +38,7 @@ class AllUsers extends Component {
     const users = this.props.allUsers
 
     return (
-      <div className="grid">
+      <div className="orders-grid">
         <table class="blueTable">
           <thead>
             <tr>

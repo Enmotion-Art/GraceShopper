@@ -50,11 +50,11 @@ class CartItem extends React.Component {
   render() {
     let quantity = this.props.quantity;
     return (
-      <div id="container-row">
+      <div className='grid-child' id="container-row">
         <div>
           <img id="cart-image" src = {this.props.product.image} />
         </div>
-        <div id="second-column">
+        <div id="flex-col" className='red'>
           <p>{this.props.product.description}</p>
           <p>Style: {this.props.product.category}</p>
           <p>{this.props.product.width}W x {this.props.product.height}H</p>
