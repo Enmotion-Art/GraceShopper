@@ -64,11 +64,14 @@ class Cart extends Component {
             }
             total += product.price * quantity;
 
-            return <div key={+key} id="container-row">
+            return <div key={+key}>
+            <div id="container-row">
               <div>
                 <CartItem product={product} quantity={quantity} refresh={this.triggerRefresh} />
                 </div>
               </div>
+            <hr width="100%" align="left" color="lightgrey" />
+            </div>
             }
           )}
           <div className='red'>

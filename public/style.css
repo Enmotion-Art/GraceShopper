@@ -21,6 +21,7 @@ body {
   height: 100%;
   font-weight: 300;
   letter-spacing: 0.025em;
+  font-size: 17px;
   /* background-color:  #233237; */
   /* background: #18121E */
   background: white
@@ -64,6 +65,7 @@ button {
     -webkit-transition: all 150ms ease;
     transition: all 150ms ease;
     margin-top: 10px;
+    margin-left: 10px;
 }
 
 /*Pagination Start*/
@@ -112,6 +114,7 @@ background: white
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap:1em;
+  font-size: 20px;
 }
 
 .nav-child {
@@ -143,9 +146,10 @@ background: white
 
 }
 
-:link {
-  color: #eac67a
-}
+/* :link { */
+  /* color: rgb(218, 157, 26); */
+  /* color: black */
+/* } */
 
 a:hover {
   color: #233237;
@@ -153,10 +157,6 @@ a:hover {
 
 a:active {
   color: #233237;
-}
-
-:visited {
-  color: #EAC67A
 }
 
 .grid {
@@ -219,23 +219,33 @@ a:active {
 }
 
 .main-container {
-  padding-top: 150px;
+  padding-top: 80px;
 }
 
 .header {
   font-family: serif;
   font-size: 2em;
-  color: #EAC67A;
+  font-weight: 200;
+  letter-spacing: 0.025em;
+  /* color: #EAC67A; */
+  color: black;
   font-weight: bold;
   text-align: left
 }
 
 .red {
   color:  #984B43;
+  /* color: black */
 }
 
 .yellow {
-  color: #EAC67A;
+  /* color: rgb(218, 157, 26); */
+  color: black
+}
+
+:visited {
+  /* color: #EAC67A */
+  color: black
 }
 
 img {
@@ -505,7 +515,8 @@ input:focus,
 }
 
 .order-details {
-  color: #eac67a;
+  /* color: #eac67a; */
+  color: black;
   float: left
 }
 #left-float {
