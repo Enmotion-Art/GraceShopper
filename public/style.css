@@ -16,6 +16,10 @@
   color: #233237;
 }
 
+nav {
+  z-index: 2;
+}
+
 body {
   font-family: sans-serif;
   height: 100%;
@@ -91,6 +95,16 @@ button {
   flex-direction: row;
 }
 
+#container-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 40px;
+  margin-top: 10px;
+  align-content: center;
+  padding-bottom: 10px;
+}
+
 #second-column {
   padding-left: 20px
 }
@@ -98,6 +112,7 @@ button {
 #cart-image {
   width: 50px;
 }
+
 
 /* GRID CSS */
 
@@ -112,6 +127,7 @@ background: white
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap:1em;
+  z-index: 4
 }
 
 .nav-child {
@@ -126,11 +142,11 @@ background: white
   opacity: 1;
   border-radius: 0 0 15px 15px;
   padding: 20px;
-  width: 99vw; 
+  width: 99vw;
   height: 60px;
   position: fixed;
     top: 0;
-    width: 96vw; 
+    width: 96vw;
 }
 
 #navTitle {
@@ -517,3 +533,35 @@ input:focus,
   color: black
 }
 /*User Order Details End*/
+
+.overlay {
+  position: relative;
+  display: inline-block;
+}
+
+
+.overlay img {
+  margin: 5px
+}
+
+.overlay h3 {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translate(0, -50%);
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 0 15px;
+}
+
+/* .display {
+  text-decoration: bold
+} */
+
+/* .overlay h3 {
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: black;
+} */

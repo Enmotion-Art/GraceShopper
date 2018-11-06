@@ -28,9 +28,9 @@ const removeUser = () => ({type: REMOVE_USER}) //logging out a user
 const deleteUser = (user) => ({type: DELETE_USER}) //deleting from database, this may be redundant
 const updateStatus = (user) => ({type: UPDATE_STATUS})
 
-/**
- * THUNK CREATORS
- */
+
+//THUNK CREATORS
+
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
@@ -53,7 +53,6 @@ export const me = () => async dispatch => {
       dispatch(gotSingleOrder(order))
     } else {
       user = initialState.singleUser
-      // console.log('user before dispatch', user)
     }
     dispatch(getUser(user || initialState.singleUser))
   } catch (err) {
