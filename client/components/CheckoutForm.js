@@ -18,7 +18,8 @@ class CheckoutForm extends React.Component {
       sc: '123',
       hidden: true,
       promo: '',
-      subtotal: this.calculatePrice()
+      subtotal: this.calculatePrice(),
+      hidden2: "true"
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -41,9 +42,15 @@ class CheckoutForm extends React.Component {
   promoSubmit(e) {
     e.preventDefault();
     if(this.state.promo.toLowerCase() === 'luigiwuzhurr') {
-      let newPrice = Math.floor(this.calculatePrice()/2)
+      let newPrice = String(Math.floor(this.calculatePrice()/2))
       this.setState({
-        subtotal: newPrice
+        subtotal: newPrice,
+        hidden2: 'valid'
+      })
+    } else {
+      this.setState({
+        hidden2: 'false',
+        promo: ''
       })
     }
   }
@@ -63,12 +70,13 @@ class CheckoutForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
+    this.setState({
+      hidden2: 'valid'
+    })
+
     let orderObj = {};
     for(let key in this.state ) {
-      if(key !== 'hidden' && key !== 'promo') {
-        if(key === 'subtotal') {
-          orderObj[key] = +this.state.subtotal;
-        }
+      if(key !== 'hidden' && key !=='hidden2') {
         orderObj[key] = this.state[key].trim();
       }
     }
@@ -90,7 +98,8 @@ class CheckoutForm extends React.Component {
       }
     } else {
       this.setState({
-        hidden: false
+        hidden: false,
+        hidden2: 'false'
       })
     }
   }
@@ -146,6 +155,14 @@ class CheckoutForm extends React.Component {
             <div>
               <label>Promo Code:</label>
               <input type="text" name="promo" onChange={this.promoChange} value={this.state.promo} />
+
+              {this.state.hidden2 === 'false' ?
+              <p style={{color:'blue'}}>Invalid promo code.</p>
+              : this.state.hidden2 === 'valid' ?
+              <p style={{color:'blue'}}>Your promo code has been applied.</p>
+              :
+              <p />
+               }
               <button type="submit" onClick={this.promoSubmit}>Apply Promo</button>
             </div>
             <div>
