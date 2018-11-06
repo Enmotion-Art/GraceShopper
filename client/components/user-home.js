@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import AdminPage from './AdminPage'
 import StandardPage from './StandardPage'
 import { me } from '../store/user'
@@ -17,10 +17,10 @@ class UserHome extends React.Component {
   // }
 
   render() {
-    const {firstName} = this.props
-    const {type} = this.props
+    const { firstName } = this.props
+    const { type } = this.props
     return (
-      <div className='grid'>
+      <div className='main-container'>
         <h3>Welcome, {firstName}!</h3>
         {
           type === 'admin' ? <AdminPage /> : <StandardPage />
