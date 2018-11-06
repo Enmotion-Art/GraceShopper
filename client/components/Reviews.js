@@ -52,7 +52,7 @@ const Reviews = (props) => {
       <h3>Customer Reviews</h3>
       <p><strong>{reviews.length} customer reviews</strong></p>
       <p><strong>Avg ratings: {avgStars(reviews)}</strong></p>
-      <hr width="100%" align="LEFT" color='#233237' size="25"/>
+      <hr width="100%" align="LEFT" color='#233237'/>
       {
         reviews.map(review =>
           <div key={review.id} >
