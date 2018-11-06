@@ -81,8 +81,7 @@ background: grey
 .navgrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap:1em
-
+  grid-gap:1em;
 }
 
 .nav-child {
@@ -134,6 +133,7 @@ a:active {
   grid-template-columns: repeat(3, 1fr);
   grid-gap:1em;
   grid-auto-rows:500px;
+  padding-top: 150px;
 }
 
 .grid-child {
@@ -152,7 +152,7 @@ a:active {
 }
 
 .main-container {
-  padding-top: 100px;
+  padding-top: 150px;
 }
 
 .header {

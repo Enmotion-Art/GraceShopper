@@ -50,7 +50,7 @@ class CheckoutForm extends React.Component {
     } else {
       this.setState({
         hidden2: 'false',
-        promo: ''
+        promo: '',
       })
     }
   }
@@ -71,13 +71,13 @@ class CheckoutForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
     this.setState({
-      hidden2: 'valid'
+      hidden2: 'true'
     })
 
     let orderObj = {};
     for(let key in this.state ) {
-      if(key !== 'hidden' && key !=='hidden2') {
-        orderObj[key] = this.state[key].trim();
+      if(key !== 'hidden' && key !=='hidden2' && key !== 'promo') {
+        orderObj[key] = String(this.state[key]).trim();
       }
     }
 
@@ -99,7 +99,7 @@ class CheckoutForm extends React.Component {
     } else {
       this.setState({
         hidden: false,
-        hidden2: 'false'
+        hidden2: 'true'
       })
     }
   }
@@ -159,7 +159,7 @@ class CheckoutForm extends React.Component {
               {this.state.hidden2 === 'false' ?
               <p style={{color:'blue'}}>Invalid promo code.</p>
               : this.state.hidden2 === 'valid' ?
-              <p style={{color:'blue'}}>Your promo code has been applied.</p>
+              <p style={{color:'blue'}}>Promo code applied.</p>
               :
               <p />
                }

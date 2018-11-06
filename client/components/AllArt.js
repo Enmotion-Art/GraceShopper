@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { NavLink, withRouter } from 'react-router-dom'
 import { fetchAllArt } from '../store/art'
-import Pagination from './Pagination';
 import { me } from '../store/user'
 
 class AllArt extends Component {
@@ -11,13 +10,13 @@ class AllArt extends Component {
     this.state = {
       selectedArt: null, //inital null value to account for when an art doesn't match any category. Has to do with if/else stmt in the render. Subject to change.
     }
-
     this.handleSelect = this.handleSelect.bind(this)
     this.artFilter = this.artFilter.bind(this)
   }
 
   componentDidMount() {
     this.props.loadInitialArt()
+    this.props.getMeAgain()
   }
 
   artFilter (category) {
@@ -38,7 +37,6 @@ class AllArt extends Component {
     });
   }
 
-
   handlePageChange(page) {
     const renderedArt = this.props.allArt.slice((page - 1) * 2, (page - 1) * 2 + 2)
     this.setState({
@@ -57,10 +55,10 @@ class AllArt extends Component {
 
       <div className='main-container'>
         <div>
+          {/* <p></p>
           <p></p>
           <p></p>
-          <p></p>
-          <p></p>
+          <p></p> */}
         </div>
         <div>
           <label className='red'>Filter by Price</label>
@@ -72,10 +70,10 @@ class AllArt extends Component {
             <option value='priceFour'  > Over $500</option>
           </select>
         </div>
+          {/* <p></p>
           <p></p>
           <p></p>
-          <p></p>
-          <p></p>
+          <p></p> */}
         <div className='grid'>
           {this.props.user.singleUser.id ?
           <h1>Welcome, {this.props.user.singleUser.firstName}!</h1>
