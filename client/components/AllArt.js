@@ -23,11 +23,17 @@ class AllArt extends Component {
 
     const allArt = this.props.allArt
 
-    if (category === 'priceAll') return allArt
+    if (category === 'All') return allArt
+
     if (category === 'priceOne') return allArt.filter(art => art.price < 100)
     if (category === 'priceTwo') return allArt.filter(art => art.price < 301 && art.price >= 100)
     if (category === 'priceThree') return allArt.filter(art => art.price < 500 && art.price > 300)
     if (category === 'priceFour') return allArt.filter(art => art.price > 500)
+
+    if (category === 'Psyche') return allArt.filter(art => art.category === 'Psyche')
+    if (category === 'Inspired by...') return allArt.filter(art => art.category === 'Inspired by...')
+    if (category === 'Social Justice') return allArt.filter(art => art.category === 'Social Justice')
+    if (category === 'Realism') return allArt.filter(art => art.category === 'Realism')
   }
 
   handleSelect(event) {
@@ -60,16 +66,31 @@ class AllArt extends Component {
           <h1>Welcome, {this.props.user.singleUser.firstName}!</h1>
           : <h1 />}
         </div>
-        <div>
+        <p />
+        <p />
+        <div className='filter'>
+        <div  className='filter-child'>
           <label className='red'>Filter by Price</label>
-          <p />
           <select name='selectedArt' onChange={this.handleSelect}>
-            <option value='priceAll'>All Prices</option>
-            <option value='priceOne'  >Under $100</option>
+            <option value='All'>All Art</option>
+            <option value='priceOne'  > Under $100 </option>
             <option value='priceTwo'  >$100 - $300 </option>
             <option value='priceThree'  > $301 - $500</option>
-            <option value='priceFour'  > Over $500</option>
+            <option value='priceFour'  > Over $500  </option>
           </select>
+        </div>
+
+        <div className='filter-child'>
+          <label className='red'>Filter by Category</label>
+          <p />
+          <select name='selectedArt' onChange={this.handleSelect}>
+            <option></option>
+            <option value='Psyche'> Psyche </option>
+            <option value='Realism'> Realism </option>
+            <option value='Social Justice'> Social Justice </option>
+            <option value='Inspired by...'> Inspired By </option>
+          </select>
+          </div>
         </div>
           <div className='grid'>
           {

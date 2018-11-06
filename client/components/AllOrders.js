@@ -153,7 +153,7 @@ class AllOrders extends Component {
                     <td>{order.zip}</td>
                     <td>{order.arts ?
                       order.arts.map(art=>
-                        <button key={art.id}><NavLink to={`/art/${art.id}`} style={{color:"#984B43"}}>{art.id}</NavLink></button>
+                        <button key={art.id}><NavLink to={`/art/${art.id}`} style={{color:"white"}}>{art.id}</NavLink></button>
                         )
                       : <div></div>
                     }</td>
