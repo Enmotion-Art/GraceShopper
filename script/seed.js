@@ -85,6 +85,42 @@ const arts = [{
   height: 5,
   width: 5,
   category: 'Test'
+}, {
+  title: 'Cave Woman',
+  description: 'test',
+  price: 1.0,
+  quantity: 3,
+  image: 'https://ayitaenmotion.files.wordpress.com/2017/10/img_7306.jpg?w=2924',
+  height: 5,
+  width: 5,
+  category: 'Test'
+}, {
+  title: 'Mandorla',
+  description: 'test',
+  price: 1.0,
+  quantity:3,
+  image: 'https://ayitaenmotion.files.wordpress.com/2017/10/img_7314.jpg',
+  height: 5,
+  width: 5,
+  category: 'Test'
+}, {
+  title: 'Dreamer',
+  description: 'test',
+  price: 1.0,
+  quantity: 3,
+  image: 'https://ayitaenmotion.files.wordpress.com/2017/10/img_7299.jpg',
+  height: 5,
+  width: 5,
+  category: 'Test'
+}, {
+  title: 'Ally',
+  description: 'test',
+  price: 1.0,
+  quantity: 3,
+  image: 'https://ayitaenmotion.files.wordpress.com/2017/10/img_7282.jpg',
+  height: 5,
+  width: 5,
+  category: 'Test'
 }
 ]
 

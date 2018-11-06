@@ -47,7 +47,7 @@ class Cart extends Component {
 
     if (!productArr || !productArr.length) {
       return (
-        <p className='main-container'>Your cart is empty.</p>
+        <p className='main-container & yellow'>Your cart is empty.</p>
       )
     } else {
       return (
