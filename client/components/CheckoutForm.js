@@ -1,6 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { putOrder, postOrder } from '../store/order'
+import {StripeProvider} from 'react-stripe-elements'
+
+import MyStoreCheckout from './MyStoreCheckout'
 
 class CheckoutForm extends React.Component {
   constructor(props) {
@@ -106,6 +109,11 @@ class CheckoutForm extends React.Component {
 
   render() {
     return (
+      <div className="main-container">
+      <StripeProvider apiKey="key">
+      <MyStoreCheckout />
+      </StripeProvider>
+    
       <div className='grid' id="container-row">
         <div className='grid-child'>
           <form>
@@ -174,6 +182,7 @@ class CheckoutForm extends React.Component {
             </div>
           </div>
         </div>
+      </div>
       </div>
       )
     }
