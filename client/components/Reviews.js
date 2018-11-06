@@ -56,7 +56,7 @@ const Reviews = (props) => {
       {
         reviews.map(review =>
           <div key={review.id} >
-            {/* <p>Reviewed By: {review.user.firstName} {review.user.lastName} </p> */}
+            <p>Reviewed By: {review.user.firstName} {review.user.lastName} </p>
             <p>{formatDate(review.createdAt)}</p>
             <p>{printStars(review.stars)}</p>
             <p>{review.content}</p>
