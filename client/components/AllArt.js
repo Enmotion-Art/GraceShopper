@@ -62,6 +62,10 @@ class AllArt extends Component {
           <p></p>
           <p></p>
         </div>
+        <div className='yellow'>
+          {this.props.user.singleUser.id ?
+          <h1>Welcome, {this.props.user.singleUser.firstName}!</h1>
+          : <h1 />}
         <div>
           <label className='red'>Filter by Price</label>
           <select name='selectedArt' onChange={this.handleSelect}>
@@ -76,12 +80,7 @@ class AllArt extends Component {
           <p></p>
           <p></p>
           <p></p>
-        <div className='grid'>
-          {this.props.user.singleUser.id ?
-          <h1>Welcome, {this.props.user.singleUser.firstName}!</h1>
-          : <h1 />}
-
-
+          <div className='grid'>
           {
             selectedArt ?
 
@@ -110,6 +109,7 @@ class AllArt extends Component {
                 </div>
               )
           }
+          </div>
         </div>
       </div>
     )

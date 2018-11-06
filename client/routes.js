@@ -51,7 +51,7 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             {/* <Route path="/home" component={AdminPage} /> */}
-            <Route exact path="/art" component={AllArt} />
+            {/* <Route exact path="/art" component={AllArt} /> */}
             <Route exact path="/home" component={UserHome} />
             {/* BELOW NEED TO BE AVAIL ADMIN ONLY... */}
             <Route exact path="/order" component={AllOrders} />
