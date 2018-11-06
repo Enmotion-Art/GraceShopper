@@ -212,6 +212,26 @@ img:hover {
   /* text-align: right */
 }
 
+/*Review Form Grid*/
+.review-grid {
+  display: grid;
+  grid-template-columns: 1fr,1fr;
+  grid-gap:1em;
+
+
+}
+
+.review-grid-child {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 10px;
+
+
+}
+
+
+
+
 /* ORDER/USER TABLE  */
 table.blueTable {
   border: 1px solid #1C6EA4;
@@ -262,6 +282,8 @@ table.blueTable thead th:first-child {
     font-family: fontAwesome;
 
 }
+
+
 .rate:not(:checked) > input {
     position:absolute;
     top:-9999px;

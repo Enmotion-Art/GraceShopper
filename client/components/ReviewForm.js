@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { NavLink, withRouter } from 'react-router-dom'
 import { postReview } from '../store/review'
+import { fetchSingleArt} from '../store/art'
+
 
 
 class ReviewForm extends React.Component {
@@ -12,11 +14,15 @@ class ReviewForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
+  componentDidMount() {
+    this.props.actions.onFetchSingleArt(this.props.match.params.artId)
+  }
+
 
   handleSubmit(event) {
     event.preventDefault()
-    const artId = this.props.match.params.artId //open to figure out how to get artId
-    const userId = this.props.user.id//open to figure out how to get userId. userId doesn't persist after refresh
+    const artId = this.props.match.params.artId
+    const userId = this.props.user.id
 
     const stars = event.target.stars.value
     const content = event.target.comment.value
@@ -33,16 +39,23 @@ class ReviewForm extends React.Component {
 
   render() {
     // console.log("USER IN REVIEWFORM", this.props.user)
-    // console.log('HISTORY IN REVIEWFORM', this.props)
+    console.log("PROPS IN REVIEWFORM", this.props)
+    const artImage = this.props.singleArt.image
 
     if (this.props.user.id)
       return (
-        <div className='grid' id="container-row">
-          <div className='grid-child'>
-            <form id='reviewForm' onSubmit={this.handleSubmit}>
-              <h2>Review Below</h2>
-              <label>Overall Rating</label>
-              <div className="rate">
+        <div className='main-container'>
+          <div className='review-grid'>
+
+            <div className='review-grid-child'><h2>Review Below</h2>
+              <label>Let us know what you think!</label>
+              <img src = {artImage} />
+              <p/>
+            </div>
+
+            <form className='review-grid-child' id='reviewForm' onSubmit={this.handleSubmit}>
+             <div>
+               <div className="rate">
                 <input type="radio" id="star5" name="stars" value="5" />
                 <label htmlFor="star5" title="text">5 stars</label>
                 <input type="radio" id="star4" name="stars" value="4" />
@@ -53,15 +66,14 @@ class ReviewForm extends React.Component {
                 <label htmlFor="star2" title="text">2 stars</label>
                 <input type="radio" id="star1" name="stars" value="1" />
                 <label htmlFor="star1" title="text">1 star</label>
+                </div>
               </div>
 
-              <p />
+              <div>
+                <textarea id='textarea' name="comment" rows="4" cols="50" onChange={this.handleChange} />
+              </div>
 
-              <textarea name="comment" rows="4" cols="50" onChange={this.handleChange} />
-
-              <p />
-
-              <button type="submit">Submit</button>
+              <div><button type="submit">Submit</button></div>
             </form>
           </div>
         </div>
@@ -78,14 +90,19 @@ const mapStateToProps = state => {
   return {
     user: state.user.singleUser,
     singleArt: state.art.singleArt,
-    singleReview: state.review.singleReview
+    singleReview: state.review.singleReview,
+    art: state.art.allArt
 
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onPostReview: (artId, userId, review) => dispatch(postReview(artId, userId, review))
+    actions: {
+      onPostReview: (artId, userId, review) => dispatch(postReview(artId, userId, review)),
+      onFetchSingleArt: (artId) => dispatch(fetchSingleArt(artId))
+    }
+
   }
 }
 
