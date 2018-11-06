@@ -16,12 +16,16 @@ class StandardPage extends Component {
     render() {
         const { user } = this.props
         // console.log('USER ON STANDARDPAGE', user)
+        console.log('PROPS on STANDARDPAGE', this.props)
         return (
 
-            <div className='main-container'>
+            <div>
                 <div className='grid-child'>
-                    <h2 className='yellow'>Your Orders:</h2>
-                    <UserOrders user={user} />
+                    <div className='user-orders'>
+                        <div><h2 className='order-details' id='left-float'>Your Orders:</h2></div>
+                        <h3 className='yellow'>We'd love to hear your thoughts on any artwork that was shipped to you!</h3>
+                        <UserOrders user={user} />
+                    </div>
                 </div>
             </div>
         )

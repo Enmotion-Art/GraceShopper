@@ -54,18 +54,15 @@ class AllArt extends Component {
     return (
 
       <div className='main-container'>
-        <div>
-          {/* <p></p>
-          <p></p>
-          <p></p>
-          <p></p> */}
-        </div>
+
         <div className='yellow'>
           {this.props.user.singleUser.id ?
           <h1>Welcome, {this.props.user.singleUser.firstName}!</h1>
           : <h1 />}
+        </div>
         <div>
           <label className='red'>Filter by Price</label>
+          <p />
           <select name='selectedArt' onChange={this.handleSelect}>
             <option value='priceAll'>All Prices</option>
             <option value='priceOne'  >Under $100</option>
@@ -74,11 +71,6 @@ class AllArt extends Component {
             <option value='priceFour'  > Over $500</option>
           </select>
         </div>
-          <p></p>
-          <p></p>
-          <p></p>
-          <p></p>
-          <p></p>
           <div className='grid'>
           {
             selectedArt ?
@@ -110,7 +102,7 @@ class AllArt extends Component {
           }
           </div>
         </div>
-      </div>
+
     )
   }
 }

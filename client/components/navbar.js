@@ -13,7 +13,7 @@ const Navbar = ({ handleClick, isLoggedIn, user }) => (
     <nav className='nav-child'>
       {/* <Link to="/art">Art Shop</Link> */}
       {isLoggedIn ? (
-        <div classname='links'>
+        <div className='links'>
           {/* The navbar will show these links after you log in */}
           <Link to="/art">Shop</Link>
           <Link to="/home">{user.UserType === 'standard' ? nameStandard : nameAdmin} </Link>
@@ -23,7 +23,7 @@ const Navbar = ({ handleClick, isLoggedIn, user }) => (
               </a>
         </div>
       ) : (
-          <div classname='links'>
+          <div className='links'>
             {/* The navbar will show these links before you log in */}
             <Link to="/art">Shop</Link>
             <Link to="/login">Login</Link>

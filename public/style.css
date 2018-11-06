@@ -21,6 +21,8 @@ body {
   height: 100%;
   font-weight: 300;
   letter-spacing: 0.025em;
+  /* background-color:  #233237; */
+  background: #18121E
 }
 
 a {
@@ -77,8 +79,9 @@ form div {
 /* GRID CSS */
 
 #app {
-  /* background: #18121E */
-background: white
+  /* background-color:  #233237; */
+  background: #18121E
+/* background: white */
 }
 
 .navgrid {
@@ -97,22 +100,23 @@ background: white
 #navContainer {
   background: rgb(152, 75, 76, .85);
   opacity: 1;
-  border-radius: 0 0 15px 20px;
+  border-radius: 0 0 15px 15px;
   padding: 20px;
-  width: 100vw;
+  /* width: 99vw; */
   height: 60px;
   position: fixed;
     top: 0;
-    width: 100%;
+    width: 96vw;
 }
 
 #navTitle {
   background: rgb(152, 75, 76, 0);
-  font-family: serif;
-  font-size: 2em;
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.5em;
   text-decoration-color: #233237;
   font-weight:bold;
-  text-align: center
+  text-align: right;
+
 }
 
 :link {
@@ -248,6 +252,32 @@ img:hover {
   /* text-align: right */
 }
 
+/*Review Form Grid*/
+.review-container {
+  background-color: white;
+  color: #233237;
+
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: 1fr,1fr;
+  grid-gap:1em;
+
+
+}
+
+.review-grid-child {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 10px;
+
+
+}
+
+
+
+
 /* ORDER/USER TABLE  */
 table.blueTable {
   border: 1px solid #1C6EA4;
@@ -298,6 +328,8 @@ table.blueTable thead th:first-child {
     font-family: fontAwesome;
 
 }
+
+
 .rate:not(:checked) > input {
     position:absolute;
     top:-9999px;
@@ -432,3 +464,31 @@ input:focus,
 }
 
 /* Stripe Card Input End */
+
+
+/*User Order Details startt*/
+.user-orders {
+  display: grid;
+  grid-template-columns: 1fr
+}
+
+.order-details {
+  color: #eac67a;
+  float: left
+}
+#left-float {
+  float: left;
+}
+
+#user-order-table {
+  color:black
+}
+
+.float-left {
+  float: left
+}
+
+.link-review {
+  color: black
+}
+/*User Order Details End*/
