@@ -1,6 +1,24 @@
 const router = require('express').Router()
-const {Order, Art, User, OrderProduct } = require('../db/models')
+const {Order, Art, User, OrderProduct } = require('../db/models');
+
+const stripe = require("stripe")("sk_test_T01tE2xx24IYY2wiYZtdlqEC")
+
 module.exports = router
+
+router.post("/charge", async (req, res) => {
+  try {
+    let {status} = await stripe.charges.create({
+      amount: req.body.price,
+      currency: "usd",
+      description: req.body.order,
+      source: req.body.body
+    });
+    res.json(status);
+  } catch (err) {
+    console.error(err)
+    res.status(500).end();
+  }
+});
 
 router.post('/', async (req, res, next) => {
   try {

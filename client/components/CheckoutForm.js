@@ -1,8 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { putOrder, postOrder } from '../store/order'
-import {StripeProvider} from 'react-stripe-elements'
-
+import { Elements, StripeProvider } from 'react-stripe-elements'
 import MyStoreCheckout from './MyStoreCheckout'
 
 class CheckoutForm extends React.Component {
@@ -93,13 +92,6 @@ class CheckoutForm extends React.Component {
     }
 
     if(allNotNull) {
-      // if(!this.props.user.id) {
-      //   let productArr = JSON.parse(localStorage.getItem('product'));
-      //   let productIds = productArr.map(product => product.id)
-      //   this.props.createOrder(productIds, orderObj, null, 'confirmation')
-      // } else {
-      //   this.props.updateOrder('processing', this.props.order.id, orderObj, "confirmation");
-      // }
       this.setState({
         orderObj: orderObj,
         validate: true
@@ -155,12 +147,12 @@ class CheckoutForm extends React.Component {
               : this.state.promoVal === 'valid' ?
               <p style={{color:'blue'}}>Promo code applied.</p> : <p />}
 
-              <button type="submit" onClick={this.promoSubmit}>Apply Promo</button>
+              <button type="submit" onClick={this.promoSubmit}id='stripeButton' type="button">Apply Promo</button>
 
               { JSON.parse(localStorage.getItem('product')) || this.props.order.id ?
               <h3>Total to Charge: ${this.state.subtotal}</h3>
               : <p /> }
-              <button type="submit" onClick={this.handleSubmit}>Enter Payment Info</button>
+              <button type="submit" onClick={this.handleSubmit}id='stripeButton' type="button">Enter Payment Info</button>
 
               {!this.state.validate ?
               <p style={{color:'red'}}>Please complete all fields.</p>
@@ -170,8 +162,10 @@ class CheckoutForm extends React.Component {
         {this.state.orderObj.firstName ?
             <div className="container">
                 <h3>Payment Information</h3>
-                <StripeProvider apiKey="key">
-                  <MyStoreCheckout />
+                <StripeProvider apiKey="pk_test_5g5hXspX2sOhG9VMG423klP8">
+                  <Elements>
+                    <MyStoreCheckout price={this.state.subtotal} orderId={this.props.order.id} orderInfo={this.state.orderObj} />
+                  </Elements>
                 </StripeProvider>
             </div> : <div />}
       </div>

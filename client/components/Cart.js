@@ -74,7 +74,7 @@ class Cart extends Component {
           <div className='red'>
             <strong className='yellow'>Total: </strong>${total}
           </div>
-          <button type="submit" onClick={() => history.push('/checkout')}>Checkout</button>
+          <button type="submit" onClick={() => history.push('/checkout')} id='stripeButton' type="button">Checkout</button>
         </div>
       )
     }
