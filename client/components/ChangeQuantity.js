@@ -21,9 +21,14 @@ class ChangeQuantity extends React.Component {
       quantity: e.target.value,
     })
   }
-  notify = () => toast("Item added to cart!", {
-    position: toast.POSITION.TOP_LEFT, autoClose: 2000
-  });
+
+  notify () {
+    if(this.props.label === "Add to Cart") {
+      toast("Item added to cart!", {
+      position: toast.POSITION.TOP_LEFT, autoClose: 2000
+      })
+    }
+  }
 
   changeQuantity(id, quant) {
     if(!quant) {
@@ -37,14 +42,6 @@ class ChangeQuantity extends React.Component {
     } else {
       if(this.props.user.id) {
         this.props.editOrder('created', this.props.order.id, null, null, [this.props.product.id], quant)
-      // } else {
-      //   if (!JSON.parse(localStorage.getItem('product'))) {
-      //     let arr = [];
-      //     localStorage.setItem('product', JSON.stringify([this.props.product]));
-      //     while(quant > 0) {
-      //       arr.push(this.props.product);
-      //       quant--
-      //     }
         } else {
           let productArr;
           if (!JSON.parse(localStorage.getItem('product'))) {
@@ -75,6 +72,7 @@ class ChangeQuantity extends React.Component {
       if(this.props.label === 'Update Quantity') {
         this.props.refresh()
       }
+      this.notify()
     }
   }
 
@@ -93,7 +91,7 @@ class ChangeQuantity extends React.Component {
             <option value="4">4</option>
           </select>
 
-          <button onClick={() => {this.changeQuantity(this.props.product.id); this.notify()}}>{this.props.label}</button>
+          <button onClick={() => this.changeQuantity(this.props.product.id)}>{this.props.label}</button>
           <ToastContainer />
 
         </div>

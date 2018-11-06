@@ -98,26 +98,22 @@ class AllArt extends Component {
 
 
               selectedArt.map(art =>
-                <div className='grid-child' key={art.id}>
-                <div>
+                <div key={art.id} id="container-column">
+                <div className="overlay">
                   <NavLink to={`/art/${art.id}`}><img id="main-art" src={art.image} /> </NavLink>
-                </div>
-                <div className='flex-col'>
-                  <NavLink to={`/art/${art.id}`}>{art.title}</NavLink>
-                  <div id='price'>{`$ ${art.price}`}</div>
-                </div>
+                {/* <div className='flex-col'> */}
+                  <NavLink to={`/art/${art.id}`}><h3>{art.title}</h3></NavLink></div>
+                  <div id='price'><strong>{`$ ${art.price}`}</strong></div>
                 </div>
               )
               :
               filteredArt.map(art =>
-                <div className='grid-child' key={art.id}>
-                <div>
+                <div key={art.id} id="container-column">
+                <div className="overlay">
                   <NavLink to={`/art/${art.id}`}><img id="main-art" src={art.image} /> </NavLink>
-                </div>
-                <div className='flex-col'>
-                  <NavLink to={`/art/${art.id}`}>{art.title}</NavLink>
-                  <div className='red'>{`$ ${art.price}`}</div>
-                </div>
+                {/* <div className='flex-col'> */}
+                  <NavLink to={`/art/${art.id}`}><h3>{art.title}</h3></NavLink></div>
+                  <div id='price'><strong>{`$ ${art.price}`}</strong></div>
                 </div>
               )
           }
