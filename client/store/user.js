@@ -32,6 +32,7 @@ const updateStatus = (user) => ({type: UPDATE_STATUS})
  * THUNK CREATORS
  */
 export const me = () => async dispatch => {
+  console.log("I AM HERE")
   try {
     const res = await axios.get('/auth/me')
     let user;
