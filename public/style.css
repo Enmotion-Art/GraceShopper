@@ -252,6 +252,17 @@ img:hover {
   /* text-align: right */
 }
 
+.filter {
+  display: flex;
+  flex-direction: row;
+}
+
+.filter-child {
+  display: flex;
+  flex-direction: column;
+  margin-right:10px;
+}
+
 /*Review Form Grid*/
 .review-container {
   background-color: white;
@@ -263,16 +274,12 @@ img:hover {
   display: grid;
   grid-template-columns: 1fr,1fr;
   grid-gap:1em;
-
-
 }
 
 .review-grid-child {
   display: grid;
   grid-template-columns: 1fr;
   padding: 10px;
-
-
 }
 
 
