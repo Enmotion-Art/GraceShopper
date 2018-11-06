@@ -15,7 +15,7 @@ class AddArt extends Component {
       height: '',
       width: '',
       depth: '',
-      category: ''
+      category: '',
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,31 +39,33 @@ class AddArt extends Component {
     const depth = +this.state.depth;
     const category = this.state.category;
 
-      this.setState({
-        title: '',
-        description: '',
-        price: '',
-        quantity: '',
-        image: '',
-        height: '',
-        width: '',
-        depth: '',
-        category: ''
-      })
-      this.props.addArt({ title,
-        description,
-        price,
-        quantity,
-        image,
-        height,
-        width,
-        depth,
-        category})
-    }
+    this.setState({
+      title: '',
+      description: '',
+      price: '',
+      quantity: '',
+      image: '',
+      height: '',
+      width: '',
+      depth: '',
+      category: ''
+    })
+    this.props.addArt({
+      title,
+      description,
+      price,
+      quantity,
+      image,
+      height,
+      width,
+      depth,
+      category
+    })
+  }
 
   render() {
     return (
-        <ArtForm title={this.props.title} state={this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
+      <ArtForm title={this.props.title} state={this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
     )
   }
 }

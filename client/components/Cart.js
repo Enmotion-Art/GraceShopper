@@ -9,12 +9,13 @@ class Cart extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      order: props.order,
-      quantity: '',
       refresh: false
     }
-    this.handleCheckout = this.handleCheckout.bind(this)
     this.triggerRefresh = this.triggerRefresh.bind(this)
+  }
+
+  componentDidMount() {
+    this.props.getMeAgain()
   }
 
   triggerRefresh() {
@@ -23,17 +24,7 @@ class Cart extends Component {
     })
   }
 
-  componentDidMount() {
-    this.props.getMeAgain()
-  }
-
-  handleCheckout() {
-    history.push('/checkout')
-  }
-
   render() {
-    // console.log("USER IN CART", this.props.user)
-    // console.log("ORDER ON STATE IN CART", this.props.order)
     let productArr;
     if(this.props.user.id) {
       productArr = this.props.order.arts;
@@ -75,7 +66,7 @@ class Cart extends Component {
 
             return <div key={+key} id="container-row">
               <div>
-                <CartItem product={product} quantity={quantity} refresh={this.triggerRefresh}/>
+                <CartItem product={product} quantity={quantity} refresh={this.triggerRefresh} />
                 </div>
               </div>
             }
@@ -83,7 +74,7 @@ class Cart extends Component {
           <div className='red'>
             <strong className='yellow'>Total: </strong>${total}
           </div>
-          <button type="submit" onClick={this.handleCheckout}>Checkout</button>
+          <button type="submit" onClick={() => history.push('/checkout')}>Checkout</button>
         </div>
       )
     }
@@ -99,10 +90,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  // createOrder: (product, page) => dispatch(postOrder(product, page)),
   getMeAgain: () => dispatch(me()),
-  // editOrder: (status, id, orderInfo, page, prodIds) => dispatch(putOrder(status, id, orderInfo, page, prodIds)),
-  // changeProduct: (orderId, productId, quantity) => dispatch(changeOrderProduct(orderId, productId, quantity)),
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Cart))

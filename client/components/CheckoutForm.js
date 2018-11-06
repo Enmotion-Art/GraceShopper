@@ -19,10 +19,11 @@ class CheckoutForm extends React.Component {
       zip: '11102',
       cc: '123456781234',
       sc: '123',
-      hidden: true,
+      validate: true,
       promo: '',
       subtotal: this.calculatePrice(),
-      hidden2: "true"
+      promoVal: "true",
+      orderObj: {}
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -48,12 +49,12 @@ class CheckoutForm extends React.Component {
       let newPrice = String(Math.floor(this.calculatePrice()/2))
       this.setState({
         subtotal: newPrice,
-        hidden2: 'valid'
+        promoVal: 'valid'
       })
     } else {
       this.setState({
-        hidden2: 'false',
-        promo: ''
+        promoVal: 'false',
+        promo: '',
       })
     }
   }
@@ -74,13 +75,13 @@ class CheckoutForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
     this.setState({
-      hidden2: 'valid'
+      promoVal: 'true'
     })
 
     let orderObj = {};
     for(let key in this.state ) {
-      if(key !== 'hidden' && key !=='hidden2') {
-        orderObj[key] = this.state[key].trim();
+      if(key !== 'validate' && key !=='promoVal' && key !== 'promo' && key!== 'orderObj') {
+        orderObj[key] = String(this.state[key]).trim();
       }
     }
 
@@ -92,17 +93,21 @@ class CheckoutForm extends React.Component {
     }
 
     if(allNotNull) {
-      if(!this.props.user.id) {
-        let productArr = JSON.parse(localStorage.getItem('product'));
-        let productIds = productArr.map(product => product.id)
-        this.props.createOrder(productIds, orderObj, null, 'confirmation')
-      } else {
-        this.props.updateOrder('processing', this.props.order.id, orderObj, "confirmation");
-      }
+      // if(!this.props.user.id) {
+      //   let productArr = JSON.parse(localStorage.getItem('product'));
+      //   let productIds = productArr.map(product => product.id)
+      //   this.props.createOrder(productIds, orderObj, null, 'confirmation')
+      // } else {
+      //   this.props.updateOrder('processing', this.props.order.id, orderObj, "confirmation");
+      // }
+      this.setState({
+        orderObj: orderObj,
+        validate: true
+      })
     } else {
       this.setState({
-        hidden: false,
-        hidden2: 'false'
+        validate: false,
+        promoVal: 'true'
       })
     }
   }
@@ -110,19 +115,10 @@ class CheckoutForm extends React.Component {
   render() {
     return (
       <div className="main-container">
-      <StripeProvider apiKey="key">
-      <MyStoreCheckout />
-      </StripeProvider>
-    
-      <div className='grid' id="container-row">
-        <div className='grid-child'>
-          <form>
-              <h3>Customer Information</h3>
-
-              {!this.state.hidden ?
-              <p style={{color:'red'}}>Please complete all fields.</p>
-              : '' }
-
+      <div className='container'>
+        <div>
+          <h3>Customer Information</h3>
+          <form className="form-inline">
               <label> First Name: </label>
               <input type="text" name="firstName" onChange={this.handleChange} value={this.state.firstName}  />
 
@@ -146,43 +142,38 @@ class CheckoutForm extends React.Component {
 
               <label> Zip Code: </label>
               <input type="text" name="zip" onChange={this.handleChange} value={this.state.zip} />
-
           </form>
         </div>
-        <div className='grid-child' id="second-column">
-          <form>
-            <h3>Payment Information</h3>
-            <label> Credit Card Number: </label>
-            <input type="text" name="cc" onChange={this.handleChange} value={this.state.cc} />
 
-            <label> Security Code: </label>
-            <input type="text" name="sc" onChange={this.handleChange} value={this.state.sc} />
-          </form>
-          <div>
+        <div>
             <br />
-            <div>
-              <label>Promo Code:</label>
+              <h3>Promo Code</h3>
               <input type="text" name="promo" onChange={this.promoChange} value={this.state.promo} />
 
-              {this.state.hidden2 === 'false' ?
+              {this.state.promoVal === 'false' ?
               <p style={{color:'blue'}}>Invalid promo code.</p>
-              : this.state.hidden2 === 'valid' ?
-              <p style={{color:'blue'}}>Your promo code has been applied.</p>
-              :
-              <p />
-               }
-              <button type="submit" onClick={this.promoSubmit}>Apply Promo</button>
-            </div>
-            <div>
-              { JSON.parse(localStorage.getItem('product')) || this.props.order.id ?
-              <p><strong>Total to Charge: ${this.state.subtotal}</strong></p>
-              : <p /> }
+              : this.state.promoVal === 'valid' ?
+              <p style={{color:'blue'}}>Promo code applied.</p> : <p />}
 
-              <button type="submit" onClick={this.handleSubmit}>Place your order</button>
-            </div>
+              <button type="submit" onClick={this.promoSubmit}>Apply Promo</button>
+
+              { JSON.parse(localStorage.getItem('product')) || this.props.order.id ?
+              <h3>Total to Charge: ${this.state.subtotal}</h3>
+              : <p /> }
+              <button type="submit" onClick={this.handleSubmit}>Enter Payment Info</button>
+
+              {!this.state.validate ?
+              <p style={{color:'red'}}>Please complete all fields.</p>
+              : '' }
           </div>
         </div>
-      </div>
+        {this.state.orderObj.firstName ?
+            <div className="container">
+                <h3>Payment Information</h3>
+                <StripeProvider apiKey="key">
+                  <MyStoreCheckout />
+                </StripeProvider>
+            </div> : <div />}
       </div>
       )
     }
