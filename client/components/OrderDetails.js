@@ -8,8 +8,10 @@ const OrderDetails = (props) => {
   // console.log('PRODUCTS in ORDER DETAILS', props)
 
   return (
+
     <div>
-      <table>
+      <h3 className='order-details'>Your Order Details:</h3>
+      <table className='blueTable'>
         <thead>
           <tr className='yellow'>
             <th>Product Id</th>
@@ -21,16 +23,17 @@ const OrderDetails = (props) => {
         <tbody>
           {
             products.map(product =>
-              <tr className='red' key={product.id}>
+              <tr className='black' key={product.id}>
                 <td>{product.id}</td>
                 <td>{product.title}</td>
                 <td>${product.price}</td>
+                <td>
                 {
                   order.status === 'shipped' ?
-                    < td > <NavLink to={`/art/${product.id}/review`}>Leave Review</NavLink></td>
-                    : null
+                    <button><NavLink to={`/art/${product.id}/review`}>Leave Review</NavLink> </button>
+                    : 'N/A'
                 }
-
+                </td>
               </tr>
             )
           }

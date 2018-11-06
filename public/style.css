@@ -454,3 +454,31 @@ input:focus,
 }
 
 /* Stripe Card Input End */
+
+
+/*User Order Details startt*/
+.user-orders {
+  display: grid;
+  grid-template-columns: 1fr
+}
+
+.order-details {
+  color: #eac67a;
+  float: left
+}
+#left-float {
+  float: left;
+}
+
+#user-order-table {
+  color:black
+}
+
+.float-left {
+  float: left
+}
+
+.link-review {
+  color: black
+}
+/*User Order Details End*/

@@ -29,7 +29,7 @@ class UserOrders extends Component {
 
     return (
       <div>
-        <table>
+        <table className="blueTable" id='user-order-table'>
           <thead>
             <tr className='yellow'>
               <th>Order#</th>
@@ -42,7 +42,7 @@ class UserOrders extends Component {
             {
               orders.map(order =>
                 order.status === 'processing' || order.status === 'shipped' ?
-                  <tr className='red' key={order.id}>
+                  <tr className='black' key={order.id}>
                     <td>{order.id}</td>
                     <td>{order.status}</td>
                     <td>${order.subtotal}</td>
@@ -54,7 +54,7 @@ class UserOrders extends Component {
             }
           </tbody>
         </table>
-
+        <p />
         <div>
           {
             this.state.showOrderDetails ?
