@@ -7,9 +7,10 @@ class AdminPage extends Component {
     render() {
         return (
           <div className='admin-grid'>
-            <AddArt title='Add A New Piece Of Art'/>
-
             <div className='admin-grid-child'>
+              <AddArt title='Add A New Piece Of Art'/>
+            </div>
+             <div className='admin-grid-child'>
               <div>
                 <h2 className='yellow'>Orders:</h2>
                 <AllOrders />
@@ -17,7 +18,7 @@ class AdminPage extends Component {
               <div>
                 <h2 className='yellow'>Users:</h2>
                 <AllUsers />
-              </div>
+            </div>
             </div>
           </div>
         )

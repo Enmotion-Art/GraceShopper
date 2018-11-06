@@ -185,17 +185,31 @@ img:hover {
   display: grid;
   grid-template-columns: 1fr, 3fr;
   grid-gap:1em;
-  grid-auto-rows:500px;
+  /* grid-auto-rows:500px; */
 }
 
 .admin-grid-child {
   display:flex;
   flex-flow: column;
   padding: 10px;
-  text-align: right
+  /* text-align: right */
 }
 
-/* ORDER TABLE  */
+.orders-grid {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-gap:1em;
+  /* grid-auto-rows:500px; */
+}
+
+.orders-grid-child {
+  display:flex;
+  flex-flow: column;
+  padding: 10px;
+  /* text-align: right */
+}
+
+/* ORDER/USER TABLE  */
 table.blueTable {
   border: 1px solid #1C6EA4;
   background-color: #EEEEEE;
