@@ -48,7 +48,7 @@ const Reviews = (props) => {
   // console.log('USER IN REVIEWS', user)
 
   return (
-    <div>
+    <div className='review-container'>
       <h4>Customer Reviews</h4>
       <p>{reviews.length} customer reviews</p>
       <p>Avg rating: {avgStars(reviews)}</p>
