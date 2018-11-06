@@ -11,7 +11,7 @@ const OrderDetails = (props) => {
     <div>
       <table>
         <thead>
-          <tr>
+          <tr className='yellow'>
             <th>Product Id</th>
             <th>Name</th>
             <th>Price</th>
@@ -21,7 +21,7 @@ const OrderDetails = (props) => {
         <tbody>
           {
             products.map(product =>
-              <tr key={product.id}>
+              <tr className='red' key={product.id}>
                 <td>{product.id}</td>
                 <td>{product.title}</td>
                 <td>${product.price}</td>

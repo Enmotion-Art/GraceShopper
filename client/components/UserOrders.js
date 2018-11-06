@@ -31,7 +31,7 @@ class UserOrders extends Component {
       <div>
         <table>
           <thead>
-            <tr>
+            <tr className='yellow'>
               <th>Order#</th>
               <th>Status</th>
               <th>Total</th>
@@ -42,7 +42,7 @@ class UserOrders extends Component {
             {
               orders.map(order =>
                 order.status === 'processing' || order.status === 'shipped' ?
-                  <tr key={order.id}>
+                  <tr className='red' key={order.id}>
                     <td>{order.id}</td>
                     <td>{order.status}</td>
                     <td>${order.subtotal}</td>

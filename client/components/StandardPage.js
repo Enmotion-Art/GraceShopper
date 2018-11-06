@@ -20,7 +20,7 @@ class StandardPage extends Component {
 
             <div>
                 <div className='grid-child'>
-                    <h2>Your Orders:</h2>
+                    <h2 className='yellow'>Your Orders:</h2>
                     <UserOrders user={user} />
                 </div>
             </div>

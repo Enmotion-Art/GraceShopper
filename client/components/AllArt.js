@@ -62,7 +62,7 @@ class AllArt extends Component {
           <p></p>
         </div>
         <div>
-          <label className='label'>Filter by Price</label>
+          <label className='red'>Filter by Price</label>
           <select name='selectedArt' onChange={this.handleSelect}>
             <option value='priceAll'>All Prices</option>
             <option value='priceOne'  >Under $100</option>
@@ -100,7 +100,7 @@ class AllArt extends Component {
                 </div>
                 <div className='flex-col'>
                   <NavLink to={`/art/${art.id}`}>{art.title}</NavLink>
-                  <div id='price'>{`$ ${art.price}`}</div>
+                  <div className='red'>{`$ ${art.price}`}</div>
                 </div>
                 </div>
               )

@@ -55,7 +55,7 @@ class SingleArt extends Component {
     const user = this.props.user
 
     return (
-      <div className='grid'>
+      <div className='main-container'>
         {
           user.UserType === 'admin' ?
             <div className='grid-child'>
@@ -73,12 +73,13 @@ class SingleArt extends Component {
             : <div />
         }
         <br />
-        <h1>{singleArt.title}</h1>
+        <div>
+        <h1 className='yellow'>{singleArt.title}</h1>
         <div className='grid-child' id="container-row">
           <div id="column">
             <img src={singleArt.image} />
           </div>
-          <div id="second-column">
+          <div id="flex-col" className='red'>
             <p>{singleArt.description}</p>
             <p>Style: {singleArt.category}</p>
             <p>{singleArt.width}W x {singleArt.height}H</p>
@@ -86,7 +87,7 @@ class SingleArt extends Component {
             {singleArt.quantity === 0 ? <p>SOLD OUT</p> :
               <button type="submit" onClick={this.addtoCart}>Add to Cart</button>}
           </div>
-
+          </div>
           <p></p>
           <hr width="100%" align="LEFT"></hr>
           {

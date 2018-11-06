@@ -9,14 +9,7 @@
 }
 
 #landingLink {
-
   margin-top: 175px;
-  /* top: 50%;
-  left: 50%; */
-  /* margin-top: -100px; */
-  /* margin-left: -100px; */
-
-
   font-family: serif;
   font-size: 1.5em;
   font-weight:bold;
@@ -88,6 +81,7 @@ form div {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap:1em
+
 }
 
 .nav-child {
@@ -102,7 +96,7 @@ form div {
   opacity: 1;
   border-radius: 0 0 15px 20px;
   padding: 20px;
-  width: 200px;
+  width: 100vw;
   height: 60px;
   position: fixed;
     top: 0;
@@ -168,12 +162,12 @@ a:active {
   text-align: left
 }
 
-.label {
+.red {
   color:  #984B43;
 }
 
-#price {
-  color:  #984B43;
+.yellow {
+  color: #EAC67A;
 }
 
 img {
@@ -185,6 +179,20 @@ img {
 
 img:hover {
   box-shadow: 0 0 8px 4px rgba(221, 230, 233, 0.5);
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: 1fr, 3fr;
+  grid-gap:1em;
+  grid-auto-rows:500px;
+}
+
+.admin-grid-child {
+  display:flex;
+  flex-flow: column;
+  padding: 10px;
+  text-align: right
 }
 
 /* ORDER TABLE  */
