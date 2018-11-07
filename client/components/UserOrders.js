@@ -25,7 +25,6 @@ class UserOrders extends Component {
 
   render() {
     const orders = this.props.user.orders
-    // console.log("USER ORDERS", orders)
 
     return (
       <div>

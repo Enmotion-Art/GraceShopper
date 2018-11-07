@@ -18,14 +18,11 @@ class PaymentRequestForm extends React.Component {
       });
   
       paymentRequest.on('token', ({complete, token, ...data}) => {
-        console.log('Received Stripe token: ', token);
-        console.log('Received customer information: ', data);
         complete('success');
       });
   
       paymentRequest.canMakePayment().then((result) => {
         this.setState({canMakePayment: !!result});
-        console.log('can make payment state', this.state)
       });
   
       this.state = {
@@ -33,14 +30,8 @@ class PaymentRequestForm extends React.Component {
         paymentRequest,
       };
     }
-    // componentDidUpdate() {
-    //     !this.state.canMakePayment ? 
-    //         this.paymentRequest.canMakePayment()
-    //         : console.log('no paymentRequest')
-    // }
   
     render() {
-        console.log('state in payment request form', this.state)
       return this.state.canMakePayment ? (
         <PaymentRequestButtonElement
           paymentRequest={this.state.paymentRequest}
