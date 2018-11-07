@@ -3,7 +3,14 @@ import { connect } from 'react-redux'
 
 const Confirmation = (props) => {
   return (
-    <div className="main-container">Thank you for your order! You'll receive a confirmation email shortly.</div>
+    <div>
+    <div>
+      <p />
+    </div>
+      <p />
+      <p />
+      <div className="main-container">Thank you for your order! You'll receive a confirmation email shortly.</div>
+    </div>
   )
 }
 
