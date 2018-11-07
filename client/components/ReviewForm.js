@@ -38,8 +38,6 @@ class ReviewForm extends React.Component {
   }
 
   render() {
-    // console.log("USER IN REVIEWFORM", this.props.user)
-    console.log("PROPS IN REVIEWFORM", this.props)
     const artImage = this.props.singleArt.image
 
     if (this.props.user.id)

@@ -41,24 +41,19 @@ class AllOrders extends Component {
 
   handleStatus(event) {
     const updatedStatus = event.target.value
-    // console.log('event', event.target.value)
     this.setState({
       [event.target.name]: updatedStatus
     })
-    console.log('state', this.state)
   }
 
   handleUpdate(event) {
-    // console.log('event.target.id', event.target.id)
     const orderId = event.target.id
     const updatedStatus = this.state.updatedOrderStatus
     this.props.actions.changeOrderStatus({status: updatedStatus}, orderId)
-    console.log('updatedStatus', updatedStatus)
   }
 
   render() {
     const orders = this.props.allOrders
-    console.log(orders)
     const selectedOrders = this.state.selectedOrders
 
     return (

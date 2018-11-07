@@ -15,7 +15,6 @@ class SingleOrder extends Component {
   componentDidMount() {
     const id= this.props.match.params.orderId
     this.props.actions.loadSingleOrder(id)
-    // console.log('didMount')
   }
 
   handleClick(event) {
