@@ -26,7 +26,7 @@ class ReviewForm extends React.Component {
 
     const stars = event.target.stars.value
     const content = event.target.comment.value
-    this.props.onPostReview(artId,
+    this.props.actions.onPostReview(artId,
       {
         stars,
         content,

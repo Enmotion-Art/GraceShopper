@@ -45,7 +45,7 @@ const avgStars = (reviews) => {
 const Reviews = (props) => {
   const reviews = props.reviews
   const user = props.user
-  // console.log('USER IN REVIEWS', user)
+  console.log('USER IN REVIEWS', user)
 
   return (
     <div className='review-container'>
@@ -56,7 +56,7 @@ const Reviews = (props) => {
       {
         reviews.map(review =>
           <div key={review.id} >
-            <p>Reviewed By: {review.user.firstName} {review.user.lastName} </p>
+            <p>Reviewed By: {user.firstName} {user.lastName} </p>
             <p>{formatDate(review.createdAt)}</p>
             <p>{printStars(review.stars)}</p>
             <p>{review.content}</p>
