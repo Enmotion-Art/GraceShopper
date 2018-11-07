@@ -79,10 +79,8 @@ class AllArt extends Component {
             <option value='priceFour'  > Over $500  </option>
           </select>
         </div>
-
         <div className='filter-child'>
           <label className='red'>Filter by Category</label>
-          <p />
           <select name='selectedArt' onChange={this.handleSelect}>
             <option></option>
             <option value='Psyche'> Psyche </option>
