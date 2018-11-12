@@ -17,6 +17,8 @@
 
 ## 🎨 About EnMotion-Art
 
+From the artist's blog: https://ayitaenmotion.wordpress.com/
+
 Welcome to EnMotion-Art, an interdisciplinary experiment by artist LE (Lee). The writings and images you will find here vary in subject matter from psychology to activism, personal journey making to mythic ritual and more. While each piece holds anchor within academia they are often intensely personal and share techniques and experiences that have, for better or for worse, informed how I see and move in the world.
 
 A message from the lovely Artist 'LE'
