@@ -1,18 +1,22 @@
 # 🖼  EnMotion-Art 🎨
+EnMotion-Art is an e-commerce web application that allows users to purchase artwork by artist LE. The site allows users to have an end to end shopping experience where they can sign-up, browse, filter, purchase, and leave reviews for products.
+
+
+## Deployed at
+ https://enmotion-art.herokuapp.com/
+
+
+ ## 🛠️ Technologies Used
+- Front-end:  React, Redux, OAuth, Stripe.js, React-toastify, Flexbox
+- Back-end: Node, Express, PostgreSQL, Sequelize
+
 
 ## 😎 Getting Started
-
 1. Fork and clone this repo
 2. `npm install`
 3. Read the rest of this `README.md` for additional information
 4. Start the build process and your application with: `npm run start-dev`. If you using Windows, you may need to execute `npm run start-server` and `npm run build-watch` separately (in their own terminal tabs).
 5. Seed database by executing `npm run seed`
-
-
-## 🛠️ Helpful Resources/Links
-
-- [📖 Project Plan](https://docs.google.com/spreadsheets/d/1seADLIUhEY5zSARXyjDgsSv9-xiP32ZeWKionRLN29A/edit#gid=1571910394)
-- [📖 Waffle IO](https://waffle.io/Enmotion-Art/GraceShopper)
 
 
 ## 🎨 About EnMotion-Art
