@@ -1,7 +1,17 @@
 # 🖼  EnMotion-Art 🎨
+EnMotion-Art is an e-commerce web application that allows users to purchase artwork by artist LE. The site allows users to have an end to end shopping experience where they can sign-up, browse, filter, purchase, and leave reviews for products.
+
+
+## Deployed at
+ https://enmotion-art.herokuapp.com/
+
+
+ ## 🛠️ Technologies Used
+- Front-end:  React, Redux, OAuth, Stripe.js, React-toastify, Flexbox
+- Back-end: Node, Express, PostgreSQL, Sequelize
+
 
 ## 😎 Getting Started
-
 1. Fork and clone this repo
 2. `npm install`
 3. Read the rest of this `README.md` for additional information
@@ -9,14 +19,7 @@
 5. Seed database by executing `npm run seed`
 
 
-## 🛠️ Helpful Resources/Links
-
-- [📖 Project Plan](https://docs.google.com/spreadsheets/d/1seADLIUhEY5zSARXyjDgsSv9-xiP32ZeWKionRLN29A/edit#gid=1571910394)
-- [📖 Waffle IO](https://waffle.io/Enmotion-Art/GraceShopper)
-
-
 ## 🎨 About EnMotion-Art
-
 Welcome to EnMotion-Art, an interdisciplinary experiment by artist LE (Lee). The writings and images you will find here vary in subject matter from psychology to activism, personal journey making to mythic ritual and more. While each piece holds anchor within academia they are often intensely personal and share techniques and experiences that have, for better or for worse, informed how I see and move in the world.
 
 A message from the lovely Artist 'LE'
